@@ -15,9 +15,17 @@
   --fg-light: #E5E5E5;
 }
 
+/* ----------  RESET TOP/BOTTOM MARGINS  ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* ----------  GLOBAL RESET / BASE  ---------- */
 html,body{
   background: url('/assets/img/grid.svg') #111111 repeat;
+  background-position: 0 0;
   color: var(--fg-light);
   font-family: "Fira Code", monospace;
   line-height: 1.6;
