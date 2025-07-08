@@ -15,6 +15,31 @@
   --fg-light: #E5E5E5;
 }
 
+/* ----------  NAV BAR  ---------- */
+.site-nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 0;
+}
+
+.site-title{
+  font-size:1.5rem;
+  font-weight:700;
+  color: var(--primary);
+}
+
+.nav-right a{
+  margin-left:1rem;
+  font-weight:500;
+  color: var(--fg-light);
+  text-decoration:none;
+}
+
+.nav-right a:hover{
+  color: var(--accent);
+}
+
 /* ----------  RESET TOP/BOTTOM MARGINS  ---------- */
 * {
   margin: 0;
