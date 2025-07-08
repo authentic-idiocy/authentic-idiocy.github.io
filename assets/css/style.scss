@@ -1,0 +1,66 @@
+---
+# Needed so Jekyll parses this as Sass
+---
+
+/* 2-line front-matter ends above; leave blank line below */
+@import "{{ site.theme }}";   /* pull in theme   ──────────── */
+
+/* ----------  YOUR BRAND PALETTE  ---------- */
+:root {
+  /* brand colours */
+  --primary:  #6C00E0;   /* electric purple  */
+  --accent:   #FF00A0;   /* vibrant pink     */
+  --cyan:     #00F0FF;   /* optional accent  */
+  --bg-dark:  #111111;
+  --fg-light: #E5E5E5;
+}
+
+/* ----------  GLOBAL RESET / BASE  ---------- */
+html,body{
+  background: var(--bg-dark);
+  color:       var(--fg-light);
+  font-family: "Fira Code", "IBM Plex Mono", monospace;
+  line-height: 1.6;
+}
+
+/* hyperlinks */
+a{
+  color: var(--accent);
+  text-decoration: none;
+  transition: color .2s ease-in-out;
+}
+a:hover{ color: var(--primary); }
+
+/* headings */
+h1,h2,h3,h4,h5,h6{
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* code blocks & inline code */
+pre,code{
+  background: #1b1b1b;
+  border-left: 3px solid var(--primary);
+  padding: .25rem .5rem;
+  border-radius: .25rem;
+}
+
+/* faint neon border around main content */
+main, .post{
+  border: 1px solid var(--primary);
+  border-radius: .75rem;
+  padding: 2rem;
+  box-shadow: 0 0 .5rem var(--accent);
+}
+
+/* colourful selection highlight */
+::selection{
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+/* responsive tweaks */
+@media (max-width: 768px){
+  main, .post{ padding: 1.25rem; }
+}
