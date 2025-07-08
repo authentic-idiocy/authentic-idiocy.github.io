@@ -1,0 +1,17 @@
+<!-- /assets/img/grid.svg  –  40 × 40 px repeating tile -->
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+  <!-- dark matte background so the tile looks correct if viewed standalone -->
+  <rect width="40" height="40" fill="#111111" />
+
+  <!-- vertical lines -->
+  <path d="M 0 0 V 40 M 40 0 V 40" stroke="#6C00E0" stroke-width="0.5"/>
+  <!-- horizontal lines -->
+  <path d="M 0 0 H 40 M 0 40 H 40" stroke="#6C00E0" stroke-width="0.5"/>
+
+  <!-- optional faint sub-grid every 10 px: uncomment if you like a denser look
+  <g opacity="0.35">
+    <path d="M10 0 V40 M20 0 V40 M30 0 V40" stroke="#6C00E0" stroke-width="0.3"/>
+    <path d="M0 10 H40 M0 20 H40 M0 30 H40" stroke="#6C00E0" stroke-width="0.3"/>
+  </g>
+  -->
+</svg>
