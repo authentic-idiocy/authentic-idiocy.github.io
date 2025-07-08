@@ -93,14 +93,4 @@ main, .post{
   color: var(--bg-dark);
 }
 
-/* responsive tweaks for ze grid*/
-@media (max-width: 768px){
-  main, .post{ padding: 1.25rem; }
-}
 
-@keyframes neonPulse{
-  0%,100%{ filter: drop-shadow(0 0 0.4rem #6C00E0); }
-  50%     { filter: drop-shadow(0 0 0.8rem #FF00A0); }
-}
-
-html{ animation: neonPulse 8s ease-in-out infinite; }
