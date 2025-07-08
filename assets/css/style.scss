@@ -5,7 +5,7 @@
 /* 2-line front-matter ends above; leave blank line below */
 @import "{{ site.theme }}";   /* pull in theme   ──────────── */
 
-/* ----------  YOUR BRAND PALETTE  ---------- */
+/* -------------  BRAND PALETTE  ------------- */
 :root {
   /* brand colours */
   --primary:  #6C00E0;   /* electric purple  */
@@ -17,9 +17,9 @@
 
 /* ----------  GLOBAL RESET / BASE  ---------- */
 html,body{
-  background: var(--bg-dark);
-  color:       var(--fg-light);
-  font-family: "Fira Code", "IBM Plex Mono", monospace;
+  background: url('/assets/img/grid.svg') #111111 repeat;
+  color: var(--fg-light);
+  font-family: "Fira Code", monospace;
   line-height: 1.6;
 }
 
