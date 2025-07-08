@@ -93,4 +93,19 @@ main, .post{
   color: var(--bg-dark);
 }
 
+/* ====== KILL THE DEFAULT SIDEBAR HEADER ======
+   The jekyll-theme-minimal layout prints <header>…<h1> AUTHENTIC-IDIOCY …</header>
+   (see upstream file:contentReference[oaicite:0]{index=0}).  We simply hide that element.          */
+header{
+  display:none !important;     /* nuke the whole legacy sidebar */
+}
+
+/* ====== GLOW-ON-HOVER FOR THE NAV TITLE ====== */
+.site-title{
+  transition:color .22s ease-in-out, text-shadow .22s ease-in-out;
+}
+.site-title:hover{
+  color:var(--accent);                 /* #FF00A0 */
+  text-shadow:0 0 8px var(--accent);   /* soft neon halo */
+}
 
