@@ -2,7 +2,7 @@
 layout: post
 title:  "Probability Theory Aperitif"
 date:   2025-07-15 10:00:00 -0700
-categories: "Basic Bitch Shit"        # <- must match the section header
+categories: basic-bitch-shit        # <- must match the section header
 description: "Prob. Theory Refresher"
 ---
 <!DOCTYPE html>
