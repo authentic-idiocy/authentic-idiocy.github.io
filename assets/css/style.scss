@@ -108,8 +108,20 @@ header{
   color:var(--accent);                 /* #FF00A0 */
   text-shadow:0 0 8px var(--accent);   /* soft neon halo */
 }
+/* ——  Nav logo sizing & hover  —— */
+.site-logo{
+  height: 28px;            /* keeps logo proportional on all screens  */
+  width:  auto;
+  margin-right: .5rem;     /* gap before the text                     */
+  vertical-align: middle;  /* aligns baseline with link text          */
+  transition: filter .2s ease-in-out;
+}
+/* optional glow-on-hover when you hover the entire nav-left area */
+.nav-left:hover .site-logo{
+  filter: drop-shadow(0 0 6px var(--accent));
+}
 
-/* ——  Neon hover for category headings  —— */
+/* ——  Neon hover for 'Posts' category headings  —— */
 .category-title{
   display:inline-block;                 /* let text-shadow render properly   */
   color: var(--primary);
