@@ -15,8 +15,10 @@ title: Posts
 {% assign fin_posts = site.categories["Finance Shit"] %}
 {% include post-list.html posts=fin_posts %}
 
-<h2 id="basic-bitch-shit" class="category-title">
-  <a href="#basic-bitch-shit">BASIC BITCH SHIT</a>
+<h2 class="category-title">
+  <a href="{{ '/posts/basic-bitch-shit/' | relative_url }}">
+    BASIC BITCH SHIT
+  </a>
 </h2>
 {% assign basic_posts = site.categories["Basic Bitch Shit"] %}
 {% include post-list.html posts=basic_posts %}
