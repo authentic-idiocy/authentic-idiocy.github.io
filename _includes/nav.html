@@ -1,11 +1,11 @@
 <nav class="site-nav">
   <div class="nav-left">
-    <img class="site-logo"
-         src="{{ '/assets/img/logo.png' | relative_url }}"
-         alt="Authentic Idiocy logo" />
-  
-    <a class="site-title" href="{{ '/' | relative_url }}">
-      Authentic&nbsp;Idiocy
+    <!-- One anchor wraps both image and text -->
+    <a class="site-home" href="{{ '/' | relative_url }}">
+      <img class="site-logo"
+           src="{{ '/assets/img/logo.png' | relative_url }}"
+           alt="Authentic Idiocy logo" />
+      <span class="site-title">Authentic&nbsp;Idiocy</span>
     </a>
   </div>
   <div class="nav-right">
