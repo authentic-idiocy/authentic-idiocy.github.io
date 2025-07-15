@@ -133,6 +133,28 @@ header{
   text-shadow: 0 0 8px var(--accent);   /* glow                              */
   cursor: pointer;
 }
+/* ——  Post index list  —— */
+.post-list{
+  list-style:none;
+  padding:0;
+}
+
+.post-date{
+  color:#666;
+  font-size:.8rem;
+  margin-right:.4rem;
+}
+
+.post-list a{
+  color: var(--fg-light);                 /* white-ish by default            */
+  text-decoration:none;
+  transition: color .22s, text-shadow .22s;
+}
+
+.post-list a:hover{
+  color: var(--accent);                   /* neon pink                       */
+  text-shadow: 0 0 8px var(--accent);     /* matching glow                   */
+}
 
 /* ── Flashcard component ───────────────────────────────────────── */
 .flashcard{
