@@ -104,20 +104,21 @@ header{
 .site-title{
   transition:color .22s ease-in-out, text-shadow .22s ease-in-out;
 }
-.site-title:hover{
-  color:var(--accent);                 /* #FF00A0 */
-  text-shadow:0 0 8px var(--accent);   /* soft neon halo */
-}
-/* ——  Nav logo sizing & hover  —— */
+
+/* ———  Logo  ——— */
 .site-logo{
-  height: 1.1em;      /* ≈ cap-height of the adjacent text            */
-  width:  auto;       /* keep aspect ratio                            */
-  margin-right:.5rem; /* gap before the title                         */
-  vertical-align:middle;
-  transition:filter .2s ease-in-out;
+  height: 1.5rem;             /* ≈24 px — stays constant on every page   */
+  width:  auto;
+  margin-right: .5rem;
+  vertical-align: baseline;
+  transition: filter .2s ease-in-out;
 }
-/* optional glow-on-hover when you hover the entire nav-left area */
-.nav-left:hover .site-logo{
+/* ———  Unified neon hover  ——— */
+.site-home:hover .site-title{
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+}
+.site-home:hover .site-logo{
   filter: drop-shadow(0 0 6px var(--accent));
 }
 
