@@ -133,3 +133,47 @@ header{
   text-shadow: 0 0 8px var(--accent);   /* glow                              */
   cursor: pointer;
 }
+
+/* ── Flashcard component ───────────────────────────────────────── */
+.flashcard{
+  margin:1.5rem 0;
+}
+
+/* the clickable “front” */
+.flashcard summary{
+  background:#2a2a2a;                 /* charcoal grey */
+  padding:1rem 1.25rem;
+  border:1px solid var(--primary);    /* purple edge   */
+  border-radius:.5rem;
+  font-weight:600;
+  cursor:pointer;
+  list-style:none;                    /* hide ▶ marker */
+  transition:color .22s, box-shadow .22s, border-color .22s;
+}
+
+/* hover glow (card + text together) */
+.flashcard:hover summary{
+  color:var(--accent);                /* neon pink text */
+  border-color:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+}
+
+/* remove default marker in all browsers */
+summary::-webkit-details-marker,
+summary::marker{ display:none; }
+
+/* back of card */
+.flashcard .back{
+  background:#1b1b1b;
+  padding:1rem 1.25rem 1.25rem;
+  border:1px solid #444;
+  border-top:0;                       /* seamless join */
+  border-radius:0 0 .5rem .5rem;
+  color:var(--fg-light);
+}
+
+/* subtle slide-down effect */
+.flashcard details[open] .back{
+  animation:reveal .25s ease-out forwards;
+}
+@keyframes reveal{ from{opacity:0;transform:translateY(-0.3rem);} to{opacity:1;transform:none;} }
