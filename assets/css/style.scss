@@ -109,3 +109,14 @@ header{
   text-shadow:0 0 8px var(--accent);   /* soft neon halo */
 }
 
+/* ——  Neon hover for category headings  —— */
+.category-title{
+  display:inline-block;                 /* let text-shadow render properly   */
+  color: var(--primary);
+  transition: color .22s ease, text-shadow .22s ease;
+}
+.category-title:hover{
+  color: var(--accent);                 /* turns pink                        */
+  text-shadow: 0 0 8px var(--accent);   /* glow                              */
+  cursor: pointer;
+}
