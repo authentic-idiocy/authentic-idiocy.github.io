@@ -20,7 +20,7 @@ title: Posts
     BASIC BITCH SHIT
   </a>
 </h2>
-{% assign basic_posts = site.categories["Basic Bitch Shit"] %}
+{% assign basic_posts = site.categories["basic-bitch-shit"] %}
 {% include post-list.html posts=basic_posts %}
 
 <h2 id="other-crap" class="category-title">
