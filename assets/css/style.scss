@@ -110,11 +110,11 @@ header{
 }
 /* ——  Nav logo sizing & hover  —— */
 .site-logo{
-  height: 28px;            /* keeps logo proportional on all screens  */
-  width:  auto;
-  margin-right: .5rem;     /* gap before the text                     */
-  vertical-align: middle;  /* aligns baseline with link text          */
-  transition: filter .2s ease-in-out;
+  height: 1.1em;      /* ≈ cap-height of the adjacent text            */
+  width:  auto;       /* keep aspect ratio                            */
+  margin-right:.5rem; /* gap before the title                         */
+  vertical-align:middle;
+  transition:filter .2s ease-in-out;
 }
 /* optional glow-on-hover when you hover the entire nav-left area */
 .nav-left:hover .site-logo{
