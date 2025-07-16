@@ -39,5 +39,31 @@ description: "Prob. Theory Refresher"
       </div>
     </details>
     </div>
+    <!----- Front of the flashcard 2 –-->
+    <div class="flashcard">
+    <details>
+      <summary>Conditional + Joint + Total = Bae's Rule</summary>
+      <!----- Back of the flashcard 2 –-->
+      <div class="back">
+        <p>Start with the definition of a conditional density<br>
+        \( p_{X\mid Y}(x\mid y)=\dfrac{p_{X,Y}(x,y)}{p_Y(y)} \)</p>
+        <p>Use the <strong>product rule</strong> for the joint<br>
+        \( p_{X,Y}(x,y)=p_{Y\mid X}(y\mid x)\,p_X(x) \)</p>
+        <p>Apply the <strong>law of total probability</strong> to the denominator<br>
+        \( p_Y(y)=\displaystyle\int_{\mathbb R} p_{Y\mid X}(y\mid x')\,p_X(x')\,dx' \)</p>
+        <p>Substitute both expressions</p>
+        <p>\[
+        p_{X\mid Y}(x\mid y)=
+           \frac{p_{Y\mid X}(y\mid x)\,p_X(x)}
+                {\displaystyle\int_{\mathbb R} p_{Y\mid X}(y\mid x')\,p_X(x')\,dx'}
+        \]</p>
+        <p><strong>Concise form</strong><br>
+        \( p_{X\mid Y}(x\mid y)\;\propto\;p_{Y\mid X}(y\mid x)\,p_X(x) \)</p>
+      </div>
+    </details>
+    </div>
   </body>
 </html>
+
+
+
