@@ -3,10 +3,14 @@ layout: default
 title: Posts
 ---
 
-<h2 id="ai-shit" class="category-title">
-  <a href="#ai-shit">AI SHIT</a>
+
+
+<h2 class="category-title">
+  <a href="{{ '/posts/ai-shit/' | relative_url }}">
+    AI SHIT
+  </a>
 </h2>
-{% assign ai_posts = site.categories["AI Shit"] %}
+{% assign ai_posts = site.categories["ai-shit"] %}
 {% include post-list.html posts=ai_posts %}
 
 <h2 id="finance-shit" class="category-title">
