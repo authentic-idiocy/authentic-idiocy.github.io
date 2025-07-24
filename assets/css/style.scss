@@ -162,7 +162,13 @@ header{
   color: var(--accent);                   /* neon pink                       */
   text-shadow: 0 0 8px var(--accent);     /* matching glow                   */
 }
-
+/* ── Actual post component ───────────────────────────────────────── */
+.post-tagline {
+  color: var(--accent);     /* bright pink to match links/hover */
+  font-style: italic;       /* subtle contrast with the title */
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
 /* ── Flashcard component ───────────────────────────────────────── */
 .flashcard{
   margin:1.5rem 0;
