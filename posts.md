@@ -13,10 +13,12 @@ title: Posts
 {% assign ai_posts = site.categories["ai-shit"] %}
 {% include post-list.html posts=ai_posts %}
 
-<h2 id="finance-shit" class="category-title">
-  <a href="#finance-shit">FINANCE SHIT</a>
+<h2 class="category-title">
+  <a href="{{ '/posts/finance-shit/' | relative_url }}">
+    FINANCE SHIT
+  </a>
 </h2>
-{% assign fin_posts = site.categories["Finance Shit"] %}
+{% assign fin_posts = site.categories["finance-shit"] %}
 {% include post-list.html posts=fin_posts %}
 
 <h2 class="category-title">
@@ -27,9 +29,12 @@ title: Posts
 {% assign basic_posts = site.categories["basic-bitch-shit"] %}
 {% include post-list.html posts=basic_posts %}
 
-<h2 id="other-crap" class="category-title">
-  <a href="#other-crap">OTHER CRAP</a>
+<h2 class="category-title">
+  <a href="{{ '/posts/other-crap/' | relative_url }}">
+    OTHER CRAP
+  </a>
 </h2>
-{% assign oth_posts = site.categories["Other Crap"] %}
+{% assign oth_posts = site.categories["other-crap"] %}
 {% include post-list.html posts=oth_posts %}
+
 
