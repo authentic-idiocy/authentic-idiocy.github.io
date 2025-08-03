@@ -212,3 +212,37 @@ summary::marker{ display:none; }
   animation:reveal .25s ease-out forwards;
 }
 @keyframes reveal{ from{opacity:0;transform:translateY(-0.3rem);} to{opacity:1;transform:none;} }
+
+/* ─── Tiny hover‑glossary for unfamiliar terms ─────────────────────────── */
+.define {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dotted currentColor;       /* visual hint */
+}
+
+.define::after {
+  content: attr(data-def);
+  position: absolute;
+  left: 0;
+  bottom: 120%;                      /* hover box above the word */
+  min-width: max-content;
+  max-width: 22rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
+  padding: 0.4rem 0.6rem;
+  color: #fff;
+  background: rgba(0,0,0,0.9);       /* dark tooltip */
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity .15s ease-out, transform .15s ease-out;
+  z-index: 9999;
+}
+
+.define:hover::after,
+.define:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
