@@ -226,17 +226,28 @@ h1:hover, h2:hover, h3:hover,
   cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><text y='14' font-size='16' fill='%23FF00A0'>❯</text></svg>") 0 14, pointer;
 }
 
-/* 3 ▸ Glitch‑flicker if you really want to hurt people’s eyes */
-@keyframes glitch {
-  0%, 100% { clip-path: inset(0 0 0 0); }
-  20% { clip-path: inset(10% -6px 85% 0); }
-  40% { clip-path: inset(0 0 70% -6px); }
-  60% { clip-path: inset(60% -6px 0 0); }
-  80% { clip-path: inset(30% 0 30% 0); }
+/* === Smooth‑Jazz Hover Animation ========================================= */
+
+@keyframes silkFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
 }
-.glitchy:hover {
-  animation: glitch 0.6s steps(2,end) infinite;
+
+.silk-hover {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform .35s cubic-bezier(.32,.72,.3,1),
+              text-shadow .35s ease,
+              color .35s ease;
 }
+
+.silk-hover:hover,
+details[open] > summary.silk-hover {
+  animation: silkFloat .8s ease-out forwards;
+  color: #FF00A0;                 /* brand heart‑pink */
+  text-shadow: 0 4px 12px rgba(108,0,224,.35);  /* purple halo */
+}
+
 
 .define {
   position: relative;
