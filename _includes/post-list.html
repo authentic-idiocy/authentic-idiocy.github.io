@@ -1,19 +1,48 @@
-<!-- _includes/post-list.html -->
+{% comment %}
+Top‑level = first category in the post’s front‑matter array.
+Child‑level = last category (may equal first if there is no sub‑category).
+Each post appears exactly once: either under its child category
+(if depth > 1) or directly under the parent heading.
+{% endcomment %}
+
 <div class="post-index">
-  {% comment %} everything exactly as in the previous snippet {% endcomment %}
-  {% assign groups = site.posts | group_by_exp: "p", "p.categories | last" %}
-  {% assign groups = groups | sort: "name" %}
-  {% for g in groups %}
-    <h3 class="post-category">{{ g.name | upcase }}</h3>
+
+{% assign parents = site.posts | group_by_exp: "p", "p.categories | first" %}
+{% assign parents = parents | sort: "name" %}
+
+{% for parent in parents %}
+  <!--  Parent heading  -->
+  <h2 class="post-parent">{{ parent.name | upcase }}</h2>
+
+  {%- comment -%} Split this parent’s posts into (a) with children, (b) direct {%- endcomment -%}
+  {% assign with_child = parent.items | where_exp: "p", "p.categories.size > 1" %}
+  {% assign direct     = parent.items | where_exp: "p", "p.categories.size == 1" %}
+
+  {%- comment -%} --- child category loops ---------------------------------- {%- endcomment -%}
+  {% assign child_groups = with_child | group_by_exp: "p", "p.categories | last" %}
+  {% assign child_groups = child_groups | sort: "name" %}
+
+  {% for child in child_groups %}
+    <h3 class="post-child">{{ child.name | upcase }}</h3>
     <ul class="post-list">
-      {% for post in g.items %}
-        <li class="post-item">
-          <a href="{{ post.url }}">{{ post.title }}</a>
-        </li>
+      {% for post in child.items %}
+        <li class="post-item"><a href="{{ post.url }}">{{ post.title }}</a></li>
       {% endfor %}
     </ul>
   {% endfor %}
-  {% if groups == empty %}
-    <p><em>Nothing here yet.</em></p>
+
+  {%- comment -%} --- posts that live directly under the parent ------------- {%- endcomment -%}
+  {% if direct != empty %}
+    <ul class="post-list">
+      {% for post in direct %}
+        <li class="post-item"><a href="{{ post.url }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
   {% endif %}
+{% endfor %}
+
+{% if parents == empty %}
+  <p><em>Nothing here yet.</em></p>
+{% endif %}
+
 </div>
