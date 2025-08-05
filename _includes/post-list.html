@@ -1,12 +1,22 @@
-<ul class="post-list">
-{% assign grouped = site.posts | group_by_exp:"p","p.categories | join:'/’" %}
-{% for cat in grouped %}
-  {% assign deepest = cat.items | sort:"categories" | last %}
-  <li>
-    <a href="{{ deepest.url }}">{{ deepest.title }}</a>
-  </li>
-  {% endfor %}
-  {% if include.posts == empty %}
-    <li><em>Nothing here yet.</em></li>
-  {% endif %}
-</ul>
+{% comment %}
+Groups posts by their *deepest* category (the last entry in the
+front‑matter `categories:` array) and prints each post exactly once.
+{% endcomment %}
+
+{% assign groups = site.posts | group_by_exp: "p", "p.categories | last" %}
+{% assign groups = groups | sort: "name" %}
+
+{% for g in groups %}
+  <h3 class="post-category">{{ g.name | upcase }}</h3>
+  <ul class="post-list">
+    {% for post in g.items %}
+      <li class="post-item">
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+
+{% if groups == empty %}
+  <p><em>Nothing here yet.</em></p>
+{% endif %}
