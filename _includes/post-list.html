@@ -1,9 +1,10 @@
 <ul class="post-list">
-  {% for p in include.posts %}
-    <li>
-      <span class="post-date">{{ p.date | date: "%b %d %Y" }}</span>
-      — <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
-    </li>
+{% assign grouped = site.posts | group_by_exp:"p","p.categories | join:'/’" %}
+{% for cat in grouped %}
+  {% assign deepest = cat.items | sort:"categories" | last %}
+  <li>
+    <a href="{{ deepest.url }}">{{ deepest.title }}</a>
+  </li>
   {% endfor %}
   {% if include.posts == empty %}
     <li><em>Nothing here yet.</em></li>
