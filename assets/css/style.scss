@@ -162,6 +162,44 @@ header{
   color: var(--accent);                   /* neon pink                       */
   text-shadow: 0 0 8px var(--accent);     /* matching glow                   */
 }
+/* === Post index enhancements ================================ */
+.post-index {                          /* limits side‑effects to this page */
+  /* --- category headings --- */
+  .post-category {
+    margin: 2.2rem 0 0.6rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    color: #FF00A0;                   /* hot‑pink */
+    border-bottom: 1px solid rgba(255,0,160,0.4);
+    padding-bottom: 0.3rem;
+  }
+
+  /* --- list items --- */
+  .post-list {                        /* inherits list-style:none & padding:0 */
+    margin: 0 0 1.6rem;              /* add bottom breathing room */
+  }
+
+  .post-item {
+    margin: 0.35rem 0;
+    padding-left: 0.6rem;
+    position: relative;
+  }
+
+  .post-item::before {               /* tiny purple bullet */
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    width: 0.25rem;
+    height: 0.25rem;
+    background: #6C00E0;
+    border-radius: 50%;
+  }
+
+  /* link colours already handled by global .post-list a rules
+     (var(--fg-light) default, var(--accent) hover)                */
+}
+
 /* ── Actual post component ───────────────────────────────────────── */
 .post-tagline {
   color: var(--accent);     /* bright pink to match links/hover */
