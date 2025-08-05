@@ -2,10 +2,12 @@
 layout: default
 ---
 
+<h1 class="post-title">{{ page.title }}</h1>
+{% if page.description %}
+  <p class="post-description">{{ page.description }}</p>
+{% endif %}
+
 <article class="post">
-  <h1>{{ page.title }}</h1>
-  {% if page.tagline %}
-    <p class="post-tagline">{{ page.tagline }}</p>
-  {% endif %}
   {{ content }}
 </article>
+
