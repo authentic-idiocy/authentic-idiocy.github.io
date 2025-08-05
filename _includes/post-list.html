@@ -7,8 +7,10 @@ Each post appears exactly once: either under its child category
 
 <div class="post-index">
 
-{% assign parents = site.posts | group_by_exp: "p", "p.categories | first" %}
+{% assign collection = include.posts | default: site.posts %}
+{% assign parents = collection | group_by_exp: "p", "p.categories | first" %}
 {% assign parents = parents | sort: "name" %}
+
 
 {% for parent in parents %}
   <!--  Parent heading  -->
