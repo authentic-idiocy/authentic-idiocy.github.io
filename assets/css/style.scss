@@ -162,30 +162,36 @@ header{
   color: var(--accent);                   /* neon pink                       */
   text-shadow: 0 0 8px var(--accent);     /* matching glow                   */
 }
-/* === Post index enhancements ================================ */
-.post-index {                          /* limits side‑effects to this page */
-  /* --- category headings --- */
-  .post-category {
-    margin: 2.2rem 0 0.6rem;
+/* === Hierarchical post index ========================================= */
+.post-index {
+  /* ---- parent headings (purple) ---- */
+  .post-parent {
+    margin: 2.8rem 0 0.9rem;
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    color: #6C00E0;                   /* hacker purple */
+    text-transform: uppercase;
+  }
+
+  /* ---- child headings (hot‑pink + underline) ---- */
+  .post-child {
+    margin: 1.8rem 0 0.5rem;
     font-size: 1.05rem;
     letter-spacing: 0.06em;
-    color: #FF00A0;                   /* hot‑pink */
+    color: #FF00A0;                  /* neon pink */
     border-bottom: 1px solid rgba(255,0,160,0.4);
-    padding-bottom: 0.3rem;
+    padding-bottom: 0.25rem;
+    text-transform: uppercase;
   }
 
-  /* --- list items --- */
-  .post-list {                        /* inherits list-style:none & padding:0 */
-    margin: 0 0 1.6rem;              /* add bottom breathing room */
-  }
-
-  .post-item {
+  /* list inherits bullet & link rules already defined earlier */
+  .post-list { margin: 0 0 1.6rem; }
+  .post-item {        /* keeps the purple dot bullet from earlier patch */
     margin: 0.35rem 0;
     padding-left: 0.6rem;
     position: relative;
   }
-
-  .post-item::before {               /* tiny purple bullet */
+  .post-item::before {
     content: "";
     position: absolute;
     left: 0;
@@ -195,9 +201,6 @@ header{
     background: #6C00E0;
     border-radius: 50%;
   }
-
-  /* link colours already handled by global .post-list a rules
-     (var(--fg-light) default, var(--accent) hover)                */
 }
 
 /* ── Actual post component ───────────────────────────────────────── */
