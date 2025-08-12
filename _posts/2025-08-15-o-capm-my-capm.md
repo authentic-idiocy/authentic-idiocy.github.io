@@ -7,6 +7,7 @@ description: "wish me luck on my interview RIP"
 ---
 
 <div class="legend-cheatsheet">
+  <h2 class="legend-heading">Legend</h2>
   <table>
     <tr><th>Notation</th><th>Description</th></tr>
     <tr><td>\(r_P\)</td><td>Portfolio excess return</td></tr>
@@ -29,6 +30,7 @@ description: "wish me luck on my interview RIP"
 </div>
 
 <div class="assumptions-block">
+  <h2 class="assumptions-heading">Assumptions</h2>
   <ol>
     <li>Risk‑free rate exists</li>
     <li>First and second moments exist</li>
