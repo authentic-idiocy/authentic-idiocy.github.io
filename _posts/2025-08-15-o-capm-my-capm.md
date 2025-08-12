@@ -77,3 +77,47 @@ description: "wish me luck on my interview RIP"
     </div>
   </details>
 </div>
+
+<div class="flashcard">
+  <details>
+    <summary>Risky Business</summary>
+    <div class="back">
+      <p><strong>CAPM assertion.</strong> Define the residual (specific) return \(\theta_P := r_P - \beta_P r_M\). CAPM adds the condition</p>
+
+      \[
+      \mathbb{E}[\theta_P]=0 \quad \text{for every asset/portfolio } P.
+      \]
+
+      <p><strong>Implication for expected returns (excess-return form).</strong></p>
+
+      \[
+      \mu_P := \mathbb{E}[r_P] \;=\; \beta_P\,\mu_M,
+      \qquad \mu_M := \mathbb{E}[r_M].
+      \]
+
+      <p><strong>Total-return (SML) form.</strong></p>
+
+      \[
+      \mathbb{E}[R_P] \;=\; i_F + \beta_P\,\mu_M
+      \quad\text{(straight line in \((\beta,\mathbb{E}[R])\) with intercept \(i_F\) and slope \(\mu_M\)).}
+      \]
+
+      <p><strong>Intuition (risk-premia view).</strong> Markets only pay a <em>risk premium</em> for risk that can’t be diversified away. 
+      Systematic risk is the market’s risk; your \(\beta_P\) measures how strongly you load on it. 
+      Idiosyncratic (residual) risk can be diversified, so its price is zero—hence \(\mathbb{E}[\theta_P]=0\).</p>
+
+      <p><strong>Impact (what this means in practice).</strong></p>
+      <ol>
+        <li><em>Diversifiable risk gets no paycheck.</em> Taking more residual risk doesn’t raise \(\mathbb{E}[R]\); only a higher \(\beta\) does.</li>
+        <li><em>Cost of capital via SML.</em> Given \(\beta_P\), the required return is \(i_F+\beta_P\mu_M\). This is the hurdle rate for valuation/DCF.</li>
+        <li><em>Performance evaluation.</em> Under CAPM, expected alpha is zero. Persistent positive alpha implies mispricing/model failure (or genuine skill).</li>
+        <li><em>Portfolio tilts.</em> Want higher expected return? Increase exposure to market risk (\(\beta\uparrow\)). 
+            Hedge assets with \(\beta<0\) lower expected excess return but can reduce total variance.</li>
+        <li><em>Market-wide accounting.</em> Value-weighted residuals net to (about) zero across the market; CAPM strengthens this by setting each asset’s <em>expected</em> residual to zero.</li>
+      </ol>
+
+      <p><small>Notation: \(i_F\) risk-free rate; \(r_M\) market excess return; \(\mu_M=\mathbb{E}[r_M]\) market risk premium; \(\beta_P\) beta of \(P\) vs. the market.</small></p>
+    </div>
+  </details>
+</div>
+
