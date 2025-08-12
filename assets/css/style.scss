@@ -71,6 +71,11 @@ h1,h2,h3,h4,h5,h6{
   letter-spacing: 0.05em;
 }
 
+/* bold emphasis */
+strong{
+  color: var(--accent);
+}
+
 /* code blocks & inline code */
 pre,code{
   background: #1b1b1b;
@@ -246,6 +251,7 @@ summary::marker{ display:none; }
   border-top:0;                       /* seamless join */
   border-radius:0 0 .5rem .5rem;
   color:var(--fg-light);
+  overflow-x: auto;                   /* prevent content spill */
 }
 
 /* subtle slide-down effect */
