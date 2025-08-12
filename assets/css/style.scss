@@ -246,12 +246,13 @@ summary::marker{ display:none; }
 /* back of card */
 .flashcard .back{
   background:#1b1b1b;
-  padding:1rem 1.25rem 1.25rem;
+  padding:1rem 1.5rem 1.25rem;
   border:1px solid #444;
   border-top:0;                       /* seamless join */
   border-radius:0 0 .5rem .5rem;
   color:var(--fg-light);
   overflow-x: auto;                   /* prevent content spill */
+  overflow-wrap: anywhere; 
 }
 
 /* subtle slide-down effect */
@@ -259,6 +260,39 @@ summary::marker{ display:none; }
   animation:reveal .25s ease-out forwards;
 }
 @keyframes reveal{ from{opacity:0;transform:translateY(-0.3rem);} to{opacity:1;transform:none;} }
+
+/* silky drop-down block for proofs / derivations */
+details.dropdown-block{
+  margin:1.5rem 0;
+  border:1px solid var(--primary);
+  border-left:4px solid var(--accent);
+  border-radius:.5rem;
+  background:#0e0e10;
+  box-shadow:0 0 8px rgba(108,0,224,0.35);
+}
+details.dropdown-block > summary{
+  padding:.75rem 1rem;
+  cursor:pointer;
+  list-style:none;
+  font-weight:600;
+  color:var(--accent);
+  transition:color .2s ease, text-shadow .2s ease;
+}
+details.dropdown-block > summary::marker,
+details.dropdown-block > summary::-webkit-details-marker{display:none;}
+details.dropdown-block > summary:hover{
+  color:var(--primary);
+  text-shadow:0 0 6px var(--accent);
+}
+details.dropdown-block[open] > summary{
+  border-bottom:1px solid #333;
+  margin-bottom:.5rem;
+}
+details.dropdown-block .content{
+  padding:0 1rem 1rem;
+  color:var(--fg-light);
+}
+
 /* === Legendairy =============================== */
 .legend-cheatsheet, .toc-block {
   background: linear-gradient(135deg, rgba(108,0,224,0.08), rgba(255,0,160,0.08));
