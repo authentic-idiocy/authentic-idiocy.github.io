@@ -292,6 +292,53 @@ span.define {
   cursor: help;
   border-bottom: 1px dotted #FF00A0;
 }
+/* purple–pink gradient header for TOC & Legend */
+.toc-block .toc-heading,
+.legend-cheatsheet .legend-heading {
+  font-family: "Fira Code", monospace;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(90deg, #6C00E0, #FF00A0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* silky-smooth hacker assumptions block */
+.assumptions-block {
+  background: #0e0e10;
+  border: 2px solid #6C00E0;
+  border-left: 8px solid #FF00A0;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(108, 0, 224, 0.4);
+  color: #f2f2f2;
+  font-family: "Fira Code", monospace;
+}
+
+.assumptions-block ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.assumptions-block ol li {
+  margin: 0.25rem 0;
+}
+
+.assumptions-block ol li::marker {
+  color: #FF00A0;
+  font-weight: bold;
+}
+/* gradient header for assumptions section */
+.assumptions-block .assumptions-heading {
+  font-family: "Fira Code", monospace;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(90deg, #6C00E0, #FF00A0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 /* ─── Tiny hover‑glossary for unfamiliar terms ─────────────────────────── */
 /* 1 ▸ Headings get a neon‑underlight on hover — pairs with #6C00E0 */
 h1:hover, h2:hover, h3:hover,
