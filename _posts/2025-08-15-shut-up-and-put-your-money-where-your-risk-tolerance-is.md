@@ -138,7 +138,9 @@ q_R(c)=E+\sigma\,\Phi^{-1}(c)\ \Rightarrow\
 \textbf{Scaling (independent periods):}\quad 
 \mathrm{VaR}_{c,\ T}\approx \big|\Phi^{-1}(c)\big|\,\sigma\,\sqrt{T}\,V.
 \]
-
+        </div>
+      </details>
+    </div>
   </details>
 </div>
 
