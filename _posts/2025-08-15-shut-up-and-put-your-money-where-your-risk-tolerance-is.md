@@ -254,3 +254,99 @@ q_R(c)=E+\sigma\,\Phi^{-1}(c)\ \Rightarrow\
   </details>
 </div>
 
+<!-- Flashcard — G&K Ch.3 (pp.53–54): Elementary Risk Models -->
+
+<div class="flashcard">
+  <details>
+    <summary>3 Indecent Proposals</summary>
+    <div class="back">
+
+      <details class="dropdown-block">
+        <summary>Why a risk model? (the covariance matrix)</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> For \(N\) assets you must estimate \(N\) volatilities plus \(N(N-1)/2\) correlations. Gather them in the covariance matrix \(V\); the goal of a risk model is to forecast \(V\) accurately and efficiently.</p>
+
+\[
+V=\begin{bmatrix}
+\sigma_1^2 & \sigma_{12} & \cdots & \sigma_{1N}\\
+\sigma_{21} & \sigma_2^2 & \cdots & \sigma_{2N}\\
+\vdots & \vdots & \ddots & \vdots\\
+\sigma_{N1} & \sigma_{N2} & \cdots & \sigma_N^2
+\end{bmatrix},
+\quad
+\sigma_{nm}=\operatorname{Cov}(r_n,r_m),\ \ \sigma_n=\sqrt{\operatorname{Var}(r_n)}.
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Model 1 — Single-factor (market + residual) risk model</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Decompose each stock’s risk into market and residual components; treat residuals across names as uncorrelated within the model.</p>
+
+\[
+r_n=\beta_n\,r_M+\theta_n
+\]
+
+\[
+\operatorname{Cov}(r_n,r_m)=\beta_n\beta_m\,\sigma_M^2
+\]
+
+\[
+\sigma_n^2=\beta_n^2\,\sigma_M^2+\omega_n^2
+\]
+
+          <ul>
+            <li><strong>NB.</strong> CAPM is about <em>expected returns</em> in equilibrium; this single-factor model is a <em>risk</em> model (no pricing claims).</li>
+            <li><strong>NB.</strong> Market-weighted residuals sum to zero:
+\[
+\sum_{n} h_M(n)\,\theta_n=0
+\]
+This implies small average negative residual correlation in large universes.</li>
+            <li><strong>Consequence.</strong> Cross-stock residual covariances are set to \(0\), giving a conservative estimate of co-movement beyond the market.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Model 2 — Constant-correlation</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Use each stock’s own \(\sigma_n\) and one common correlation \(\rho\) for all pairs; quick but crude.</p>
+
+\[
+\operatorname{Cov}(r_n,r_m)=\sigma_n\,\sigma_m\,\rho \quad (n\neq m)
+\]
+
+          <ul>
+            <li><strong>Pros.</strong> Extremely simple; useful for “quick-and-dirty” controls.</li>
+            <li><strong>Cons.</strong> Ignores industry/style linkages and other structure.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Model 3 — Historical covariance matrix</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Estimate \(V\) directly from sample covariances. Not robust for portfolio construction.</p>
+          <ul>
+            <li>Requires more time observations than assets to avoid singularity.</li>
+            <li>Short windows conflict with typical forecast horizons; long windows miss structural change.</li>
+            <li>Selection and sample biases (omitted failures, corporate events) distort estimates.</li>
+            <li>Sampling error explodes with dimension: large \(N\) means many chances for bad numbers.</li>
+            <li><strong>NB (rank condition).</strong> An \(N\times N\) sample covariance from \(T\) periods has rank \(\le T-1\); a practical rule is \(T\gtrsim N+1\).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Bottom line</summary>
+        <div class="content">
+          <p>Elementary models illuminate trade-offs but are either too crude (single-factor, constant-\(\rho\)) or too noisy (historical \(V\)). This motivates structured multi-factor risk models to stabilize and explain covariance forecasts.</p>
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
+
+
