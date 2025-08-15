@@ -10,17 +10,16 @@ description: "A SFW way to ask what you consider a 'gamble' is."
 
 <div class="flashcard">
   <details>
-    <summary>Risk Metrics — σ, Semivariance, Shortfall Probability, VaR (summary + derivations)</summary>
+    <summary>Risk Metrics — foundations (not Var/Semivariance/Shortfall/VaR)</summary>
     <div class="back">
-      <p><em>Open each drop-down for the bite-size summary and the matching math.</em></p>
 
       <details class="dropdown-block">
         <summary>1) What a usable risk measure must satisfy</summary>
         <div class="content">
           <ul>
             <li><strong>Universal & impersonal.</strong> Not investor-specific; works across mandates.</li>
-            <li><strong>Symmetric.</strong> Judge up/down moves consistently relative to a benchmark.</li>
-            <li><strong>Flexible & aggregable.</strong> Applies to assets and portfolios; adds up cleanly.</li>
+            <li><strong>Symmetric.</strong> Judges up/down moves consistently vs. a benchmark.</li>
+            <li><strong>Flexible & aggregable.</strong> Applies to assets and portfolios; composes cleanly.</li>
             <li><strong>Forecastable.</strong> Estimable with reasonable stability out of sample.</li>
           </ul>
         </div>
@@ -29,120 +28,171 @@ description: "A SFW way to ask what you consider a 'gamble' is."
       <details class="dropdown-block">
         <summary>2) Distribution vs. single-number risk</summary>
         <div class="content">
-          <p>The full return distribution answers every risk question but is unwieldy. In practice we compress it to a single, stable, aggregable statistic—leading to variance/standard deviation.</p>
-        </div>
-      </details>
-
-      <details class="dropdown-block">
-        <summary>3) Standard deviation (the workhorse)</summary>
-        <div class="content">
-          <p><strong>Idea.</strong> Dispersion about the mean is the operative “cost of risk;” use variance for math, σ for reporting. Stable and portfolio-aggregable.</p>
-
-\[
-\operatorname{Var}(r)=\mathbb{E}\!\big[(r-\mu)^2\big],\qquad 
-\sigma=\sqrt{\operatorname{Var}(r)}.
-\]
-
-\[
-\text{Annualization (i.i.d.):}\quad 
-\sigma_{\text{ann}}=\sqrt{N}\,\sigma_{\text{per}},\qquad
-\sigma_{\text{ann}}^2=N\,\sigma_{\text{per}}^2.
-\]
-
-          <p><small>Under (approx.) normal returns, ≈⅔ of outcomes lie within \(\mu\pm\sigma\).</small></p>
-        </div>
-      </details>
-
-      <details class="dropdown-block">
-        <summary>4) Downside measures — overview & semivariance formulas</summary>
-        <div class="content">
-          <p><strong>Overview.</strong> Downside metrics focus on “bad” outcomes. They are intuitive but harder to aggregate/forecast; with symmetric returns they add little beyond variance.</p>
-
-\[
-\textbf{Semivariance about mean:}\quad 
-\operatorname{SemiVar}(r)=\mathbb{E}\!\big[(\mu-r)^2\,\mathbf{1}_{\{r<\mu\}}\big].
-\]
-
-\[
-\textbf{Target semivariance (threshold }\tau\textbf{):}\quad 
-\operatorname{SemiVar}_{\tau}(r)=\mathbb{E}\!\big[(\tau-r)^2\,\mathbf{1}_{\{r<\tau\}}\big].
-\]
-
-\[
-\textbf{Sample estimator:}\quad 
-\widehat{\operatorname{SemiVar}}=\frac{1}{T}\sum_{t=1}^{T}(\hat\mu-r_t)^2\,\mathbf{1}(r_t<\hat\mu),\quad 
-\hat\mu=\frac{1}{T}\sum_{t=1}^{T} r_t.
-\]
-
-\[
-\textbf{Symmetry relation:}\quad \operatorname{SemiVar}(r)=\tfrac{1}{2}\operatorname{Var}(r)\ \ \text{if the distribution is symmetric.}
-\]
-        </div>
-      </details>
-
-      <details class="dropdown-block">
-        <summary>5) Shortfall probability — explanation + derivation</summary>
-        <div class="content">
-          <p><strong>Idea.</strong> Probability that return falls below a chosen target; intuitive but target-dependent and tail-forecasting is hard.</p>
-
-\[
-\textbf{One-period (simple return) under normality:}\quad 
-R\sim\mathcal N(E,\sigma^2)\ \Rightarrow\ 
-\Pr(R\le \tau)=\Phi\!\left(\frac{\tau-E}{\sigma}\right).
-\]
-
-\[
-\textbf{Multi-period (log returns):}\quad 
-r_t=\ln(1+R_t)\overset{i.i.d.}{\sim}\mathcal N(\mu,\sigma^2)
-\Rightarrow
-\ln\!\left(\frac{V_T}{V_0}\right)=\sum_{t=1}^T r_t\sim\mathcal N(T\mu,\ T\sigma^2).
-\]
-
-\[
-\textbf{Absolute shortfall at level }K>0:\quad 
-\Pr(V_T<K)=\Phi\!\left(\frac{\ln K - T\mu}{\sqrt{T}\,\sigma}\right).
-\]
-
-\[
-\textbf{Shortfall vs. cont.-compounded risk-free }r:\quad 
-\Pr\!\left(\frac{V_T}{V_0}\le e^{rT}\right)=\Phi\!\left(\sqrt{T}\,\frac{r-\mu}{\sigma}\right).
-\]
-        </div>
-      </details>
-
-      <details class="dropdown-block">
-        <summary>6) Value at Risk (VaR) — explanation + derivation</summary>
-        <div class="content">
-          <p><strong>Idea.</strong> Invert shortfall: choose tail probability \(c\) and report the associated loss quantile. Useful for reporting; inherits tail-forecast issues.</p>
-
-\[
-\textbf{Definition (monetary VaR at tail prob. }c):\quad 
-\mathrm{VaR}_c=-\,q_R(c)\,V,
-\]
-\[
-\text{where }q_R(c)\text{ is the lower }c\text{-quantile of next-period return }R,\ \ V\text{ is current portfolio value.}
-\]
-
-\[
-\textbf{Normal case }(R\sim\mathcal N(E,\sigma^2)):\quad 
-q_R(c)=E+\sigma\,\Phi^{-1}(c)\ \Rightarrow\ 
-\mathrm{VaR}_c= -\big(E+\sigma\,\Phi^{-1}(c)\big)\,V.
-\]
-
-\[
-\textbf{Small-horizon approximation:}\quad 
-\mathrm{VaR}_c\approx \big|\Phi^{-1}(c)\big|\,\sigma\,V\ \ (\text{if }E\approx 0).
-\]
-
-\[
-\textbf{Scaling (independent periods):}\quad 
-\mathrm{VaR}_{c,\ T}\approx \big|\Phi^{-1}(c)\big|\,\sigma\,\sqrt{T}\,V.
-\]
+          <p>The full return distribution answers every risk question but is unwieldy. In practice we compress it to a single, stable, aggregable statistic for monitoring and control.</p>
         </div>
       </details>
     </div>
   </details>
 </div>
+
+<div class="flashcard">
+  <details>
+    <summary>A risk by any other name.</summary>
+    <div class="back">
+
+      <details class="dropdown-block">
+        <summary>3) Standard deviation (the workhorse)</summary>
+        <div class="content">
+          <p><strong>Idea.</strong> Dispersion about the mean is the operative “cost of risk;” use variance for math, σ for reporting.</p>
+
+          
+\[ 
+\operatorname{Var}(r)=\mathbb{E}\big[(r-\mu)^2\big]
+\]
+
+\[
+\sigma=\sqrt{\operatorname{Var}(r)}
+\]
+
+\[
+\text{Annualization (i.i.d.):}\quad 
+\sigma_{\text{ann}}=\sqrt{T}\,\sigma_{\text{per}},\qquad
+\sigma_{\text{ann}}^2=T\,\sigma_{\text{per}}^2
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>4) Semivariance (definitions)</summary>
+        <div class="content">
+
+\[
+\textbf{Semivariance about mean:}\quad 
+\operatorname{SemiVar}(r)=\mathbb{E}\!\big[(\mu-r)^2\,\mathbf{1}_{\{r<\mu\}}\big]
+\]
+
+\[
+\textbf{Target semivariance (threshold }\tau\textbf{):}\quad 
+\operatorname{SemiVar}_{\tau}(r)=\mathbb{E}\!\big[(\tau-r)^2\,\mathbf{1}_{\{r<\tau\}}\big]
+\]
+
+\[
+\textbf{Symmetry:}\quad \operatorname{SemiVar}(r)=\tfrac{1}{2}\operatorname{Var}(r)\ \text{if the distribution is symmetric.}
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>5) Shortfall probability (one-period)</summary>
+        <div class="content">
+          <p><strong>Definition.</strong> Probability of failing a chosen threshold \(K\) next period: \(\Pr(R<K)\).</p>
+
+\[
+R\sim\mathcal N(E,\sigma^2)
+\]
+
+\[
+\Pr(R<K)=\Phi\!\left(\frac{K-E}{\sigma}\right)
+\]
+
+          <p><strong>Drawbacks.</strong> Choice of \(K\) is investor-/mandate-specific; tail probabilities rely on distributional assumptions that can miss fat tails.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>6) Absolute shortfall (terminal value)</summary>
+        <div class="content">
+          <p><strong>Definition.</strong> Probability terminal value falls below a fixed level \(K\): \(\Pr(V_T<K)\).</p>
+
+\[
+r_t=\ln(1+R_t)\overset{i.i.d.}{\sim}\mathcal N(\mu,\sigma^2)
+\]
+
+\[
+\ln V_T=\ln V_0+\sum_{t=1}^T r_t\sim \mathcal N(\ln V_0+T\mu,\ T\sigma^2)
+\]
+
+\[
+\Pr(V_T<K)=\Phi\!\left(\frac{\ln K-\ln V_0 - T\mu}{\sqrt{T}\,\sigma}\right)
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>7) Relative shortfall (vs. a benchmark)</summary>
+        <div class="content">
+          <p><strong>Definition.</strong> Probability a risky asset or portfolio underperforms a benchmark over \(T\) periods.</p>
+
+\[
+\Delta := \sum_{t=1}^T (r_{S,t}-r_{B,t})
+\]
+
+\[
+E(\Delta)=T(\mu_S-\mu_B),\quad 
+\operatorname{Var}(\Delta)=T\!\left(\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B\right)
+\]
+
+\[
+\Pr(V_{S,T}<V_{B,T})=\Pr(\Delta<0)
+= \Phi\!\left(\frac{-T(\mu_S-\mu_B)}{\sqrt{T\big(\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B\big)}}\right)
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>8) VaR — parametric (Normal) </summary>
+        <div class="content">
+          <p><strong>Definition.</strong> For tail probability \(c\in(0,1)\), VaR is the positive number \( \mathrm{VaR}_c \) such that the next-period loss exceeds \( \mathrm{VaR}_c \) with probability \(c\).</p>
+
+\[
+q_R(c)=E+\sigma\,\Phi^{-1}(c),\qquad
+\mathrm{VaR}_c = -\,V\cdot q_R(c)
+\]
+
+\[
+\text{Small horizon (}E\approx 0\text{):}\quad 
+\mathrm{VaR}_c \approx z_c\,\sigma\,V,\ \ z_c:=|\Phi^{-1}(c)|
+\]
+
+\[
+\text{Scaling (i.i.d.):}\quad 
+\mathrm{VaR}_{c,\ T}\approx z_c\,\sigma\,\sqrt{T}\,V
+\]
+
+          <p><strong>Drawbacks.</strong> Assumes a shape (often Normal) for tails; ignores loss severity beyond the quantile; can be pro-cyclical when σ rises in sell-offs.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>9) Historical VaR</summary>
+        <div class="content">
+          <p><strong>Definition.</strong> Use the empirical \(c\)-quantile of a rolling window of past returns (or P&amp;L) as the loss threshold.</p>
+
+\[
+\widehat{\mathrm{VaR}}_{c} = V \cdot \big|\ \widehat{q}_{R}(c)\ \big|\quad
+\text{with }\widehat{q}_{R}(c)\text{ the sample }c\text{-quantile of returns}
+\]
+
+          <p><strong>Notes.</strong> No distributional assumption; window choice and equal weighting of days matter; may underweight stale extremes.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>10) Volatility-based VaR</summary>
+        <div class="content">
+          <p><strong>Definition.</strong> Forecast next-period volatility \(\sigma_t\) (e.g., via a volatility model), assume short-horizon mean \(\approx 0\), then</p>
+
+\[
+\mathrm{VaR}_{c,t+1}= z_c\,\sigma_t\,V_t,\qquad z_{1\%}\approx 2.33,\ z_{5\%}\approx 1.65
+\]
+
+          <p><strong>Notes.</strong> Quality depends on the volatility forecast; still inherits the quantile-only limitation.</p>
+        </div>
+      </details>
+    </div>
+  </details>
+</div>
+
 
 <!-- Flashcard — G&K Ch.3 (pp.47–52): Risk, Diversification, Active & Residual Risk -->
 
