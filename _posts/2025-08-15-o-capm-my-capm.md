@@ -121,3 +121,138 @@ description: "wish me luck on my interview RIP"
   </details>
 </div>
 
+<!-- Flashcard: Ex-ante SML vs. Ex-post line (interactive) -->
+<div class="flashcard">
+  <details open>
+    <summary>"Ex-ante vs. Ex-post": Is it all just Latin?</summary>
+    <div class="back">
+
+      <p><strong>Idea.</strong> Ex-ante (CAPM), expected total return lies on the Security Market Line
+      \( \mathbb{E}[R_P]= i_F + \beta_P\,\mu_M \) (intercept \(i_F\), slope \( \mu_M \)).
+      Ex-post, after realization, plot \( R_P = i_F + \beta_P\, r_M \) (intercept \(i_F\), slope = realized market excess \(r_M\)).
+      Vertical gaps from this ex-post line are residuals \( \varepsilon_P = R_P - (i_F+\beta_P r_M)\).
+      Value-weighted residuals across the universe sum to ~0.</p>
+
+      <div id="sml-expost-card" style="max-width: 920px;"></div>
+      <div id="residual-sum" style="font-size: 0.9em; opacity: 0.8; margin-top: 6px;"></div>
+
+      <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+      <script>
+        // ===== Parameters (edit these to taste) =====
+        const iF = 0.02;          // risk-free rate (intercept)
+        const muM = 0.06;         // expected market excess return (ex-ante slope)
+        const rM = 0.03;          // realized market excess return (ex-post slope)
+
+        // Sample assets: choose betas, weights, and residuals ε so that ∑ w_i ε_i ≈ 0
+        // (here exactly 0 with equal weights)
+        const assets = [
+          {name: "A", beta: 0.70, w: 0.25, eps:  +0.020},
+          {name: "B", beta: 1.00, w: 0.25, eps:  -0.010},
+          {name: "C", beta: 1.30, w: 0.25, eps:  +0.005},
+          {name: "D", beta: 1.00, w: 0.25, eps:  -0.015}
+        ];
+
+        // ===== Build lines =====
+        const betaGrid = Array.from({length: 201}, (_, i) => -0.2 + i*(2.0/200)); // [-0.2, 1.8]
+        const yExAnte  = betaGrid.map(b => iF + muM*b);
+        const yExPost  = betaGrid.map(b => iF + rM*b);
+
+        const traceExAnte = {
+          x: betaGrid, y: yExAnte, mode: "lines",
+          name: "Ex-ante SML: i_F + β·μ_M",
+          hovertemplate: "β=%{x:.2f}<br>E[R]=i_F + β·μ_M = %{y:.2%}<extra></extra>"
+        };
+
+        const traceExPost = {
+          x: betaGrid, y: yExPost, mode: "lines",
+          name: "Ex-post line: i_F + β·r_M",
+          line: {dash: "dash"},
+          hovertemplate: "β=%{x:.2f}<br>R = i_F + β·r_M = %{y:.2%}<extra></extra>"
+        };
+
+        // Key points: risk-free and market (expected vs realized)
+        const riskFree = {
+          x: [0], y: [iF], mode: "markers+text", name: "Risk-free i_F",
+          text: ["i_F"], textposition: "bottom right", marker: {size: 9},
+          hovertemplate: "β=0<br>i_F=%{y:.2%}<extra></extra>"
+        };
+
+        const marketExpected = {
+          x: [1], y: [iF + muM], mode: "markers+text", name: "Market (expected)",
+          text: ["M (expected)"], textposition: "top left", marker: {size: 9},
+          hovertemplate: "β=1<br>E[R_M]=i_F+μ_M=%{y:.2%}<extra></extra>"
+        };
+
+        const marketRealized = {
+          x: [1], y: [iF + rM], mode: "markers+text", name: "Market (realized)",
+          text: ["M (realized)"], textposition: "bottom left", marker: {size: 9},
+          hovertemplate: "β=1<br>R_M=i_F+r_M=%{y:.2%}<extra></extra>"
+        };
+
+        // ===== Sample assets with vertical residual "sticks" =====
+        const assetMarkers = {
+          x: [], y: [], mode: "markers+text", name: "Assets (realized)",
+          text: [], textposition: "top center", marker: {size: 9},
+          hovertemplate: "β=%{x:.2f}<br>R=%{y:.2%}<extra></extra>"
+        };
+
+        const residualLines = []; // one trace per asset (vertical line)
+        let wResidualSum = 0.0;
+
+        assets.forEach(a => {
+          const yPred = iF + rM * a.beta;      // ex-post line value at β_i
+          const yReal = yPred + a.eps;          // realized total return
+          assetMarkers.x.push(a.beta);
+          assetMarkers.y.push(yReal);
+          assetMarkers.text.push(a.name);
+
+          // vertical segment from predicted to realized
+          residualLines.push({
+            x: [a.beta, a.beta],
+            y: [yPred, yReal],
+            mode: "lines",
+            name: `ε_${a.name}`,
+            hovertemplate: `Asset ${a.name}<br>ε = ${a.eps.toLocaleString(undefined,{style:"percent", minimumFractionDigits:2})}<extra></extra>`
+          });
+
+          wResidualSum += a.w * a.eps;
+        });
+
+        // ===== Layout =====
+        const layout = {
+          title: "Ex-ante SML vs. Ex-post Line (Notation: i_F, μ_M, β, r_M)",
+          xaxis: {title: "β (beta)"},
+          yaxis: {title: "Return (total)", tickformat: ".0%"},
+          template: "plotly_white",
+          legend: {orientation: "h", y: 1.1},
+          margin: {l: 40, r: 10, t: 60, b: 40},
+          width: 900, height: 520,
+          annotations: [
+            {x: 1.6, y: iF + muM*1.6, text: "slope = μ_M", showarrow: false, yshift: 10},
+            {x: 1.6, y: iF + rM*1.6, text: "slope = r_M (realized)", showarrow: false, yshift: -10}
+          ]
+        };
+
+        Plotly.newPlot(
+          "sml-expost-card",
+          [traceExAnte, traceExPost, riskFree, marketExpected, marketRealized, assetMarkers, ...residualLines],
+          layout,
+          {displayModeBar: true, responsive: true}
+        );
+
+        // Display the value-weighted residual sum
+        const pct = (wResidualSum*100).toFixed(2);
+        document.getElementById("residual-sum").innerHTML =
+          `Value-weighted residuals: <strong>${pct}%</strong> (constructed to be ~0).`;
+      </script>
+
+      <p style="font-size:0.9em; opacity:0.8; margin-top:8px;">
+        Hover the lines/points: solid = ex-ante SML \(i_F+\beta\,\mu_M\); dashed = ex-post line \(i_F+\beta\,r_M\).
+        Vertical segments show residuals \( \varepsilon \). We chose betas/weights/residuals so that
+        \( \sum w_i\varepsilon_i \approx 0 \), illustrating the “value-weighted residuals sum to zero” fact.
+      </p>
+    </div>
+  </details>
+</div>
+
+
