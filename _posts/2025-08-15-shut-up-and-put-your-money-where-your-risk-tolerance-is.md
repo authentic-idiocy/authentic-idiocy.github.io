@@ -448,4 +448,84 @@ This implies small average negative residual correlation in large universes.</li
   </details>
 </div>
 
+<!-- Flashcard — Structural Risk Models (G&K Ch.3): summary + equations -->
+
+<div class="flashcard">
+  <details>
+    <summary>A decent(-er) proposal.</summary>
+    <div class="back">
+
+      <details class="dropdown-block">
+        <summary>Motivation</summary>
+        <div class="content">
+          <p>Elementary models are too crude/noisy. A <strong>structural multifactor risk model</strong> explains each stock’s return with a small set of <em>common factors</em> plus an <em>idiosyncratic</em> piece. This collapses the problem from thousands of assets and millions of covariance terms to a modest number of factors (e.g., industries, size, leverage). Stocks can change their <strong>exposures</strong>; the factors themselves are treated as stable.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Return structure (linear, excess-return form)</summary>
+        <div class="content">
+
+\[
+r_n(t)=\sum_{k=1}^{K} X_{n,k}(t)\, b_k(t)+u_n(t)
+\]
+
+          <ul>
+            <li><strong>\(X_{n,k}(t)\)</strong>: exposure (factor loading) of stock \(n\) to factor \(k\), known/estimated at the <em>start</em> of period \(t\).
+              <ul>
+                <li>Industry exposures are typically <strong>0/1</strong> indicators.</li>
+                <li>Other factor exposures are standardized <strong>cross-sectionally</strong> (mean \(0\), stdev \(1\)).</li>
+              </ul>
+            </li>
+            <li><strong>\(b_k(t)\)</strong>: factor return realized over \([t,t+1]\).</li>
+            <li><strong>\(u_n(t)\)</strong>: specific (idiosyncratic) return over \([t,t+1]\) not explained by factors; its risk is modeled explicitly.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Time conventions & interpretation</summary>
+        <div class="content">
+          <p>Exposures are known at \(t\); factor and specific returns are realized over \(t\!\to\!t+1\). The model is a <strong>risk decomposition</strong>, not a causal statement—factors are convenient dimensions for analyzing risk.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Risk (covariance) structure</summary>
+        <div class="content">
+          <p>Under the standard assumptions (specific returns uncorrelated with factors and with each other):</p>
+
+\[
+V_{n,m}=\sum_{k_1=1}^{K}\sum_{k_2=1}^{K} X_{n,k_1}\,F_{k_1,k_2}\,X_{m,k_2}+\Delta_{n,m}
+\]
+
+          <ul>
+            <li><strong>\(V_{n,m}\)</strong>: covariance between assets \(n\) and \(m\) (variance when \(n=m\)).</li>
+            <li><strong>\(F_{k_1,k_2}\)</strong>: factor covariance matrix (diagonal entries are factor variances).</li>
+            <li><strong>\(\Delta_{n,m}\)</strong>: specific covariance; with zero cross-specific correlations, \(\Delta\) is <strong>diagonal</strong> (entries = specific variances).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Practical virtue</summary>
+        <div class="content">
+          <p><strong>Massive dimension reduction:</strong> estimate/forecast a relatively small \(F\), a diagonal \(\Delta\), and exposures \(X\) (interpretable and constraint-friendly), instead of a full \(N\times N\) covariance matrix directly.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>NBs</summary>
+        <div class="content">
+          <ul>
+            <li>Authors have deep practical history with structural models (e.g., BARRA approach).</li>
+            <li>With adequate data, large conglomerates can be <em>split</em> so industry exposures better reflect underlying segments.</li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
+
 
