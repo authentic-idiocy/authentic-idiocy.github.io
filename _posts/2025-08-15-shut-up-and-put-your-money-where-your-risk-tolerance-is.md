@@ -141,3 +141,114 @@ q_R(c)=E+\sigma\,\Phi^{-1}(c)\ \Rightarrow\
 
   </details>
 </div>
+
+<!-- Flashcard — G&K Ch.3 (pp.47–52): Risk, Diversification, Active & Residual Risk -->
+
+<div class="flashcard">
+  <details>
+    <summary>Sigma</summary>
+    <div class="back">
+      <p><em>Open sections for the bite-size summary interleaved with the key formulas.</em></p>
+
+      <details class="dropdown-block">
+        <summary>1) Standard deviation as the risk metric</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Use the standard deviation of return as “risk”; use variance as the cost in optimization. For a given period, the risk of the excess return equals the risk of the total return because the risk-free rate is known at the start.</p>
+
+\[
+\operatorname{Var}(r)=\mathbb{E}\big[(r-\mu)^2\big]
+\]
+
+\[
+\sigma=\sqrt{\operatorname{Var}(r)}
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>2) σ is not a weighted average (two-asset property)</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Portfolio σ is <em>not</em> the weighted average of individual σ’s; correlation drives diversification. Equality to the simple average occurs only if correlation is +1.</p>
+
+\[
+\sigma_P=\sqrt{(w_1\sigma_1)^2+(w_2\sigma_2)^2+2\,w_1w_2\,\sigma_1\sigma_2\,\rho_{12}}
+\]
+
+\[
+\sigma_P \le w_1\sigma_1+w_2\sigma_2
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>3) Diversification with many assets</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Idiosyncratic risk diversifies away; what remains is the correlated component.</p>
+
+\[
+\text{Equal-weight, uncorrelated:}\quad \sigma_P=\frac{\sigma}{\sqrt{N}}
+\]
+
+\[
+\text{Equal-weight, common correlation }\rho:\quad 
+\sigma_P=\sigma\,\sqrt{\frac{1+\rho\,(N-1)}{N}}
+\]
+
+\[
+\text{Limit as }N\to\infty:\quad \sigma_P\to \sigma\,\sqrt{\rho}
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>4) Time aggregation / annualization</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> With negligible autocorrelation across non-overlapping periods, variance adds across time; σ scales with the square-root of time.</p>
+
+\[
+\sigma_{\text{annual}}=\sqrt{12}\,\sigma_{\text{monthly}}
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>5) Active risk (tracking error)</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Active return is portfolio minus benchmark return; active risk is its standard deviation. It is driven by <em>active exposures</em> and asset risks, not by benchmark weights per se.</p>
+
+\[
+\psi_P=\operatorname{Std}[\,r_P-r_B\,]
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>6) Residual risk and beta (orthogonal to benchmark)</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Residual risk is the component of portfolio risk orthogonal to the benchmark; remove the systematic piece measured by beta.</p>
+
+\[
+\omega_P=\sqrt{\sigma_P^2-\beta_P^2\,\sigma_B^2}
+\]
+
+\[
+\beta_P=\frac{\operatorname{Cov}(r_P,r_B)}{\operatorname{Var}(r_B)}
+\]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>7) Cost of risk (optimization view)</summary>
+        <div class="content">
+          <p><strong>Summary.</strong> Treat variance as a <em>cost</em> with risk-aversion parameter \(a\). For active management, the expected return trade-off associated with taking tracking error \(\psi_P\) is proportional to \(\psi_P^2\).</p>
+
+\[
+\text{Cost of active risk} \;=\; a\,\psi_P^2
+\]
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
+
