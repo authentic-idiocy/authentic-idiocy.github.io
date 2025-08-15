@@ -10,7 +10,7 @@ description: "A SFW way to ask what you consider a 'gamble' is."
 
 <div class="flashcard">
   <details>
-    <summary>Risk Metrics — foundations (not Var/Semivariance/Shortfall/VaR)</summary>
+    <summary>Measuring Risk (well)</summary>
     <div class="back">
 
       <details class="dropdown-block">
@@ -31,16 +31,7 @@ description: "A SFW way to ask what you consider a 'gamble' is."
           <p>The full return distribution answers every risk question but is unwieldy. In practice we compress it to a single, stable, aggregable statistic for monitoring and control.</p>
         </div>
       </details>
-    </div>
-  </details>
-</div>
-
-<div class="flashcard">
-  <details>
-    <summary>A risk by any other name.</summary>
-    <div class="back">
-
-      <details class="dropdown-block">
+            <details class="dropdown-block">
         <summary>3) Standard deviation (the workhorse)</summary>
         <div class="content">
           <p><strong>Idea.</strong> Dispersion about the mean is the operative “cost of risk;” use variance for math, σ for reporting.</p>
@@ -61,7 +52,14 @@ description: "A SFW way to ask what you consider a 'gamble' is."
 \]
         </div>
       </details>
+    </div>
+  </details>
+</div>
 
+<div class="flashcard">
+  <details>
+    <summary>A Risk By Any Other Name</summary>
+    <div class="back">
       <details class="dropdown-block">
         <summary>4) Semivariance (definitions)</summary>
         <div class="content">
@@ -82,116 +80,167 @@ description: "A SFW way to ask what you consider a 'gamble' is."
         </div>
       </details>
 
+
       <details class="dropdown-block">
-        <summary>5) Shortfall probability (one-period)</summary>
+        <summary>1) Shortfall probability (one period)</summary>
         <div class="content">
-          <p><strong>Definition.</strong> Probability of failing a chosen threshold \(K\) next period: \(\Pr(R<K)\).</p>
+          <p><strong>Definition.</strong> Probability that next-period simple return falls below threshold \(K\): \(SF_K:=\Pr(R<K)\).</p>
 
+          
 \[
-R\sim\mathcal N(E,\sigma^2)
+R\sim\mathcal N(E,\sigma^2),\quad 
+Z:=\frac{R-E}{\sigma}\sim\mathcal N(0,1).
 \]
 
 \[
-\Pr(R<K)=\Phi\!\left(\frac{K-E}{\sigma}\right)
+SF_K=\Pr(R<K)=\Pr\!\left(Z<\frac{K-E}{\sigma}\right)=\Phi\!\left(\frac{K-E}{\sigma}\right).
 \]
 
-          <p><strong>Drawbacks.</strong> Choice of \(K\) is investor-/mandate-specific; tail probabilities rely on distributional assumptions that can miss fat tails.</p>
+          <p><strong>Drawbacks.</strong> (i) Depends on investor-chosen \(K\) (not universal). (ii) Binary—doesn’t care “how far” below \(K\). (iii) Tail probabilities are fragile to distributional misspecification and regime changes.</p>
         </div>
       </details>
 
       <details class="dropdown-block">
-        <summary>6) Absolute shortfall (terminal value)</summary>
+        <summary>2) Absolute shortfall (terminal wealth vs. a fixed level)</summary>
         <div class="content">
-          <p><strong>Definition.</strong> Probability terminal value falls below a fixed level \(K\): \(\Pr(V_T<K)\).</p>
+          <p><strong>Definition.</strong> Probability terminal value falls below \(K>0\) after \(T\) periods: \(\Pr(V_T<K)\).</p>
 
+          
 \[
-r_t=\ln(1+R_t)\overset{i.i.d.}{\sim}\mathcal N(\mu,\sigma^2)
+V_T=V_0\prod_{t=1}^{T}(1+R_t),\qquad 
+r_t:=\ln(1+R_t).
 \]
 
 \[
-\ln V_T=\ln V_0+\sum_{t=1}^T r_t\sim \mathcal N(\ln V_0+T\mu,\ T\sigma^2)
+\sum_{t=1}^{T} r_t \overset{i.i.d.}{\sim} \mathcal N(T\mu,\ T\sigma^2)
+\quad\Rightarrow\quad 
+\ln V_T=\ln V_0+\sum_{t=1}^{T} r_t.
 \]
 
 \[
-\Pr(V_T<K)=\Phi\!\left(\frac{\ln K-\ln V_0 - T\mu}{\sqrt{T}\,\sigma}\right)
-\]
-        </div>
-      </details>
-
-      <details class="dropdown-block">
-        <summary>7) Relative shortfall (vs. a benchmark)</summary>
-        <div class="content">
-          <p><strong>Definition.</strong> Probability a risky asset or portfolio underperforms a benchmark over \(T\) periods.</p>
-
-\[
-\Delta := \sum_{t=1}^T (r_{S,t}-r_{B,t})
-\]
-
-\[
-E(\Delta)=T(\mu_S-\mu_B),\quad 
-\operatorname{Var}(\Delta)=T\!\left(\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B\right)
-\]
-
-\[
-\Pr(V_{S,T}<V_{B,T})=\Pr(\Delta<0)
-= \Phi\!\left(\frac{-T(\mu_S-\mu_B)}{\sqrt{T\big(\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B\big)}}\right)
+\Pr(V_T<K)
+=\Pr\!\left(\sum_{t=1}^{T} r_t<\ln K-\ln V_0\right)
+=\Phi\!\left(\frac{\ln K-\ln V_0-T\mu}{\sqrt{T}\,\sigma}\right).
 \]
         </div>
       </details>
 
       <details class="dropdown-block">
-        <summary>8) VaR — parametric (Normal) </summary>
+        <summary>3) Relative shortfall (underperforming a benchmark)</summary>
         <div class="content">
-          <p><strong>Definition.</strong> For tail probability \(c\in(0,1)\), VaR is the positive number \( \mathrm{VaR}_c \) such that the next-period loss exceeds \( \mathrm{VaR}_c \) with probability \(c\).</p>
+          <p><strong>Definition.</strong> Probability a strategy \(S\) underperforms a benchmark \(B\) over \(T\) periods.</p>
 
+          
 \[
-q_R(c)=E+\sigma\,\Phi^{-1}(c),\qquad
-\mathrm{VaR}_c = -\,V\cdot q_R(c)
+\Delta_t:=r_{S,t}-r_{B,t},\qquad 
+\Delta:=\sum_{t=1}^{T}\Delta_t.
 \]
 
 \[
-\text{Small horizon (}E\approx 0\text{):}\quad 
-\mathrm{VaR}_c \approx z_c\,\sigma\,V,\ \ z_c:=|\Phi^{-1}(c)|
+\mathbb E[\Delta_t]=\mu_S-\mu_B,\quad 
+\operatorname{Var}(\Delta_t)=\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B.
 \]
 
 \[
-\text{Scaling (i.i.d.):}\quad 
-\mathrm{VaR}_{c,\ T}\approx z_c\,\sigma\,\sqrt{T}\,V
+\Delta \sim \mathcal N\!\Big(T(\mu_S-\mu_B),\ T(\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B)\Big).
 \]
 
-          <p><strong>Drawbacks.</strong> Assumes a shape (often Normal) for tails; ignores loss severity beyond the quantile; can be pro-cyclical when σ rises in sell-offs.</p>
+\[
+\Pr(V_{S,T}<V_{B,T})
+=\Pr(\Delta<0)
+=\Phi\!\left(
+\frac{-T(\mu_S-\mu_B)}{\sqrt{T(\sigma_S^2+\sigma_B^2-2\rho_{SB}\sigma_S\sigma_B)}}
+\right).
+\]
         </div>
       </details>
 
       <details class="dropdown-block">
-        <summary>9) Historical VaR</summary>
+        <summary>4) Parametric (Normal) VaR</summary>
         <div class="content">
-          <p><strong>Definition.</strong> Use the empirical \(c\)-quantile of a rolling window of past returns (or P&amp;L) as the loss threshold.</p>
+          <p><strong>Setup.</strong> Portfolio value \(V\). One-period loss \(L:=-V\,R\). Choose tail prob. \(c\in(0,1)\).</p>
 
+          
 \[
-\widehat{\mathrm{VaR}}_{c} = V \cdot \big|\ \widehat{q}_{R}(c)\ \big|\quad
-\text{with }\widehat{q}_{R}(c)\text{ the sample }c\text{-quantile of returns}
+\text{VaR}_c:=\inf\{ \ell>0:\ \Pr(L>\ell)\le c\}.
 \]
 
-          <p><strong>Notes.</strong> No distributional assumption; window choice and equal weighting of days matter; may underweight stale extremes.</p>
+\[
+R\sim\mathcal N(E,\sigma^2)\ \Rightarrow\ q_R(c)=E+\sigma\,\Phi^{-1}(c).
+\]
+
+\[
+\Pr(L>\ell)=\Pr(-VR>\ell)=\Pr\!\left(R<-\frac{\ell}{V}\right)
+\stackrel{!}{=}c
+\ \Rightarrow\ 
+-\frac{\ell}{V}=q_R(c).
+\]
+
+\[
+\boxed{\ \text{VaR}_c = -V\,q_R(c) = -V\big(E+\sigma\,\Phi^{-1}(c)\big)\ }.
+\]
+
+\[
+\text{Small horizon (}E\approx 0\text{):}\quad
+\text{VaR}_c \approx z_c\,\sigma\,V,\quad z_c:=|\Phi^{-1}(c)|.
+\]
+
+\[
+\text{\(T\)-period scaling (i.i.d.):}\quad
+\text{VaR}_{c,T}\approx z_c\,\sigma\,\sqrt{T}\,V.
+\]
+
+          <p><strong>Drawbacks.</strong> (i) Quantile only—ignores tail severity beyond VaR; (ii) sensitive to distributional assumptions (e.g., Normal tails); (iii) pro-cyclical if σ spikes in sell-offs; (iv) not necessarily subadditive (risk aggregation issue).</p>
         </div>
       </details>
 
       <details class="dropdown-block">
-        <summary>10) Volatility-based VaR</summary>
+        <summary>5) Historical VaR (nonparametric)</summary>
         <div class="content">
-          <p><strong>Definition.</strong> Forecast next-period volatility \(\sigma_t\) (e.g., via a volatility model), assume short-horizon mean \(\approx 0\), then</p>
+          <p><strong>Idea.</strong> Use empirical loss/return quantiles over a rolling window \(W\) (no distributional assumption).</p>
 
+          
 \[
-\mathrm{VaR}_{c,t+1}= z_c\,\sigma_t\,V_t,\qquad z_{1\%}\approx 2.33,\ z_{5\%}\approx 1.65
+\{R_{t-i}\}_{i=1}^{W}\ \text{past simple returns} \ \Rightarrow \
+\text{sort }R_{(1)}\le \cdots \le R_{(W)}.
 \]
 
-          <p><strong>Notes.</strong> Quality depends on the volatility forecast; still inherits the quantile-only limitation.</p>
+\[
+\hat q_R(c):=R_{(\lceil cW\rceil)},\qquad 
+\boxed{\ \widehat{\text{VaR}}_{c} = -V\,\hat q_R(c)\ }.
+\]
+
+\[
+\text{Example: }W=250,\ c=5\%\Rightarrow \lceil cW\rceil=13\text{th worst return.}
+\]
+
+          <p><strong>Notes.</strong> Window length and equal-weighting matter; can under-react to structural breaks; no explicit scaling beyond the window.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>6) Volatility-based VaR (conditional)</summary>
+        <div class="content">
+          <p><strong>Idea.</strong> Forecast next-period conditional volatility \( \hat\sigma_{t+1|t} \) and plug into the Normal quantile.</p>
+
+          
+\[
+R_{t+1}\mid \mathcal F_t \sim \mathcal N(E_t,\ \hat\sigma_{t+1|t}^2),\quad \text{with }E_t\approx 0.
+\]
+
+\[
+\boxed{\ \text{VaR}_{c,t+1} = z_c\,\hat\sigma_{t+1|t}\,V_t,\quad 
+z_{1\%}\approx 2.33,\ z_{5\%}\approx 1.65\ }.
+\]
+
+
+          <p><strong>Notes.</strong> Quality hinges on the volatility forecast and conditional Normality; still inherits the “quantile-only” limitation.</p>
         </div>
       </details>
     </div>
   </details>
 </div>
+
 
 
 <!-- Flashcard — G&K Ch.3 (pp.47–52): Risk, Diversification, Active & Residual Risk -->
