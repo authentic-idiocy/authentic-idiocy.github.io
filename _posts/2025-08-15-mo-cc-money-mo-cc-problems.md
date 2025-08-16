@@ -5,9 +5,10 @@ date: 2025-08-12 00:00:00 +0000
 categories: [finance-shit]
 description: "-- Biggie Smalls, probably."
 ---
+
 <div class="flashcard">
   <details>
-    <summary>Who hot, who not</summary>
+    <summary>Continuously-Compounded Return Facts</summary>
     <div class="back">
 
       <details class="dropdown-block">
@@ -58,14 +59,39 @@ description: "-- Biggie Smalls, probably."
           \[
           r_{t,t+h}=\ln(1+R_{t,t+h}),\qquad R_{t,t+h}=e^{\,r_{t,t+h}}-1.
           \]
-          <p>For small moves, \(r\approx R\) (<span class="define" data-def="$$&#10;\\textbf{Taylor about }a:\\quad&#10;f(x)=\\sum_{k=0}^{n}\\frac{f^{(k)}(a)}{k!}(x-a)^k \\;+\\; R_{n+1}(x).&#10;$$&#10;$$&#10;\\textbf{Maclaurin about }0:\\quad&#10;f(x)=\\sum_{k=0}^{n}\\frac{f^{(k)}(0)}{k!}x^k \\;+\\; R_{n+1}(x).&#10;$$&#10;$$&#10;\\textbf{First order (}n=1\\textbf{):}\\quad&#10;f(x)\\approx f(a)+f'(a)(x-a)\\quad\\text{or}\\quad f(x)\\approx f(0)+f'(0)x.&#10;$$&#10;Let&#10;$$&#10;R:=\\frac{S_{t+h}-S_t}{S_t}=\\frac{S_{t+h}}{S_t}-1,\\qquad&#10;r:=\\ln\\!\\left(\\frac{S_{t+h}}{S_t}\\right)=\\ln(1+R).&#10;$$&#10;Expand \\(\\ln(1+x)\\) about \\(x=0\\):&#10;$$&#10;\\ln(1+x)=x-\\frac{x^{2}}{2}+\\frac{x^{3}}{3}-\\cdots&#10;=\\sum_{k=1}^{\\infty}(-1)^{k+1}\\frac{x^{k}}{k},\\quad |x|&lt;1\\ (\\text{also converges at }x=1).&#10;$$&#10;With \\(x=R\\),&#10;$$&#10;r=\\ln(1+R)=R-\\frac{R^{2}}{2}+O(R^{3})=R+O(R^{2}).&#10;$$&#10;Hence, to first order, \\(r\\approx R\\).">first-order Taylor</span>).</p>
+          <p>For small moves, \(r\approx R\) (<span class="define" data-def="$$
+\textbf{Taylor about }a:\quad
+f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^k \;+\; R_{n+1}(x).
+$$
+$$
+\textbf{Maclaurin about }0:\quad
+f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(0)}{k!}x^k \;+\; R_{n+1}(x).
+$$
+$$
+\textbf{First order (}n=1\textbf{):}\quad
+f(x)\approx f(a)+f'(a)(x-a)\quad\text{or}\quad f(x)\approx f(0)+f'(0)x.
+$$
+Let
+$$
+R:=\frac{S_{t+h}-S_t}{S_t}=\frac{S_{t+h}}{S_t}-1,\qquad
+r:=\ln\!\left(\frac{S_{t+h}}{S_t}\right)=\ln(1+R).
+$$
+Expand \(\ln(1+x)\) about \(x=0\):
+$$
+\ln(1+x)=x-\frac{x^{2}}{2}+\frac{x^{3}}{3}-\cdots
+=\sum_{k=1}^{\infty}(-1)^{k+1}\frac{x^{k}}{k},\quad |x|<1\ (\text{also converges at }x=1).
+$$
+With \(x=R\),
+$$
+r=\ln(1+R)=R-\frac{R^{2}}{2}+O(R^{3})=R+O(R^{2}).
+$$
+Hence, to first order, \(r\approx R\).">first-order Taylor</span>).</p>
         </div>
       </details>
 
     </div>
   </details>
 </div>
-
 <div class="flashcard">
   <details>
     <summary>Dangerous on trizack, leave your ass kizzack (Volatility (σ) for CCRs)</summary>
