@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Shut up and Put Your Money Where Your Risk Tolerance Is."
+title: "Riskology"
 date: 2025-08-12 00:00:00 +0000
 categories: [finance-shit]
-description: "A SFW way to ask what you consider a 'gamble' is."
+description: "alt. σ-ology, although I'm sure that's already the name of an overvalued startup."
 ---
 
 <!-- Single Flashcard — G&K Ch.3 (pp.42–46): Summary + Formulas + Derivations -->
