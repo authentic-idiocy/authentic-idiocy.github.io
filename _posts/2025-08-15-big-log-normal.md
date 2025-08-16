@@ -294,8 +294,8 @@ description: "Stock prices are in league with the freeway."
             const modeLN   = (m, v) => Math.exp(m - v*v);
 
             // Grid (y from ~0 to 10; avoid y=0 because of log)
-            const yMin = 1e-3, yMax = 10, N = 1200;
-            const yGrid = Array.from({length: N}, (_, i) => yMin + i*(yMax - yMin)/(N-1));
+            const yMin = 1e-3, yMax = 10, Ny = 1200;
+            const yGrid = Array.from({length: Ny}, (_, i) => yMin + i*(yMax - yMin)/(Ny-1));
 
             // Build traces
             const traces = dists.map(d => ({
