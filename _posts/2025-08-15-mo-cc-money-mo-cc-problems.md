@@ -8,7 +8,7 @@ description: "-- Biggie Smalls, probably."
 
 <div class="flashcard">
   <details>
-    <summary>Continuously-Compounded Return Facts</summary>
+    <summary>who hot, who not</summary>
     <div class="back">
 
       <details class="dropdown-block">
