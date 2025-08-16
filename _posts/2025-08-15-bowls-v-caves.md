@@ -188,7 +188,24 @@ description: "'Let's get ready to RUMBLEEEE' -- Jensen"
             That is Jensen’s inequality: \( \mathbb{E}[f(X)] \ge f(\mathbb{E}[X]) \).
           </p>
         `;
+        
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise();
+        }
       </script>
+    </div>
+  </details>
+</div>
+
+<div class="flashcard">
+  <details>
+    <summary>Why this post is in Finance Shit</summary>
+    <div class="back">
+      <h2>Why this post is in Finance Shit</h2>
+      <ul>
+        <li>With \(f=\exp\), Jensen explains why <strong>cc averages</strong> \(\frac{1}{T}\ln(\text{gross return})\) differ from averages of <strong>effective</strong> rates: \(\mathbb{E}[e^{x}]\ge e^{\mathbb{E}[x]}\).</li>
+        <li>With \(f=\log\) (concave), Jensen reverses: \(\mathbb{E}[\log S]\le \log \mathbb{E}[S]\); averaging logs (e.g., utility, growth-rate calculations) penalizes dispersion.</li>
+      </ul>
     </div>
   </details>
 </div>
