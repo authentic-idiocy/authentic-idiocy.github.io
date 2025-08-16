@@ -528,4 +528,83 @@ V_{n,m}=\sum_{k_1=1}^{K}\sum_{k_2=1}^{K} X_{n,k_1}\,F_{k_1,k_2}\,X_{m,k_2}+\Delt
   </details>
 </div>
 
+<div class="flashcard">
+  <details>
+    <summary>Separating the Men from the Boys</summary>
+    <div class="back">
 
+      <details class="dropdown-block">
+        <summary>A-priori constraint</summary>
+        <div class="content">
+          <p>In a multifactor <strong>risk</strong> model, <strong>factor exposures must be known at the start of the period</strong> (even though factor returns are uncertain). Within that constraint, many factor types are possible.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Three broad sources of factors</summary>
+        <div class="content">
+          <ol>
+            <li><strong>Responses to external influences (macro factors).</strong> Link stock returns to outside forces: bond-market return ("bond beta"), inflation surprises, oil prices, industrial production, FX changes, etc.
+              <ul>
+                <li><strong>Limits:</strong> (i) heavy estimation burden -> "errors-in-variables"; (ii) <strong>nonstationarity</strong>--coefficients estimated from the past may not describe the present after firms change practices; (iii) macro data are often <strong>noisy, lagged, infrequent</strong>.</li>
+                <li><strong>NB:</strong> The taxonomy is not exclusive; in practice, factors based on external responses often <strong>do not add explanatory power</strong> beyond good cross-sectional factors--those tend to <strong>subsume</strong> the macro responses.</li>
+              </ul>
+            </li>
+            <li><strong>Cross-sectional comparisons (attributes).</strong> Compare stocks on fundamentals (dividend/earnings yield, analyst EPS forecasts, cash flow/book value/sales-to-price, etc.) and market attributes (realized volatility, past returns, option-implied vol, turnover).
+              <ul>
+                <li><strong>Momentum example (interpretation):</strong> the factor acknowledges that previously successful/unsuccessful stocks often continue to behave differently from the rest for stretches of time; sometimes it reverses, sometimes not--the point is to capture the <strong>common behavior</strong>.</li>
+                <li>These factors are <strong>powerful</strong> in practice, though they can share the same statistical caveats (errors-in-variables, nonstationarity).</li>
+              </ul>
+            </li>
+            <li><strong>Statistical factors.</strong> Extracted mechanically (PCA, MLE, EM, two-step "get factors then exposures," or joint estimation).
+              <ul>
+                <li><strong>Cautions:</strong> typically <strong>hard to interpret</strong>, prone to <strong>spurious correlations</strong>, and assume <strong>constant exposures</strong> over the estimation window => cannot capture time-varying exposures such as momentum well. The authors generally <strong>avoid</strong> pure statistical factors.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Selection criteria for factors</summary>
+        <div class="content">
+          <p>Choose factors that are <strong>incisive</strong> (clearly separate returns along the dimension), <strong>intuitive</strong> (recognizable, credible market stories: size splits big vs. small, momentum separates winners vs. losers), and <strong>interesting</strong> (explain a meaningful part of performance--alpha, beta, or volatility). Combine <strong>statistical</strong> and <strong>investment</strong> significance.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Two working families of factors in equity models</summary>
+        <div class="content">
+          <ul>
+            <li><strong>Industry factors.</strong> Partition the market into non-overlapping classes. Good practice: ensure (i) a <strong>reasonable number of companies</strong> per industry, (ii) a <strong>meaningful share of total cap</strong>, and (iii) <strong>alignment with market conventions</strong>. Exposures are usually <strong>0/1</strong> (in or out). Large conglomerates can be <strong>split</strong> to reflect multiple businesses (so exposures better match underlying segments).</li>
+            <li><strong>Risk indices (non-industry dimensions).</strong> Capture common movements tied to broad traits. Typical U.S./global categories:
+              <ul>
+                <li><strong>Volatility</strong> (stocks with high/low risk),</li>
+                <li><strong>Momentum</strong> (recent performance),</li>
+                <li><strong>Size</strong> (large vs. small),</li>
+                <li><strong>Liquidity</strong> (trading activity/turnover),</li>
+                <li><strong>Growth</strong> (past/anticipated earnings growth),</li>
+                <li><strong>Value</strong> (cheap vs. expensive on fundamentals),</li>
+                <li><strong>Earnings volatility</strong>,</li>
+                <li><strong>Financial leverage</strong> (debt/equity, interest-rate sensitivity),</li>
+                <li>plus <strong>foreign-currency sensitivity</strong> where relevant.</li>
+              </ul>
+              Each category is built from several <strong>descriptors</strong> (specific measurements, e.g., recent daily vol, option IV, price range, beta). Descriptors within a category are often correlated; combine them with <strong>weights chosen to maximize explanatory/predictive power</strong> to form the index exposure.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Normalizing exposures across the cross-section</summary>
+        <div class="content">
+          <p>Because raw descriptors live on different scales, rescale to zero mean and unit variance so different indices are comparable and robust to outliers:</p>
+          <p>$$
+          x_{\text{normalized}} \;=\; \frac{x_{\text{raw}} - \langle x_{\text{raw}}\rangle}{\operatorname{Std}[x_{\text{raw}}]}
+          $$</p>
+          <p>where angle brackets and \\(\\operatorname{Std}[\\cdot]\\) are the cross-sectional mean and standard deviation over the universe at that date.</p>
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
