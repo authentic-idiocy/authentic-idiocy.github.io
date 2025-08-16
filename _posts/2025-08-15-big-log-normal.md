@@ -108,7 +108,8 @@ description: "Stock prices are in league with the freeway."
 
       <div id="normals-combo" style="width:900px;height:620px;"></div>
       <div id="normals-combo-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
-
+      
+      <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
       <script>
         // ===== Helpers =====
         const phi = (x, mu=0, sig=1) =>
