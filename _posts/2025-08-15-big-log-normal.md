@@ -272,6 +272,91 @@ description: "Stock prices are in league with the freeway."
         </div>
       </details>
       
+          
+      <details class="dropdown-block">
+        <summary>Driving me On (Derivation)</summary>
+        <div class="content">
+          <h3>Goal</h3>
+          \[
+            X \sim \mathcal N(\mu,\sigma^2)\quad\Longrightarrow\quad \mathbb{E}\!\left(e^{X}\right)=e^{\,\mu+\tfrac12\sigma^{2}}.
+          \]
+          <hr/>
+          <h3>Step 1 — Write the expectation as an integral against the normal pdf</h3>
+          \[
+            \mathbb{E}(e^{X})
+            =\int_{-\infty}^{\infty} e^{x}\,\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left[-\tfrac12\!\left(\frac{x-\mu}{\sigma}\right)^{\!2}\right]dx.
+            \tag{1}
+          \]
+          <p>Combine the exponentials:</p>
+          \[
+            \mathbb{E}(e^{X})
+            =\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left\{\,x-\frac{(x-\mu)^2}{2\sigma^2}\right\}dx.
+            \tag{2}
+          \]
+
+          <h3>Step 2 — Prepare to complete the square in the exponent</h3>
+          <p>Factor \(-\frac{1}{2\sigma^2}\) from the curly braces:</p>
+          \[
+            x-\frac{(x-\mu)^2}{2\sigma^2}
+            =-\frac{1}{2\sigma^2}\Big[(x-\mu)^2-2\sigma^2x\Big].
+            \tag{3}
+          \]
+          <p>Now expand and regroup the bracketed quadratic:</p>
+          \[
+            \begin{aligned}
+            (x-\mu)^2-2\sigma^2x
+            &=x^2-2\mu x+\mu^2-2\sigma^2 x \\
+            &=x^2-2(\mu+\sigma^2)x+\mu^2.
+            \end{aligned}
+            \tag{4}
+          \]
+          <p>Complete the square around \(x-(\mu+\sigma^2)\):</p>
+          \[
+            \begin{aligned}
+            x^2-2(\mu+\sigma^2)x+\mu^2
+            &=\big[x-(\mu+\sigma^2)\big]^2-\big(\mu+\sigma^2\big)^2+\mu^2 \\
+            &=\big[x-(\mu+\sigma^2)\big]^2-\big(\mu^2+2\mu\sigma^2+\sigma^4\big)+\mu^2 \\
+            &=\big[x-(\mu+\sigma^2)\big]^2-\big(2\mu\sigma^2+\sigma^4\big).
+            \end{aligned}
+            \tag{5}
+          \]
+          <p>Substitute (5) into (3):</p>
+          \[
+            \begin{aligned}
+            x-\frac{(x-\mu)^2}{2\sigma^2}
+            &=-\frac{1}{2\sigma^2}\left\{\big[x-(\mu+\sigma^2)\big]^2-\big(2\mu\sigma^2+\sigma^4\big)\right\} \\
+            &=-\frac{\big[x-(\mu+\sigma^2)\big]^2}{2\sigma^2}
+            +\frac{2\mu\sigma^2+\sigma^4}{2\sigma^2} \\
+            &=-\frac{\big[x-(\mu+\sigma^2)\big]^2}{2\sigma^2}+\mu+\frac{\sigma^2}{2}.
+            \end{aligned}
+            \tag{6}
+          \]
+          <p>Thus the integrand in (2) factorizes cleanly.</p>
+
+          <h3>Step 3 — Pull out the constant factor and recognize a normal pdf</h3>
+          \[
+            \begin{aligned}
+            \mathbb{E}(e^{X})
+            &=\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left(\mu+\tfrac12\sigma^2\right)
+            \exp\!\left[-\frac{\big(x-(\mu+\sigma^2)\big)^2}{2\sigma^2}\right]dx \\
+            &=e^{\,\mu+\tfrac12\sigma^2}\,
+            \underbrace{\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left[-\frac{\big(x-(\mu+\sigma^2)\big)^2}{2\sigma^2}\right]dx}_{=\,1}.
+            \end{aligned}
+            \tag{7}
+          \]
+          <p>The underbraced integral equals \(1\) because it is the total mass of a normal density with mean \(\mu+\sigma^2\) and variance \(\sigma^2\).</p>
+          <p>Therefore,</p>
+          \[
+            \boxed{\;\mathbb{E}(e^{X})=e^{\,\mu+\tfrac12\sigma^2}\;}
+            \tag{8}
+          \]
+          <p>as claimed.</p>
+        </div>
+      </details>
           <div id="lognormal-fig-18-3" style="width:900px;height:520px;"></div>
           <div id="lognormal-fig-18-3-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
           <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
@@ -368,92 +453,6 @@ description: "Stock prices are in league with the freeway."
               MathJax.typesetPromise();
             }
           </script>
-          
-      <details class="dropdown-block">
-        <summary>Driving me On (Derivation)</summary>
-        <div class="content">
-          <h3>Goal</h3>
-          \[
-            X \sim \mathcal N(\mu,\sigma^2)\quad\Longrightarrow\quad \mathbb{E}\!\left(e^{X}\right)=e^{\,\mu+\tfrac12\sigma^{2}}.
-          \]
-          <hr/>
-          <h3>Step 1 — Write the expectation as an integral against the normal pdf</h3>
-          \[
-            \mathbb{E}(e^{X})
-            =\int_{-\infty}^{\infty} e^{x}\,\frac{1}{\sigma\sqrt{2\pi}}
-            \exp\!\left[-\tfrac12\!\left(\frac{x-\mu}{\sigma}\right)^{\!2}\right]dx.
-            \tag{1}
-          \]
-          <p>Combine the exponentials:</p>
-          \[
-            \mathbb{E}(e^{X})
-            =\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
-            \exp\!\left\{\,x-\frac{(x-\mu)^2}{2\sigma^2}\right\}dx.
-            \tag{2}
-          \]
-
-          <h3>Step 2 — Prepare to complete the square in the exponent</h3>
-          <p>Factor \(-\frac{1}{2\sigma^2}\) from the curly braces:</p>
-          \[
-            x-\frac{(x-\mu)^2}{2\sigma^2}
-            =-\frac{1}{2\sigma^2}\Big[(x-\mu)^2-2\sigma^2x\Big].
-            \tag{3}
-          \]
-          <p>Now expand and regroup the bracketed quadratic:</p>
-          \[
-            \begin{aligned}
-            (x-\mu)^2-2\sigma^2x
-            &=x^2-2\mu x+\mu^2-2\sigma^2 x \\
-            &=x^2-2(\mu+\sigma^2)x+\mu^2.
-            \end{aligned}
-            \tag{4}
-          \]
-          <p>Complete the square around \(x-(\mu+\sigma^2)\):</p>
-          \[
-            \begin{aligned}
-            x^2-2(\mu+\sigma^2)x+\mu^2
-            &=\big[x-(\mu+\sigma^2)\big]^2-\big(\mu+\sigma^2\big)^2+\mu^2 \\
-            &=\big[x-(\mu+\sigma^2)\big]^2-\big(\mu^2+2\mu\sigma^2+\sigma^4\big)+\mu^2 \\
-            &=\big[x-(\mu+\sigma^2)\big]^2-\big(2\mu\sigma^2+\sigma^4\big).
-            \end{aligned}
-            \tag{5}
-          \]
-          <p>Substitute (5) into (3):</p>
-          \[
-            \begin{aligned}
-            x-\frac{(x-\mu)^2}{2\sigma^2}
-            &=-\frac{1}{2\sigma^2}\left\{\big[x-(\mu+\sigma^2)\big]^2-\big(2\mu\sigma^2+\sigma^4\big)\right\} \\
-            &=-\frac{\big[x-(\mu+\sigma^2)\big]^2}{2\sigma^2}
-            +\frac{2\mu\sigma^2+\sigma^4}{2\sigma^2} \\
-            &=-\frac{\big[x-(\mu+\sigma^2)\big]^2}{2\sigma^2}+\mu+\frac{\sigma^2}{2}.
-            \end{aligned}
-            \tag{6}
-          \]
-          <p>Thus the integrand in (2) factorizes cleanly.</p>
-
-          <h3>Step 3 — Pull out the constant factor and recognize a normal pdf</h3>
-          \[
-            \begin{aligned}
-            \mathbb{E}(e^{X})
-            &=\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
-            \exp\!\left(\mu+\tfrac12\sigma^2\right)
-            \exp\!\left[-\frac{\big(x-(\mu+\sigma^2)\big)^2}{2\sigma^2}\right]dx \\
-            &=e^{\,\mu+\tfrac12\sigma^2}\,
-            \underbrace{\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
-            \exp\!\left[-\frac{\big(x-(\mu+\sigma^2)\big)^2}{2\sigma^2}\right]dx}_{=\,1}.
-            \end{aligned}
-            \tag{7}
-          \]
-          <p>The underbraced integral equals \(1\) because it is the total mass of a normal density with mean \(\mu+\sigma^2\) and variance \(\sigma^2\).</p>
-          <p>Therefore,</p>
-          \[
-            \boxed{\;\mathbb{E}(e^{X})=e^{\,\mu+\tfrac12\sigma^2}\;}
-            \tag{8}
-          \]
-          <p>as claimed.</p>
-        </div>
-      </details>
-
     </div>
   </details>
 </div>
