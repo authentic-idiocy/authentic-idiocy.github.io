@@ -56,6 +56,13 @@ html,body{
   line-height: 1.6;
 }
 
+/* widen overall page container */
+.wrapper{
+  max-width:min(90vw, 1200px);
+  width:100%;
+  margin:0 auto;
+}
+
 /* hyperlinks */
 a{
   color: var(--accent);
@@ -90,6 +97,10 @@ main, .post{
   border-radius: .75rem;
   padding: 2rem;
   box-shadow: 0 0 .5rem var(--accent);
+  width: 100%;
+  max-width: min(90vw, 1200px);
+  overflow-x: auto;
+  overflow-wrap: anywhere;
 }
 
 /* colourful selection highlight */
@@ -218,6 +229,8 @@ header{
 /* ── Flashcard component ───────────────────────────────────────── */
 .flashcard{
   margin:1.5rem 0;
+  width:100%;
+  overflow-wrap:anywhere;
 }
 
 /* the clickable “front” */
@@ -230,6 +243,7 @@ header{
   cursor:pointer;
   list-style:none;                    /* hide ▶ marker */
   transition:color .22s, box-shadow .22s, border-color .22s;
+  overflow-wrap:anywhere;
 }
 
 /* hover glow (card + text together) */
@@ -264,33 +278,40 @@ summary::marker{ display:none; }
 /* silky drop-down block for proofs / derivations */
 details.dropdown-block{
   margin:1.5rem 0;
-  border:1px solid var(--primary);
-  border-left:4px solid var(--accent);
-  border-radius:.5rem;
-  background:#0e0e10;
-  box-shadow:0 0 8px rgba(108,0,224,0.35);
+  width:100%;
+  border:1px solid var(--accent);
+  border-left:4px solid var(--primary);
+  border-radius:.75rem;
+  background:linear-gradient(135deg, rgba(108,0,224,0.08), rgba(255,0,160,0.08));
+  box-shadow:0 0 12px rgba(255,0,160,0.25);
+  overflow-wrap:anywhere;
 }
 details.dropdown-block > summary{
-  padding:.75rem 1rem;
+  padding:1rem 1.25rem;
   cursor:pointer;
   list-style:none;
   font-weight:600;
-  color:var(--accent);
-  transition:color .2s ease, text-shadow .2s ease;
+  background:#141417;
+  color:var(--primary);
+  transition:color .2s ease, text-shadow .2s ease, background .2s ease;
+  overflow-wrap:anywhere;
 }
 details.dropdown-block > summary::marker,
 details.dropdown-block > summary::-webkit-details-marker{display:none;}
 details.dropdown-block > summary:hover{
-  color:var(--primary);
-  text-shadow:0 0 6px var(--accent);
+  color:var(--accent);
+  text-shadow:0 0 8px var(--accent);
+  background:#1d1d21;
 }
 details.dropdown-block[open] > summary{
   border-bottom:1px solid #333;
-  margin-bottom:.5rem;
+  margin-bottom:.75rem;
 }
 details.dropdown-block .content{
-  padding:0 1rem 1rem;
+  padding:0 1.25rem 1.25rem;
   color:var(--fg-light);
+  overflow-x:auto;
+  overflow-wrap:anywhere;
 }
 
 /* === Legendairy =============================== */
