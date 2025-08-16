@@ -62,7 +62,12 @@ html,body{
   width:100%;
   margin:0 auto;
 }
-
+/* kill leftover sidebar offset from theme */
+.wrapper > section{
+  margin-left:0;
+  padding:0;
+  width:100%;
+}
 /* hyperlinks */
 a{
   color: var(--accent);
@@ -102,7 +107,12 @@ main, .post{
   overflow-x: auto;
   overflow-wrap: anywhere;
 }
-
+/* center post content within the page */
+.post-container{
+  max-width:min(90vw, 1200px);
+  margin:0 auto;
+  width:100%;
+}
 /* colourful selection highlight */
 ::selection{
   background: var(--accent);
