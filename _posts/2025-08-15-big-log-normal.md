@@ -269,7 +269,9 @@ description: "Stock prices are in league with the freeway."
             \mathbb{E}\!\left(e^{x}\right) > e^{\mathbb{E}[x]}=e^{m}
           \]
           <p>unless \(x\) is degenerate.</p>
-
+        </div>
+      </details>
+      
           <div id="lognormal-fig-18-3" style="width:900px;height:520px;"></div>
           <div id="lognormal-fig-18-3-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
           <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
@@ -366,9 +368,7 @@ description: "Stock prices are in league with the freeway."
               MathJax.typesetPromise();
             }
           </script>
-        </div>
-      </details>
-
+          
       <details class="dropdown-block">
         <summary>Driving me On (Derivation)</summary>
         <div class="content">
