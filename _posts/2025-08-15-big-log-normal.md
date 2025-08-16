@@ -210,3 +210,250 @@ description: "Stock prices are in league with the freeway."
     </div>
   </details>
 </div>
+
+<div class="flashcard">
+  <details>
+    <summary>Leading me On</summary>
+    <div class="back">
+
+      <details class="dropdown-block">
+        <summary>Definition and link to prices</summary>
+        <div class="content">
+          <p>A r.v. \(y\) is <strong>lognormally distributed</strong> iff \(\ln(y)\) is normally distributed. Equivalently, there exists a normal r.v. \(x\) such that</p>
+          \[
+            \ln(y)=x \qquad \text{or} \qquad y=e^{x}.
+          \]
+          <p><strong>Continuously-compounded (cc) return and price.</strong> Between \(0\) and \(t\),</p>
+          \[
+            R(0,t)=\ln\!\left(\frac{S_t}{S_0}\right).
+          \]
+          <p>If \(R(0,t)\) is normal, then exponentiating gives the price:</p>
+          \[
+            S_t=S_0\,e^{R(0,t)}.
+          \]
+          <p><strong>In english.</strong> Normal cc returns ⇒ <strong>lognormal</strong> prices. Because an exponential is always positive, a lognormal stock price is <strong>nonnegative</strong>.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Closure properties and CLT intuition</summary>
+        <div class="content">
+          <ul>
+            <li><strong>Sum of normals is normal.</strong> Thus if \(x_1,x_2\) are normal, then \(y_1=e^{x_1}\), \(y_2=e^{x_2}\) are lognormal and
+              \[
+                y_1y_2=e^{x_1}e^{x_2}=e^{x_1+x_2}
+              \]
+              is <strong>lognormal</strong> (since \(x_1+x_2\) is normal).</li>
+            <li><strong>But:</strong> the <strong>sum</strong> of lognormals is <strong>not</strong> lognormal (just as the product of normals is not normal).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Lognormal density, mean, and variance</summary>
+        <div class="content">
+          <p>If \(\ln(y)\sim\mathcal N(m,v^2)\), then the <strong>lognormal density</strong> is</p>
+          \[
+            g(y;m,v)=\frac{1}{y\,v\sqrt{2\pi}}\exp\!\left[-\tfrac12\!\left(\frac{\ln y-m}{v}\right)^2\right],\qquad y>0.
+          \]
+          <p>If \(x\sim\mathcal N(m,v^2)\), then</p>
+          \[
+            \mathbb{E}\!\left(e^{x}\right)=e^{m+\tfrac12 v^2},
+          \]
+          \[
+            \operatorname{Var}\!\left(e^{x}\right)=e^{2m+v^2}\left(e^{v^2}-1\right).
+          \]
+          <p><strong>Shape facts (Fig. 18.3).</strong> Lognormal is <strong>skewed right</strong> and <strong>bounded below by zero</strong>. When the underlying normal has small variance and positive mean (e.g., \(m=1.5, v=0.2\)), the density looks closer to a normal but remains right-skewed.</p>
+          <p><strong>Jensen’s inequality (key consequence).</strong> Because \(\exp(\cdot)\) is convex,</p>
+          \[
+            \mathbb{E}\!\left(e^{x}\right) > e^{\mathbb{E}[x]}=e^{m}
+          \]
+          <p>unless \(x\) is degenerate.</p>
+
+          <div id="lognormal-fig-18-3" style="width:900px;height:520px;"></div>
+          <div id="lognormal-fig-18-3-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
+          <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+          <script>
+            // ===== Figure 18.3 parameters (match the page labels) =====
+            // ln(y) ~ N(m, v^2) with v = std. dev. of ln(y)
+            const dists = [
+              { name: "ln(y) ~ 𝒩(0, 1)",     m: 0.0, v: 1.0,  dash: "solid"   },
+              { name: "ln(y) ~ 𝒩(0, 1.5)",   m: 0.0, v: 1.5,  dash: "dash"    },
+              { name: "ln(y) ~ 𝒩(1.5, 0.2)", m: 1.5, v: 0.2,  dash: "dashdot" }
+            ];
+
+            // Lognormal density: g(y; m, v) = [1/(y v √(2π))] * exp(-½((ln y - m)/v)^2), y>0
+            const LNpdf = (y, m, v) =>
+              (1/(y*v*Math.sqrt(2*Math.PI))) * Math.exp(-0.5 * Math.pow((Math.log(y)-m)/v, 2));
+
+            // Helpful summaries
+            const meanLN   = (m, v) => Math.exp(m + 0.5*v*v);
+            const medianLN = (m, v) => Math.exp(m);
+            const modeLN   = (m, v) => Math.exp(m - v*v);
+
+            // Grid (y from ~0 to 10; avoid y=0 because of log)
+            const yMin = 1e-3, yMax = 10, N = 1200;
+            const yGrid = Array.from({length: N}, (_, i) => yMin + i*(yMax - yMin)/(N-1));
+
+            // Build traces
+            const traces = dists.map(d => ({
+              x: yGrid,
+              y: yGrid.map(y => LNpdf(y, d.m, d.v)),
+              mode: "lines",
+              name: d.name,
+              line: {width: 3, dash: d.dash},
+              hovertemplate: "y=%{x:.2f}<br>pdf=%{y:.4f}<extra></extra>"
+            }));
+
+            const layout = {
+              title: "Figure 18.3 — Lognormal Probability Densities",
+              xaxis: {title: "y", range: [0, 10], zeroline: false},
+              yaxis: {title: "Probability Density", rangemode: "tozero"},
+              template: "plotly_white",
+              legend: {orientation: "h", y: 1.12},
+              margin: {l: 55, r: 20, t: 60, b: 45}
+            };
+
+            Plotly.newPlot("lognormal-fig-18-3", traces, layout,
+                           {displayModeBar: true, responsive: true});
+
+            // ===== Numbers + intuition (as on the page) =====
+            const rows = dists.map(d => {
+              const mean = meanLN(d.m, d.v);
+              const med  = medianLN(d.m, d.v);
+              const mode = modeLN(d.m, d.v);
+              return `<tr>
+      <td>${d.name}</td>
+      <td>${mean.toFixed(4)}</td>
+      <td>${med.toFixed(4)}</td>
+      <td>${mode.toFixed(4)}</td>
+    </tr>`;
+            }).join("");
+
+            // Jensen example from the caption text
+            const jLHS = 0.5*(Math.exp(0.5) + Math.exp(-0.5));  // (e^{0.5} + e^{-0.5})/2
+            const jRHS = Math.exp(0);                            // e^{E[X]} with E[X]=0
+
+            document.getElementById("lognormal-fig-18-3-info").innerHTML = `
+    <p>
+      Lognormal density: \\(g(y; m, v)=\frac{1}{y\,v\sqrt{2\pi}}\exp\{-\tfrac12[(\ln y-m)/v]^2\}\\),
+      where \\(\ln y\sim\mathcal N(m,v^2)\\). Curves are right-skewed and supported on \\(y>0\\).
+    </p>
+
+    <table style="border-collapse:collapse; width: 100%; font-variant-numeric: tabular-nums;">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Distribution</th>
+          <th style="text-align:right;">Mean \\(=e^{m+\tfrac12 v^2}\\)</th>
+          <th style="text-align:right;">Median \\(=e^{m}\\)</th>
+          <th style="text-align:right;">Mode \\(=e^{m-v^2}\\)</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+
+    <p style="margin-top:8px;">
+      <strong>Jensen’s inequality (why means exceed medians here):</strong>
+      for convex \\(\exp\\), \\(\mathbb E[e^{X}]>e^{\mathbb E[X]}\\).
+      Numerically, \\((e^{0.5}+e^{-0.5})/2 = ${jLHS.toFixed(3)} > ${jRHS.toFixed(0)}=e^{0}\\).
+      This pushes the lognormal mean above the median and creates the visible right-skew.
+    </p>
+  `;
+
+            if (window.MathJax && MathJax.typesetPromise) {
+              MathJax.typesetPromise();
+            }
+          </script>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Driving me On (Derivation)</summary>
+        <div class="content">
+          <h3>Goal</h3>
+          \[
+            X \sim \mathcal N(\mu,\sigma^2)\quad\Longrightarrow\quad \mathbb{E}\!\left(e^{X}\right)=e^{\,\mu+\tfrac12\sigma^{2}}.
+          \]
+          <hr/>
+          <h3>Step 1 — Write the expectation as an integral against the normal pdf</h3>
+          \[
+            \mathbb{E}(e^{X})
+            =\int_{-\infty}^{\infty} e^{x}\,\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left[-\tfrac12\!\left(\frac{x-\mu}{\sigma}\right)^{\!2}\right]dx.
+            \tag{1}
+          \]
+          <p>Combine the exponentials:</p>
+          \[
+            \mathbb{E}(e^{X})
+            =\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left\{\,x-\frac{(x-\mu)^2}{2\sigma^2}\right\}dx.
+            \tag{2}
+          \]
+
+          <h3>Step 2 — Prepare to complete the square in the exponent</h3>
+          <p>Factor \(-\frac{1}{2\sigma^2}\) from the curly braces:</p>
+          \[
+            x-\frac{(x-\mu)^2}{2\sigma^2}
+            =-\frac{1}{2\sigma^2}\Big[(x-\mu)^2-2\sigma^2x\Big].
+            \tag{3}
+          \]
+          <p>Now expand and regroup the bracketed quadratic:</p>
+          \[
+            \begin{aligned}
+            (x-\mu)^2-2\sigma^2x
+            &=x^2-2\mu x+\mu^2-2\sigma^2 x \\
+            &=x^2-2(\mu+\sigma^2)x+\mu^2.
+            \end{aligned}
+            \tag{4}
+          \]
+          <p>Complete the square around \(x-(\mu+\sigma^2)\):</p>
+          \[
+            \begin{aligned}
+            x^2-2(\mu+\sigma^2)x+\mu^2
+            &=\big[x-(\mu+\sigma^2)\big]^2-\big(\mu+\sigma^2\big)^2+\mu^2 \\
+            &=\big[x-(\mu+\sigma^2)\big]^2-\big(\mu^2+2\mu\sigma^2+\sigma^4\big)+\mu^2 \\
+            &=\big[x-(\mu+\sigma^2)\big]^2-\big(2\mu\sigma^2+\sigma^4\big).
+            \end{aligned}
+            \tag{5}
+          \]
+          <p>Substitute (5) into (3):</p>
+          \[
+            \begin{aligned}
+            x-\frac{(x-\mu)^2}{2\sigma^2}
+            &=-\frac{1}{2\sigma^2}\left\{\big[x-(\mu+\sigma^2)\big]^2-\big(2\mu\sigma^2+\sigma^4\big)\right\} \\
+            &=-\frac{\big[x-(\mu+\sigma^2)\big]^2}{2\sigma^2}
+            +\frac{2\mu\sigma^2+\sigma^4}{2\sigma^2} \\
+            &=-\frac{\big[x-(\mu+\sigma^2)\big]^2}{2\sigma^2}+\mu+\frac{\sigma^2}{2}.
+            \end{aligned}
+            \tag{6}
+          \]
+          <p>Thus the integrand in (2) factorizes cleanly.</p>
+
+          <h3>Step 3 — Pull out the constant factor and recognize a normal pdf</h3>
+          \[
+            \begin{aligned}
+            \mathbb{E}(e^{X})
+            &=\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left(\mu+\tfrac12\sigma^2\right)
+            \exp\!\left[-\frac{\big(x-(\mu+\sigma^2)\big)^2}{2\sigma^2}\right]dx \\
+            &=e^{\,\mu+\tfrac12\sigma^2}\,
+            \underbrace{\int_{-\infty}^{\infty}\frac{1}{\sigma\sqrt{2\pi}}
+            \exp\!\left[-\frac{\big(x-(\mu+\sigma^2)\big)^2}{2\sigma^2}\right]dx}_{=\,1}.
+            \end{aligned}
+            \tag{7}
+          \]
+          <p>The underbraced integral equals \(1\) because it is the total mass of a normal density with mean \(\mu+\sigma^2\) and variance \(\sigma^2\).</p>
+          <p>Therefore,</p>
+          \[
+            \boxed{\;\mathbb{E}(e^{X})=e^{\,\mu+\tfrac12\sigma^2}\;}
+            \tag{8}
+          \]
+          <p>as claimed.</p>
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
