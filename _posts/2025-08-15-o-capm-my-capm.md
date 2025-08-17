@@ -189,124 +189,100 @@ description: "wish me luck on my interview RIP"
       Vertical gaps from this ex-post line are residuals \( \varepsilon_P = R_P - (i_F+\beta_P r_M)\).
       Value-weighted residuals across the universe sum to ~0.</p>
 
-      <div id="sml-expost-card" style="max-width: 920px;"></div>
-      <div id="residual-sum" style="font-size: 0.9em; opacity: 0.8; margin-top: 6px;"></div>
-
+      <div id="capm-fig-2x" style="width:900px;height:520px;"></div>
+      <div id="capm-fig-2x-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
+      
       <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
       <script>
-        // ===== Parameters (edit these to taste) =====
-        const iF = 0.02;          // risk-free rate (intercept)
-        const muM = 0.06;         // expected market excess return (ex-ante slope)
-        const rM = 0.03;          // realized market excess return (ex-post slope)
-
-        // Sample assets: choose betas, weights, and residuals ε so that ∑ w_i ε_i ≈ 0
-        // (here exactly 0 with equal weights)
-        const assets = [
-          {name: "A", beta: 0.70, w: 0.25, eps:  +0.020},
-          {name: "B", beta: 1.00, w: 0.25, eps:  -0.010},
-          {name: "C", beta: 1.30, w: 0.25, eps:  +0.005},
-          {name: "D", beta: 1.00, w: 0.25, eps:  -0.015}
-        ];
-
-        // ===== Build lines =====
-        const betaGrid = Array.from({length: 201}, (_, i) => -0.2 + i*(2.0/200)); // [-0.2, 1.8]
-        const yExAnte  = betaGrid.map(b => iF + muM*b);
-        const yExPost  = betaGrid.map(b => iF + rM*b);
-
-        const traceExAnte = {
-          x: betaGrid, y: yExAnte, mode: "lines",
-          name: "Ex-ante SML: i_F + β·μ_M",
-          hovertemplate: "β=%{x:.2f}<br>E[R]=i_F + β·μ_M = %{y:.2%}<extra></extra>"
+      function renderCAPMExAnteExPost() {
+        // ===== Parameters to mirror the book figures =====
+        const i_f  = 0.05;          // risk-free rate (5%)
+        const mu_M = 0.07;          // expected excess market return (7%)  — SML slope
+        const betas  = [0.8, 1.0, 1.15, 1.3];     // P1, M, P2, P3
+        const labels = ["P1","M","P2","P3"];
+      
+        // ===== Figure 2.1 — Security Market Line (ex-ante) =====
+        const x1 = Array.from({length:301}, (_, i) => i * 1.4 / 300);
+        const y1 = x1.map(b => i_f + mu_M * b);
+      
+        const smlLine = {
+          x: x1, y: y1, mode: "lines", name: "Security Market Line",
+          xaxis: "x", yaxis: "y", hoverinfo: "skip"
         };
-
-        const traceExPost = {
-          x: betaGrid, y: yExPost, mode: "lines",
-          name: "Ex-post line: i_F + β·r_M",
-          line: {dash: "dash"},
-          hovertemplate: "β=%{x:.2f}<br>R = i_F + β·r_M = %{y:.2%}<extra></extra>"
+        const rfMarker = {
+          x: [0], y: [i_f], mode: "markers+text", name: "Risk-free (R_f)",
+          text: ["R_f"], textposition: "top left", showlegend: false, xaxis: "x", yaxis: "y"
         };
-
-        // Key points: risk-free and market (expected vs realized)
-        const riskFree = {
-          x: [0], y: [iF], mode: "markers+text", name: "Risk-free i_F",
-          text: ["i_F"], textposition: "bottom right", marker: {size: 9},
-          hovertemplate: "β=0<br>i_F=%{y:.2%}<extra></extra>"
+        const smlPts = {
+          x: betas, y: betas.map(b => i_f + mu_M * b),
+          mode: "markers+text", name: "Portfolios on SML",
+          text: labels, textposition: ["bottom left","bottom center","bottom right","bottom right"],
+          xaxis: "x", yaxis: "y"
         };
-
-        const marketExpected = {
-          x: [1], y: [iF + muM], mode: "markers+text", name: "Market (expected)",
-          text: ["M (expected)"], textposition: "top left", marker: {size: 9},
-          hovertemplate: "β=1<br>E[R_M]=i_F+μ_M=%{y:.2%}<extra></extra>"
+      
+        // ===== Figure 2.2 — Ex-post market line (realizations) =====
+        const R_M = 0.02; // realized market return (2%) < R_f ⇒ downward slope like the page
+        const x2 = Array.from({length:301}, (_, i) => i * 1.5 / 300);
+        const y2 = x2.map(b => i_f + (R_M - i_f) * b);
+      
+        const exPostLine = {
+          x: x2, y: y2, mode: "lines", name: "CAPM Ex-Post Returns",
+          xaxis: "x2", yaxis: "y2", hoverinfo: "skip"
         };
-
-        const marketRealized = {
-          x: [1], y: [iF + rM], mode: "markers+text", name: "Market (realized)",
-          text: ["M (realized)"], textposition: "bottom left", marker: {size: 9},
-          hovertemplate: "β=1<br>R_M=i_F+r_M=%{y:.2%}<extra></extra>"
+        const prime = s => s + "\u2032"; // prime mark
+        const exPostPredPts = {
+          x: betas, y: betas.map(b => i_f + (R_M - i_f) * b),
+          mode: "markers+text", name: "On ex-post line",
+          text: [prime("P1"), "M", prime("P2"), prime("P3")],
+          textposition: ["bottom left","bottom center","bottom right","bottom right"],
+          xaxis: "x2", yaxis: "y2"
         };
-
-        // ===== Sample assets with vertical residual "sticks" =====
-        const assetMarkers = {
-          x: [], y: [], mode: "markers+text", name: "Assets (realized)",
-          text: [], textposition: "top center", marker: {size: 9},
-          hovertemplate: "β=%{x:.2f}<br>R=%{y:.2%}<extra></extra>"
+      
+        // Realized returns (so P3 beats, P1/P2 lag — matches the caption text)
+        const realized = [0.010, 0.020, 0.012, 0.050];
+        const realizedPts = {
+          x: betas, y: realized, mode: "markers+text", name: "Realized Annual Return",
+          marker: {symbol: "square", size: 8},
+          text: labels, textposition: ["top left","top center","top right","top right"],
+          xaxis: "x2", yaxis: "y2"
         };
-
-        const residualLines = []; // one trace per asset (vertical line)
-        let wResidualSum = 0.0;
-
-        assets.forEach(a => {
-          const yPred = iF + rM * a.beta;      // ex-post line value at β_i
-          const yReal = yPred + a.eps;          // realized total return
-          assetMarkers.x.push(a.beta);
-          assetMarkers.y.push(yReal);
-          assetMarkers.text.push(a.name);
-
-          // vertical segment from predicted to realized
-          residualLines.push({
-            x: [a.beta, a.beta],
-            y: [yPred, yReal],
-            mode: "lines",
-            name: `ε_${a.name}`,
-            hovertemplate: `Asset ${a.name}<br>ε = ${a.eps.toLocaleString(undefined,{style:"percent", minimumFractionDigits:2})}<extra></extra>`
-          });
-
-          wResidualSum += a.w * a.eps;
-        });
-
-        // ===== Layout =====
+      
+        const data = [smlLine, rfMarker, smlPts, exPostLine, exPostPredPts, realizedPts];
+      
         const layout = {
-          title: "Ex-ante SML vs. Ex-post Line (Notation: i_F, μ_M, β, r_M)",
-          xaxis: {title: "β (beta)"},
-          yaxis: {title: "Return (total)", tickformat: ".0%"},
           template: "plotly_white",
-          legend: {orientation: "h", y: 1.1},
-          margin: {l: 40, r: 10, t: 60, b: 40},
-          width: 900, height: 520,
+          height: 520, width: 900,
+          margin: {l: 55, r: 30, t: 70, b: 55},
+          legend: {orientation: "h", x: 0.5, xanchor: "center", y: 1.12, yanchor: "bottom"},
+          // left subplot (Figure 2.1)
+          xaxis:  {domain: [0.00, 0.46], title: "Beta", range: [0, 1.4]},
+          yaxis:  {domain: [0.00, 1.00], title: "Expected Annual Return", tickformat: ".0%", range: [0, 0.16]},
+          // right subplot (Figure 2.2)
+          xaxis2: {domain: [0.54, 1.00], title: "Beta", range: [0, 1.5]},
+          yaxis2: {domain: [0.00, 1.00], title: "Expected Annual Return", tickformat: ".0%", range: [0, 0.06]},
+          // captions
           annotations: [
-            {x: 1.6, y: iF + muM*1.6, text: "slope = μ_M", showarrow: false, yshift: 10},
-            {x: 1.6, y: iF + rM*1.6, text: "slope = r_M (realized)", showarrow: false, yshift: -10}
+            {text: "Figure 2.1 — The Security Market Line", x: 0.23, xref: "paper", y: 1.06, yref: "paper", showarrow: false, font: {size: 13}},
+            {text: "Figure 2.2 — An Ex-Post Market Line",  x: 0.77, xref: "paper", y: 1.06, yref: "paper", showarrow: false, font: {size: 13}}
           ]
         };
-
-        Plotly.newPlot(
-          "sml-expost-card",
-          [traceExAnte, traceExPost, riskFree, marketExpected, marketRealized, assetMarkers, ...residualLines],
-          layout,
-          {displayModeBar: true, responsive: true}
-        );
-
-        // Display the value-weighted residual sum
-        const pct = (wResidualSum*100).toFixed(2);
-        document.getElementById("residual-sum").innerHTML =
-          `Value-weighted residuals: <strong>${pct}%</strong> (constructed to be ~0).`;
+      
+        Plotly.newPlot("capm-fig-2x", data, layout, {displayModeBar: true, responsive: true});
+      
+        // ===== Info / intuition =====
+        const infoHTML = `
+          <p><strong>Security Market Line (left).</strong> Consensus CAPM: \\(E[R]=i_f+\\beta\\,\\mu_M\\) with \\(i_f=5\\%\\), \\(\\mu_M=7\\%\\). Points \\(P_1,P_2,P_3\\) and \\(M\\) lie on the line.</p>
+          <p><strong>Ex-post line (or '<i>Insecurity</i> Market Line' if you like nerdy finance humor that makes other people want to punch you.) (right).</strong> Connect \\(R_f\\) to realized \\(R_M=2\\%\\): \\(R'=i_f+\\beta\\,(R_M-i_f)\\). Open markers \\(P_1',M,P_2',P_3'\\) lie on that line (CAPM ex-post predictions); filled squares are the realized returns.</p>
+          <ul style="margin-top:6px;">
+            <li>Vertical gap (square − open marker) = realized residual/alpha.</li>
+            <li>Value-weighted residuals net to zero each period; dispersion is idiosyncratic risk.</li>
+            <li>Here \\(P_3\\) sits above the line (positive alpha); \\(P_1\\), \\(P_2\\) sit below (negative alphas).</li>
+          </ul>`;
+        document.getElementById("capm-fig-2x-info").innerHTML = infoHTML;
+      }
+      renderCAPMExAnteExPost();
       </script>
 
-      <p style="font-size:0.9em; opacity:0.8; margin-top:8px;">
-        Hover the lines/points: solid = ex-ante SML \(i_F+\beta\,\mu_M\); dashed = ex-post line \(i_F+\beta\,r_M\).
-        Vertical segments show residuals \( \varepsilon \). We chose betas/weights/residuals so that
-        \( \sum w_i\varepsilon_i \approx 0 \), illustrating the “value-weighted residuals sum to zero” fact.
-      </p>
     </div>
   </details>
 </div>
