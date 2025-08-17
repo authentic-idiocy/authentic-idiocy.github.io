@@ -56,5 +56,12 @@
       </footer>
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
+    <script>
+      window.addEventListener('load', () => {
+        if (window.MathJax) {
+          MathJax.typesetPromise(document.querySelectorAll('.tooltip'));
+        }
+      });
+    </script>
   </body>
 </html>
