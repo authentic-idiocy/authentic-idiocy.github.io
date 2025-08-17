@@ -41,7 +41,7 @@ description: "wish me luck on my interview RIP"
 
 <div class="flashcard">
   <details>
-    <summary>The Whole is Other than the Sum of Its Parts (but not really)</summary>
+    <summary>You can be diversified away. I raise the cost of capital. We are not the same.</summary>
     <div class="back">
       <p><strong>Setup.</strong> Portfolio \(P\) and market \(M\) with excess returns \(r_P, r_M\).</p>
       
@@ -79,7 +79,17 @@ description: "wish me luck on my interview RIP"
       \operatorname{Var}(r_P)=\underbrace{\beta_P^{2}\operatorname{Var}(r_M)}_{\text{systematic risk}} + \underbrace{\omega_P^{2}}_{\text{idiosyncratic risk}},
       \qquad \omega_P^{2}:=\operatorname{Var}(\theta_P).
       \]
-      
+      <details class="dropdown-block">
+        <summary>In english.</summary>
+        <div class="content">
+          <ul>
+            <li>\\(\\beta_p\\) measures how much <strong>market risk</strong> \\(P\\) carries per unit of market variance.</li>
+            <li>The arithmetic decomposition is a <strong>projection</strong>: \\(r_p\\) is orthogonally projected onto \\(r_M\\). The fitted part \\(\\beta_p r_M\\) is the market-driven return; the miss \\(\\theta_p\\) is everything <em>not</em> explained by the market.</li>
+            <li>Because \\(\\theta_p \\perp r_M\\), total variance splits additively. This is the statistical backbone behind phrases like “systematic vs. idiosyncratic risk.”</li>
+            <li>None of this assumes CAPM or equilibrium—only linear projection and definitions. CAPM later stipulates how <strong>expected</strong> returns relate to \\(\\beta\\) and says residuals shouldn’t earn systematic premia.</li>
+          </ul>
+        </div>
+      </details>
       <p><small>
         Notes: \((\hat\alpha_P,\hat\beta_P)\) from historical OLS summarize the past; \(\beta\) itself is forward-looking. By convention the market has \(\beta=1\) and the risk-free asset has \(\beta=0\). No CAPM assumptions needed—this is straight regression algebra.<br>
         <span style="font-style: italic;">The CAPM adds <span style="font-weight: bold;">economic</span> content only when it asserts something about the <span style="font-weight: bold;">expected</span> returns of those residual (non-market) pieces.</span>
@@ -90,7 +100,7 @@ description: "wish me luck on my interview RIP"
 
 <div class="flashcard">
   <details>
-    <summary>Risky Business</summary>
+    <summary>CAPM Crunch</summary>
     <div class="back">
       <p><strong>CAPM assertion.</strong> Define the residual (specific) return \(\theta_P := r_P - \beta_P r_M\). CAPM adds the condition</p>
 
@@ -124,8 +134,44 @@ description: "wish me luck on my interview RIP"
         <li><em>Portfolio tilts.</em> Want higher expected return? Increase exposure to market risk (\(\beta\uparrow\)). 
             Hedge assets with \(\beta<0\) lower expected excess return but can reduce total variance.</li>
         <li><em>Market-wide accounting.</em> Value-weighted residuals net to (about) zero across the market; CAPM strengthens this by setting each asset’s <em>expected</em> residual to zero.</li>
+        <li><em>Implicit assumption:</em> Investors share <strong>homogeneous expectations</strong> (they differ only in risk tolerance).</li>
+        <li><em>Passive investing implication:</em> Under CAPM, anyone who deviates from the market plays a <strong>zero-sum</strong> game—extra risk with no extra expected return—so the logic pushes to buy-and-hold the market (<strong>passive investing</strong>).</li>
       </ol>
-
+      <details class="dropdown-block">
+        <summary>CAPM and Efficient Markets Theory</summary>
+        <div class="content">
+          <ul>
+            <li>Not identical but consistent.</li>
+            <li><b>EMH forms:</b>
+              <ul>
+                <li><b>Weak:</b> Cannot beat the market using only historical price/volume.</li>
+                <li><b>Semistrong:</b> Cannot beat the market using all public info (fundamentals, analyst reports, social media).</li>
+                <li><b>Strong:</b> Prices reflect <b>all</b> relevant information; no one can systematically outperform.</li>
+              </ul>
+            </li>
+            <li>CAPM says: For every winner there's a loser; absent "greater fools," don't expect to outperform.</li>
+            <li>EMH's strong/no-greater-fools view dovetails with CAPM's \(\mathbb{E}[\alpha]=0\) claim.</li>
+          </ul>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Consensus Expected Returns</summary>
+        <div class="content">
+          <ul>
+            <li>CAPM's \(\mathbb{E}[\theta_p]=0\) ⇒ <b>passive</b> (market) is optimal.</li>
+            <li>In mean–variance terms:
+              <ul>
+                <li><b>Feed CAPM \(\mathbb{E}[r]\)</b> into Markowitz ⇒ <b>optimal</b> portfolio is the <b>market</b></li>
+                <li>(Or some <b>combo</b> of market and cash under full-investment constraints. <strong>KEEP READING.</strong>)</li>
+              </ul>
+            </li>
+            <li>Conversely, <b>assume</b> market is optimal ⇒ back out the \(\mathbb{E}[r]\) that make it so: returns proportional to \(\beta\) w.r.t. that optimal portfolio.</li>
+            <li>Hence CAPM \(\mathbb{E}[r]\) are called <b>consensus expected returns</b>: the returns that make the market (consensus portfolio) optimal.</li>
+            <li>An <b>active</b> manager's subjective \(\mathbb{E}[r]\) must <b>differ</b> from consensus \(\mathbb{E}[r]\).</li>
+          </ul>
+        </div>
+      </details>
       <p><small>Notation: \(i_F\) risk-free rate; \(r_M\) market excess return; \(\mu_M=\mathbb{E}[r_M]\) market risk premium; \(\beta_P\) beta of \(P\) vs. the market.</small></p>
     </div>
   </details>
