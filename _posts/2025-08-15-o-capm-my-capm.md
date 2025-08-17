@@ -83,10 +83,10 @@ description: "wish me luck on my interview RIP"
         <summary>In english.</summary>
         <div class="content">
           <ul>
-            <li>\\(\\beta_p\\) measures how much <strong>market risk</strong> \\(P\\) carries per unit of market variance.</li>
-            <li>The arithmetic decomposition is a <strong>projection</strong>: \\(r_p\\) is orthogonally projected onto \\(r_M\\). The fitted part \\(\\beta_p r_M\\) is the market-driven return; the miss \\(\\theta_p\\) is everything <em>not</em> explained by the market.</li>
-            <li>Because \\(\\theta_p \\perp r_M\\), total variance splits additively. This is the statistical backbone behind phrases like “systematic vs. idiosyncratic risk.”</li>
-            <li>None of this assumes CAPM or equilibrium—only linear projection and definitions. CAPM later stipulates how <strong>expected</strong> returns relate to \\(\\beta\\) and says residuals shouldn’t earn systematic premia.</li>
+            <li>\(\beta_p\) measures how much <strong>market risk</strong> \(P\) carries per unit of market variance.</li>
+            <li>The arithmetic decomposition is a <strong>projection</strong>: \(r_p\) is orthogonally projected onto \(r_M\). The fitted part \(\beta_p r_M\) is the market-driven return; the miss \(\theta_p\) is everything <em>not</em> explained by the market.</li>
+            <li>Because \(\theta_p \perp r_M\), total variance splits additively. This is the statistical backbone behind phrases like “systematic vs. idiosyncratic risk.”</li>
+            <li>None of this assumes CAPM or equilibrium—only linear projection and definitions. CAPM later stipulates how <strong>expected</strong> returns relate to \(\beta\) and says residuals shouldn’t earn systematic premia.</li>
           </ul>
         </div>
       </details>
