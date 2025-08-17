@@ -452,8 +452,8 @@ details[open] > summary.silk-hover {
   border-bottom: 1px dotted currentColor;       /* visual hint */
 }
 
-.define::after {
-  content: attr(data-def);
+.tooltip {
+  display: none;
   position: absolute;
   left: 0;
   bottom: 120%;                      /* hover box above the word */
@@ -465,16 +465,14 @@ details[open] > summary.silk-hover {
   color: #fff;
   background: rgba(0,0,0,0.9);       /* dark tooltip */
   border-radius: 4px;
-  opacity: 0;
   transform: translateY(4px);
   pointer-events: none;
-  transition: opacity .15s ease-out, transform .15s ease-out;
   z-index: 9999;
 }
 
-.define:hover::after,
-.define:focus-visible::after {
-  opacity: 1;
+.define:hover .tooltip,
+.define:focus-visible .tooltip {
+  display: block;
   transform: translateY(0);
 }
 
