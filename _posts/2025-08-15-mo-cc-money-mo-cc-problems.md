@@ -60,12 +60,14 @@ description: "-- Biggie Smalls, probably."
       \[
       r_{t,t+h}=\ln(1+R_{t,t+h}),\qquad R_{t,t+h}=e^{\,r_{t,t+h}}-1.
       \]
-      <p>For small moves, \(r\approx R\) (<span class="define" data-def="\[
+      <p>For small moves, \(r\approx R\) (<span class="define">first-order Taylor
+        <span class="tooltip">
+\[
 
 
 \textbf{Taylor about }a:\quad
-f(x)=\sum\_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^k ;+; R\_{n+1}(x).
-]
+f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^k \;+\; R_{n+1}(x).
+\]
 
 \[
 \textbf{Maclaurin about }0:\quad
@@ -97,7 +99,9 @@ With $x=R$,
 r=\ln(1+R)=R-\frac{R^{2}}{2}+O(R^{3})=R+O(R^{2}).
 \]
 
-Hence, to first order, \(r\approx R\).">first-order Taylor</span>).</p> </div> </details>
+Hence, to first order, \(r\approx R\).
+        </span>
+      </span>).</p> </div> </details>
 
 
 </div>
