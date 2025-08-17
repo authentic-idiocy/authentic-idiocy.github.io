@@ -183,7 +183,7 @@ description: "wish me luck on my interview RIP"
     <summary>"Ex-ante vs. Ex-post": Is it all just Latin?</summary>
     <div class="back">
 
-      <p><strong>Idea.</strong> Ex-ante (CAPM), expected total return lies on the Security Market Line
+      <p><strong>CAPM is about expectations.</strong> Ex-ante (CAPM), expected total return lies on the Security Market Line
       \( \mathbb{E}[R_P]= i_F + \beta_P\,\mu_M \) (intercept \(i_F\), slope \( \mu_M \)).
       Ex-post, after realization, plot \( R_P = i_F + \beta_P\, r_M \) (intercept \(i_F\), slope = realized market excess \(r_M\)).
       Vertical gaps from this ex-post line are residuals \( \varepsilon_P = R_P - (i_F+\beta_P r_M)\).
@@ -282,7 +282,41 @@ description: "wish me luck on my interview RIP"
       }
       renderCAPMExAnteExPost();
       </script>
-
+      <details class="dropdown-block">
+        <summary>What does this mean for you, the active investor with the active lifestyle? (cough, day trader, cough.)</summary>
+        <div class="content">
+          <strong>Goal:</strong> Beat the market.
+          <ul>
+            <li>CAPM says \(\mathbb{E}[\theta_p]=0\) ⇒ \(\mathbb{E}[r_p]=\beta_p \mu_M\).</li>
+            <li>On priors, alpha is a 50–50 proposition. Sheer dumb luck a la McGonagall.; a strict CAPM disciple wouldn't hire an active manager.</li>
+          </ul>
+          Yet CAPM (and EMH) still <strong>help</strong> actives:
+          <ol>
+            <li><b>Burden of proof</b> shifts to the manager to explain why insights should produce superior <i>risk-adjusted</i> results (market is at least somewhat efficient).</li>
+            <li><b>Decomposition</b> into market vs. residual return needs <b>no theory</b>—only a beta forecast. Many managers therefore target \(\beta \approx 1\) to control market timing risk.</li>
+            <li>Provides <b>consensus expected returns</b> (the CAPM line) as a <b>baseline</b>; research can focus on forecasting <b>residual</b> returns (where consensus is zero).</li>
+          </ol>
+        </div>
+      </details>
+      <details class="dropdown-block">
+        <summary>Your Robinhood trading strategy is only as good as your \(\beta\) forecast.</summary>
+        <div class="content">
+        <ul>
+          <li>Or I guess if we're splitting hairs, your <strong>\(\mu_M\)</strong> is only as good as your \(\beta\) forecast.</li>
+          <li>3 ways to do it:
+            <ol>
+              <li><b>Simple:</b> historical beta from past returns</li>
+              <li><b>Improved:</b> <b>Bayesian</b> shrinkage/adjustment to historical betas. <strong>KEEP READING.</strong></li>
+              <li><b>Forward-looking risk models</b> (discussed in post coming to a blog near you.) for beta in particular</li>
+            </ol>
+          </li>
+          <li>Estimate \(\mu_M\) from historical excess returns.
+            <ul>
+              <li>Note: a <b>beta-neutral to benchmark</b> policy needn't estimate \(\mu_M\); with <b>portfolio \(\beta=1.0\)</b> vs. the market benchmark, the market excess return does <b>not</b> contribute to <b>active</b> return.</li>
+            </ul>
+          </li>
+        </ul>
+      </details>
     </div>
   </details>
 </div>
