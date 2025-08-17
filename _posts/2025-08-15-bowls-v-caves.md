@@ -169,6 +169,9 @@ description: "'Let's get ready to RUMBLEEEE' -- Jensen"
       
         // ===== Numbers + intuition text =====
         const num = v => v.toFixed(4);
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise();
+        }
         document.getElementById("jensen-c1-numbers").innerHTML = `
           <p>
             With \( X \in \{-1,1\} \) and \( \mathbb{P}(X{=}-1)=\mathbb{P}(X{=}1)=0.5 \), we have
@@ -189,9 +192,6 @@ description: "'Let's get ready to RUMBLEEEE' -- Jensen"
           </p>
         `;
         
-        if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise();
-        }
       </script>
     </div>
   </details>
