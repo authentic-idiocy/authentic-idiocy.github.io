@@ -44,35 +44,45 @@ description: "wish me luck on my interview RIP"
     <summary>The Whole is Other than the Sum of Its Parts (but not really)</summary>
     <div class="back">
       <p><strong>Setup.</strong> Portfolio \(P\) and market \(M\) with excess returns \(r_P, r_M\).</p>
-
+      
+      <ul>
+        <li><em>Note:</em> The market portfolio \(M\) is typically approximated using a broad value-weighted domestic equity index (e.g., S&amp;P 500 for US markets).</li>
+      </ul>
+      
+      <p>Define the portfolio's market beta as:</p>
+      \[
+      \beta_P = \frac{\operatorname{Cov}(r_P,r_M)}{\operatorname{Var}(r_M)}
+      \]
+      
       <p><em>Regression form (time series):</em></p>
-
+      
       \[
       r_P(t)=\alpha_P+\beta_P\,r_M(t)+\varepsilon_P(t),\qquad t=1,\ldots,T.
       \]
-
+      
       <p><em>Arithmetic decomposition (definition):</em></p>
-
+      
       \[
-      \theta_P \;:=\; r_P-\beta_P r_M \quad\Rightarrow\quad r_P=\beta_P r_M+\theta_P.
+      r_P=\underbrace{\beta_P r_M}_{\text{market (systematic) component}} + \underbrace{\theta_P}_{\text{residual (idiosyncratic) component}} \quad\Rightarrow\quad \theta_P \;:=\; r_P-\beta_P r_M.
       \]
-
+      
       <p><em>Orthogonality (pure regression geometry):</em></p>
-
+      
       \[
       \operatorname{Cov}(\theta_P,r_M)=\operatorname{Cov}(r_P-\beta_P r_M,\,r_M)
       =\operatorname{Cov}(r_P,r_M)-\beta_P \operatorname{Var}(r_M)=0.
       \]
-
+      
       <p><em>Variance split:</em></p>
-
+      
       \[
-      \operatorname{Var}(r_P)=\beta_P^{2}\operatorname{Var}(r_M)+\omega_P^{2},
+      \operatorname{Var}(r_P)=\underbrace{\beta_P^{2}\operatorname{Var}(r_M)}_{\text{systematic risk}} + \underbrace{\omega_P^{2}}_{\text{idiosyncratic risk}},
       \qquad \omega_P^{2}:=\operatorname{Var}(\theta_P).
       \]
-
+      
       <p><small>
-        Notes: \((\hat\alpha_P,\hat\beta_P)\) from historical OLS summarize the past; \(\beta\) itself is forward-looking. By convention the market has \(\beta=1\) and the risk-free asset has \(\beta=0\). No CAPM assumptions needed—this is straight regression algebra.
+        Notes: \((\hat\alpha_P,\hat\beta_P)\) from historical OLS summarize the past; \(\beta\) itself is forward-looking. By convention the market has \(\beta=1\) and the risk-free asset has \(\beta=0\). No CAPM assumptions needed—this is straight regression algebra.<br>
+        <span style="font-style: italic;">The CAPM adds <span style="font-weight: bold;">economic</span> content only when it asserts something about the <span style="font-weight: bold;">expected</span> returns of those residual (non-market) pieces.</span>
       </small></p>
     </div>
   </details>
