@@ -424,15 +424,15 @@ description: "Stock prices are in league with the freeway."
 
             document.getElementById("lognormal-fig-18-3-info").innerHTML = `
     <p>
-      Lognormal density: \\(g(y; m, v)=\frac{1}{y\,v\sqrt{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{\ln y - m}{v}\right)^2\right)\\),
-      where \\(\ln y\sim\mathcal{N}(m,v^2)\\). Curves are right-skewed and supported on \\(y>0\\).
+      Lognormal density: \\(g(y; m, v)=\\frac{1}{y\\,v\\sqrt{2\\pi}}\\exp\\left(-\\frac{1}{2}\\left(\\frac{\\ln y - m}{v}\\right)^2\\right)\\),
+      where \\(\\ln y\\sim\\mathcal{N}(m,v^2)\\). Curves are right-skewed and supported on \\(y>0\\).
     </p>
 
     <table style="border-collapse:collapse; width: 100%; font-variant-numeric: tabular-nums;">
       <thead>
         <tr>
           <th style="text-align:left;">Distribution</th>
-          <th style="text-align:right;">Mean \\(=e^{m+\tfrac{1}{2} v^2}\\)</th>
+          <th style="text-align:right;">Mean \\(=e^{m+\\frac{1}{2} v^2}\\)</th>
           <th style="text-align:right;">Median \\(=e^{m}\\)</th>
           <th style="text-align:right;">Mode \\(=e^{m-v^2}\\)</th>
         </tr>
@@ -444,8 +444,8 @@ description: "Stock prices are in league with the freeway."
 
     <p style="margin-top:8px;">
       <strong>Jensen’s inequality (why means exceed medians here):</strong>
-      for convex \\(\exp\\), \\(\mathbb{E}[e^{X}]>e^{\mathbb{E}[X]}\\).
-      Numerically, \\((e^{0.5}+e^{-0.5})/2 = ${jLHS.toFixed(3)} > ${jRHS.toFixed(0)}=e^{0}\\).
+      for convex \\(\\exp\\), \\(\\mathbb{E}[e^{X}]>e^{\\mathbb{E}[X]}\\).
+      Numerically, \\((e^{0.5}+e^{-0.5})/2\\) = ${jLHS.toFixed(3)} &gt; ${jRHS.toFixed(0)} \\(= e^{0}\\).
       This pushes the lognormal mean above the median and creates the visible right-skew.
     </p>
   `;
