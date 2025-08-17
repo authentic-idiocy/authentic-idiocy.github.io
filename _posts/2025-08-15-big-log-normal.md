@@ -212,7 +212,7 @@ description: "Stock prices are in league with the freeway."
 </div>
 
 <div class="flashcard">
-  <details>
+  <details id="leading-me-on">
     <summary>Leading me On</summary>
     <div class="back">
 
@@ -361,7 +361,8 @@ description: "Stock prices are in league with the freeway."
           <div id="lognormal-fig-18-3-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
           <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
           <script>
-            // ===== Figure 18.3 parameters (match the page labels) =====
+            function renderLognormal() {
+              // ===== Figure 18.3 parameters (match the page labels) =====
             // ln(y) ~ N(m, v^2) with v = std. dev. of ln(y)
             const dists = [
               { name: "ln(y) ~ 𝒩(0, 1)",     m: 0.0, v: 1.0,  dash: "solid"   },
@@ -393,7 +394,7 @@ description: "Stock prices are in league with the freeway."
             }));
 
             const layout = {
-              title: "Figure 18.3 — Lognormal Probability Densities",
+              title: "Lognormal Probability Densities",
               xaxis: {title: "y", range: [0, 10], zeroline: false},
               yaxis: {title: "Probability Density", rangemode: "tozero"},
               template: "plotly_white",
@@ -402,7 +403,7 @@ description: "Stock prices are in league with the freeway."
             };
 
             Plotly.newPlot("lognormal-fig-18-3", traces, layout,
-                           {displayModeBar: true, responsive: true});
+                             {displayModeBar: true, responsive: true});
 
             // ===== Numbers + intuition (as on the page) =====
             const rows = dists.map(d => {
@@ -450,8 +451,16 @@ description: "Stock prices are in league with the freeway."
   `;
 
             if (window.MathJax && MathJax.typesetPromise) {
-              MathJax.typesetPromise();
+                MathJax.typesetPromise();
+              }
             }
+            const card = document.getElementById('leading-me-on');
+            card.addEventListener('toggle', () => {
+              if (card.open && !card.dataset.rendered) {
+                renderLognormal();
+                card.dataset.rendered = true;
+              }
+            });
           </script>
     </div>
   </details>
