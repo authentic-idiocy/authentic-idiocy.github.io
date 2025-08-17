@@ -463,146 +463,147 @@ description: "Stock prices are in league with the freeway."
             });
           </script>
     </div>
-    <div class="flashcard">
-      <details>
-        <summary>Big log (-normal) model of stock prices</summary>
-        <div class="back">
-    
-          <details class="dropdown-block">
-            <summary>Setup (lognormality from cc returns)</summary>
-            <div class="content">
-              <p>If \(S_t\) is lognormal, there exists a normal r.v. \(x\) such that</p>
-              \[
-              \frac{S_t}{S_0}=e^{x}, \qquad x\sim \mathcal N(\cdot,\cdot).
-              \]
-              <p>Let the continuously-compounded return from \(t\) to \(s\) be \(R(t,s)\).</p>
-              <p>Additivity of cc returns (and multiplicativity of prices):</p>
-              \[
-              S_{t_1}=S_0 e^{R(0,t_1)},\quad
-              S_{t_2}=S_{t_1}e^{R(t_1,t_2)}=S_0 e^{R(0,t_1)+R(t_1,t_2)},
-              \]
-              \[
-              R(t_0,t_2)=R(t_0,t_1)+R(t_1,t_2).
-              \]
-            </div>
-          </details>
-    
-          <details class="dropdown-block">
-            <summary>Time aggregation (iid short-horizon returns)</summary>
-            <div class="content">
-              <p>Split \([0,T]\) into \(n\) equal steps of length \(h=T/n\). Then</p>
-              \[
-              R(0,T)=\sum_{i=1}^{n} R\!\big((i-1)h,\,ih\big),\qquad
-              \mathbb E\!\left[R\!\big((i-1)h,\,ih\big)\right]=\alpha_h,\quad
-              \operatorname{Var}\!\left[R\!\big((i-1)h,\,ih\big)\right]=\sigma_h^2.
-              \]
-              <p>Under independence and identical distribution across steps,</p>
-              \[
-              \mathbb E\!\left[R(0,T)\right]=n\alpha_h,\qquad
-              \operatorname{Var}\!\left[R(0,T)\right]=n\sigma_h^2.
-              \]
-              <p><b>In english.</b> mean and variance of cc returns are ∝ time.</p>
-            </div>
-          </details>
-    
-          <details class="dropdown-block">
-            <summary>Parametrization with drift, dividends, and volatility</summary>
-            <div class="content">
-              <p>Let \(t\) be in years. Let</p>
-              <ul>
-                <li>\(\alpha\) = annual mean <b>cc capital-gain rate</b>,</li>
-                <li>\(\delta\) = annual <b>dividend yield</b>,</li>
-                <li>\(\sigma\) = annual <b>volatility</b> (std. dev. of cc returns).</li>
-              </ul>
-              <p>Model (lognormal under the physical measure):</p>
-              \[
-              \ln\!\left(\frac{S_t}{S_0}\right)\sim
-              \mathcal N\!\Big(\,(\alpha-\delta-\tfrac12\sigma^2)t,\;\sigma^2 t\,\Big).
-              \]
-              <p>Equivalent forms:</p>
-              \[
-              \ln\!\left(\frac{S_t}{S_0}\right)=
-              (\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z,\quad Z\sim\mathcal N(0,1),
-              \]
-              \[
-              S_t=S_0\exp\!\Big((\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z\Big).
-              \]
-              <p><b>Why the \(-\tfrac12\sigma^2\) term?</b> Because \(\mathbb E\!\left[e^{\sigma\sqrt{t}Z}\right]=e^{\tfrac12\sigma^2 t}\). Subtracting \(\tfrac12\sigma^2\) makes \(\alpha-\delta\) equal the <span class="define">expected cc rate of appreciation<span class="tooltip">
-                Short version: the exponential of a normal is lognormal, and its mean picks up a convexity factor \(e^{\tfrac12\sigma^2 t}\). Subtracting \(\tfrac12\sigma^2\) in the log drift cancels that factor so the expected price grows at cc rate \(\alpha-\delta\).<br><br>
-                
-                Let \(Z\sim\mathcal N(0,1)\) and<br>
-                \[
-                \ln\!\frac{S_t}{S_0}
-                = (\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z,
-                \quad\Rightarrow\quad
-                S_t=S_0\exp\!\Big((\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z\Big).
-                \]<br>
-                
-                Take expectation:<br>
-                \[
-                \mathbb E[S_t]
-                = S_0 e^{(\alpha-\delta-\tfrac12\sigma^2)t}\;\mathbb E\!\left[e^{\sigma\sqrt{t}\,Z}\right]
-                = S_0 e^{(\alpha-\delta-\tfrac12\sigma^2)t}\; e^{\tfrac12\sigma^2 t}
-                = S_0 e^{(\alpha-\delta)t}.
-                \]<br>
-                
-                Therefore the "expected cc rate of appreciation" (the \(r\) such that \(\mathbb E[S_t]=S_0e^{rt}\)) is<br>
-                \[
-                r=\frac{1}{t}\ln\frac{\mathbb E[S_t]}{S_0}=\alpha-\delta.
-                \]<br>
-                
-                If you didn't subtract \(\tfrac12\sigma^2\) (i.e., used drift \(\alpha-\delta\) in \(\ln S\)), you'd get<br>
-                \[
-                \mathbb E[S_t]=S_0 e^{(\alpha-\delta)t}e^{\tfrac12\sigma^2 t}
-                \quad\Rightarrow\quad
-                r=\alpha-\delta+\tfrac12\sigma^2,
-                \]<br>
-                which is too high by the convexity bump. In words: volatility lifts the arithmetic mean of a lognormal by \(e^{\tfrac12\sigma^2 t}\); subtracting \(\tfrac12\sigma^2\) in the log drift exactly offsets it.
-              </span></span>.</p>
-            </div>
-          </details>
-    
-          <details class="dropdown-block">
-            <summary>Mean, expected log-return, and median</summary>
-            <div class="content">
-              <p>Taking expectation of \(S_t\):</p>
-              \[
-              \mathbb E[S_t]=S_0\,e^{(\alpha-\delta)t},
-              \]
-              \[
-              \ln \mathbb E\!\left(\frac{S_t}{S_0}\right)=(\alpha-\delta)t.
-              \]
-              <p>Median price (set \(Z=0\)):</p>
-              \[
-              \operatorname{Median}[S_t]=S_0\,e^{(\alpha-\delta-\tfrac12\sigma^2)t}.
-              \]
-              <p><b>Implications.</b> For \(\sigma>0\), \(\operatorname{Median}[S_t]<\mathbb E[S_t]\); if \(\sigma\) is large, \(S_t<S_0\) <b>more than half the time</b> even when the mean grows.</p>
-            </div>
-          </details>
-    
-          <details class="dropdown-block">
-            <summary>One-sigma price moves (log-centered around the mean)</summary>
-            <div class="content">
-              <p>Over horizon \(t\), a "±1σ" move corresponds to \(Z=\pm 1\):</p>
-              \[
-              S_t^{(\pm 1\sigma)}=S_0\,\exp\!\Big((\alpha-\delta-\tfrac12\sigma^2)t \;\pm\; \sigma\sqrt{t}\Big).
-              \]
-            </div>
-          </details>
-    
-          <details class="dropdown-block">
-            <summary>In english</summary>
-            <div class="content">
-              <ul>
-                <li>Cc returns <b>add</b>; exponentiating makes prices <b>multiply</b> ⇒ lognormal prices.</li>
-                <li>Drift net of dividends is \(\alpha-\delta\); subtracting \(\tfrac12\sigma^2\) aligns the model so that expected <b>price</b> grows at rate \(\alpha-\delta\) while the <b>median</b> grows slower.</li>
-                <li>Mean/variance of cc returns scale with time; one-σ price bands are \(e^{\pm\sigma\sqrt{t}}\) about the median in <b>log</b> space.</li>
-              </ul>
-            </div>
-          </details>
-    
+
+  </details>
+</div>
+<div class="flashcard">
+  <details>
+    <summary>Big log (-normal) model of stock prices</summary>
+    <div class="back">
+
+      <details class="dropdown-block">
+        <summary>Setup (lognormality from cc returns)</summary>
+        <div class="content">
+          <p>If \(S_t\) is lognormal, there exists a normal r.v. \(x\) such that</p>
+          \[
+          \frac{S_t}{S_0}=e^{x}, \qquad x\sim \mathcal N(\cdot,\cdot).
+          \]
+          <p>Let the continuously-compounded return from \(t\) to \(s\) be \(R(t,s)\).</p>
+          <p>Additivity of cc returns (and multiplicativity of prices):</p>
+          \[
+          S_{t_1}=S_0 e^{R(0,t_1)},\quad
+          S_{t_2}=S_{t_1}e^{R(t_1,t_2)}=S_0 e^{R(0,t_1)+R(t_1,t_2)},
+          \]
+          \[
+          R(t_0,t_2)=R(t_0,t_1)+R(t_1,t_2).
+          \]
         </div>
       </details>
+
+      <details class="dropdown-block">
+        <summary>Time aggregation (iid short-horizon returns)</summary>
+        <div class="content">
+          <p>Split \([0,T]\) into \(n\) equal steps of length \(h=T/n\). Then</p>
+          \[
+          R(0,T)=\sum_{i=1}^{n} R\!\big((i-1)h,\,ih\big),\qquad
+          \mathbb E\!\left[R\!\big((i-1)h,\,ih\big)\right]=\alpha_h,\quad
+          \operatorname{Var}\!\left[R\!\big((i-1)h,\,ih\big)\right]=\sigma_h^2.
+          \]
+          <p>Under independence and identical distribution across steps,</p>
+          \[
+          \mathbb E\!\left[R(0,T)\right]=n\alpha_h,\qquad
+          \operatorname{Var}\!\left[R(0,T)\right]=n\sigma_h^2.
+          \]
+          <p><b>In english.</b> mean and variance of cc returns are ∝ time.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Parametrization with drift, dividends, and volatility</summary>
+        <div class="content">
+          <p>Let \(t\) be in years. Let</p>
+          <ul>
+            <li>\(\alpha\) = annual mean <b>cc capital-gain rate</b>,</li>
+            <li>\(\delta\) = annual <b>dividend yield</b>,</li>
+            <li>\(\sigma\) = annual <b>volatility</b> (std. dev. of cc returns).</li>
+          </ul>
+          <p>Model (lognormal under the physical measure):</p>
+          \[
+          \ln\!\left(\frac{S_t}{S_0}\right)\sim
+          \mathcal N\!\Big(\,(\alpha-\delta-\tfrac12\sigma^2)t,\;\sigma^2 t\,\Big).
+          \]
+          <p>Equivalent forms:</p>
+          \[
+          \ln\!\left(\frac{S_t}{S_0}\right)=
+          (\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z,\quad Z\sim\mathcal N(0,1),
+          \]
+          \[
+          S_t=S_0\exp\!\Big((\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z\Big).
+          \]
+          <p><b>Why the \(-\tfrac12\sigma^2\) term?</b> Because \(\mathbb E\!\left[e^{\sigma\sqrt{t}Z}\right]=e^{\tfrac12\sigma^2 t}\). Subtracting \(\tfrac12\sigma^2\) makes \(\alpha-\delta\) equal the <span class="define">expected cc rate of appreciation<span class="tooltip">
+            Short version: the exponential of a normal is lognormal, and its mean picks up a convexity factor \(e^{\tfrac12\sigma^2 t}\). Subtracting \(\tfrac12\sigma^2\) in the log drift cancels that factor so the expected price grows at cc rate \(\alpha-\delta\).<br><br>
+            
+            Let \(Z\sim\mathcal N(0,1)\) and<br>
+            \[
+            \ln\!\frac{S_t}{S_0}
+            = (\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z,
+            \quad\Rightarrow\quad
+            S_t=S_0\exp\!\Big((\alpha-\delta-\tfrac12\sigma^2)t+\sigma\sqrt{t}\,Z\Big).
+            \]<br>
+            
+            Take expectation:<br>
+            \[
+            \mathbb E[S_t]
+            = S_0 e^{(\alpha-\delta-\tfrac12\sigma^2)t}\;\mathbb E\!\left[e^{\sigma\sqrt{t}\,Z}\right]
+            = S_0 e^{(\alpha-\delta-\tfrac12\sigma^2)t}\; e^{\tfrac12\sigma^2 t}
+            = S_0 e^{(\alpha-\delta)t}.
+            \]<br>
+            
+            Therefore the "expected cc rate of appreciation" (the \(r\) such that \(\mathbb E[S_t]=S_0e^{rt}\)) is<br>
+            \[
+            r=\frac{1}{t}\ln\frac{\mathbb E[S_t]}{S_0}=\alpha-\delta.
+            \]<br>
+            
+            If you didn't subtract \(\tfrac12\sigma^2\) (i.e., used drift \(\alpha-\delta\) in \(\ln S\)), you'd get<br>
+            \[
+            \mathbb E[S_t]=S_0 e^{(\alpha-\delta)t}e^{\tfrac12\sigma^2 t}
+            \quad\Rightarrow\quad
+            r=\alpha-\delta+\tfrac12\sigma^2,
+            \]<br>
+            which is too high by the convexity bump. In words: volatility lifts the arithmetic mean of a lognormal by \(e^{\tfrac12\sigma^2 t}\); subtracting \(\tfrac12\sigma^2\) in the log drift exactly offsets it.
+          </span></span>.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Mean, expected log-return, and median</summary>
+        <div class="content">
+          <p>Taking expectation of \(S_t\):</p>
+          \[
+          \mathbb E[S_t]=S_0\,e^{(\alpha-\delta)t},
+          \]
+          \[
+          \ln \mathbb E\!\left(\frac{S_t}{S_0}\right)=(\alpha-\delta)t.
+          \]
+          <p>Median price (set \(Z=0\)):</p>
+          \[
+          \operatorname{Median}[S_t]=S_0\,e^{(\alpha-\delta-\tfrac12\sigma^2)t}.
+          \]
+          <p><b>Implications.</b> For \(\sigma>0\), \(\operatorname{Median}[S_t]<\mathbb E[S_t]\); if \(\sigma\) is large, \(S_t<S_0\) <b>more than half the time</b> even when the mean grows.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>One-sigma price moves (log-centered around the mean)</summary>
+        <div class="content">
+          <p>Over horizon \(t\), a "±1σ" move corresponds to \(Z=\pm 1\):</p>
+          \[
+          S_t^{(\pm 1\sigma)}=S_0\,\exp\!\Big((\alpha-\delta-\tfrac12\sigma^2)t \;\pm\; \sigma\sqrt{t}\Big).
+          \]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>In english</summary>
+        <div class="content">
+          <ul>
+            <li>Cc returns <b>add</b>; exponentiating makes prices <b>multiply</b> ⇒ lognormal prices.</li>
+            <li>Drift net of dividends is \(\alpha-\delta\); subtracting \(\tfrac12\sigma^2\) aligns the model so that expected <b>price</b> grows at rate \(\alpha-\delta\) while the <b>median</b> grows slower.</li>
+            <li>Mean/variance of cc returns scale with time; one-σ price bands are \(e^{\pm\sigma\sqrt{t}}\) about the median in <b>log</b> space.</li>
+          </ul>
+        </div>
+      </details>
+
     </div>
   </details>
 </div>
