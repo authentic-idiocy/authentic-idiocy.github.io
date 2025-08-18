@@ -359,10 +359,6 @@ details.dropdown-block .content{
   border-bottom-color: #FF00A0;
 }
 
-span.define {
-  cursor: help;
-  border-bottom: 1px dotted #FF00A0;
-}
 /* purple–pink gradient header for TOC & Legend */
 .toc-block .toc-heading,
 .legend-cheatsheet .legend-heading {
@@ -448,32 +444,39 @@ details[open] > summary.silk-hover {
 
 .define {
   position: relative;
+  display: inline-block;
   cursor: help;
-  border-bottom: 1px dotted currentColor;       /* visual hint */
+  font-size: 0.85em;
+  border-bottom: 1px dotted var(--accent);
 }
 
 .tooltip {
   display: none;
   position: absolute;
-  left: 0;
-  bottom: 120%;                      /* hover box above the word */
-  min-width: max-content;
-  max-width: 22rem;
-  font-size: 0.8rem;
-  line-height: 1.25;
-  padding: 0.4rem 0.6rem;
-  color: #fff;
-  background: rgba(0,0,0,0.9);       /* dark tooltip */
-  border-radius: 4px;
-  transform: translateY(4px);
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  transform: translate(-50%, 0) scale(0.95);
+  width: max-content;
+  max-width: min(80vw, 24rem);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--fg-light);
+  background: var(--bg-dark);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  box-shadow: 0 0 12px var(--accent);
+  opacity: 0;
   pointer-events: none;
-  z-index: 9999;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 1000;
 }
 
 .define:hover .tooltip,
 .define:focus-visible .tooltip {
   display: block;
-  transform: translateY(0);
+  opacity: 1;
+  transform: translate(-50%, -0.4rem) scale(1);
 }
 
 /* 5 ▸ Dark‑mode code blocks get hacker‑green text */
