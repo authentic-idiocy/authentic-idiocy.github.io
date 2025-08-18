@@ -51,69 +51,67 @@ description: "Your Guide to the Matrix"
             <li>Use elementary operations to create zeros below the diagonal.</li>
             <li>Read off equations and back-solve.</li>
           </ol>
-          <small>
-            <span class="define">pull out the zip?
-              <span class="tooltip">
-                <div style="max-width: 380px">
-                  <p><b>Goal:</b> Solve the system by elementary row operations.</p>
-          
-                  <p><b>System</b></p>
-                  \[
-                  \begin{cases}
-                  x + y = 3 \\
-                  2x + 3y = 8
-                  \end{cases}
-                  \]
-          
-                  <p><b>Augmented matrix</b></p>
-                  \[
-                  \left[
-                  \begin{array}{cc|c}
-                  1 & 1 & 3 \\
-                  2 & 3 & 8
-                  \end{array}
-                  \right]
-                  \]
-          
-                  <ol style="margin-left:1.1rem">
-                    <li><b>Make zeros below the first pivot.</b><br>
-                      Row replacement \(R_2 \leftarrow R_2 - 2R_1\).
-                      \[
-                      \left[
-                      \begin{array}{cc|c}
-                      1 & 1 & 3 \\
-                      0 & 1 & 2
-                      \end{array}
-                      \right]
-                      \]
-                    </li>
-          
-                    <li><b>Back-solve (upper-triangular reached).</b><br>
-                      From row 2: \(y = 2\).<br>
-                      From row 1: \(x + y = 3 \Rightarrow x = 1\).
-                    </li>
-          
-                    <li><i>(Optional RREF cleanup.)</i><br>
-                      Row replacement \(R_1 \leftarrow R_1 - R_2\).
-                      \[
-                      \left[
-                      \begin{array}{cc|c}
-                      1 & 0 & 1 \\
-                      0 & 1 & 2
-                      \end{array}
-                      \right]
-                      \]
-                    </li>
-                  </ol>
-          
-                  <p><b>Solution</b></p>
-                  \[
-                  (x,\,y) = (1,\,2).
-                  \]
-                </div>
-              </span>
-            </span>
-          </small>
+          <div class="define"><small>pull out the zip?</small>
+            <div class="tooltip">
+              <div style="max-width: 380px">
+                <p><b>Goal:</b> Solve the system by elementary row operations.</p>
+
+                <p><b>System</b></p>
+                \[
+                \begin{cases}
+                x + y = 3 \\
+                2x + 3y = 8
+                \end{cases}
+                \]
+
+                <p><b>Augmented matrix</b></p>
+                \[
+                \left[
+                \begin{array}{cc|c}
+                1 & 1 & 3 \\
+                2 & 3 & 8
+                \end{array}
+                \right]
+                \]
+
+                <ol style="margin-left:1.1rem">
+                  <li><b>Make zeros below the first pivot.</b><br>
+                    Row replacement \(R_2 \leftarrow R_2 - 2R_1\).
+                    \[
+                    \left[
+                    \begin{array}{cc|c}
+                    1 & 1 & 3 \\
+                    0 & 1 & 2
+                    \end{array}
+                    \right]
+                    \]
+                  </li>
+
+                  <li><b>Back-solve (upper-triangular reached).</b><br>
+                    From row 2: \(y = 2\).<br>
+                    From row 1: \(x + y = 3 \Rightarrow x = 1\).
+                  </li>
+
+                  <li><i>(Optional RREF cleanup.)</i><br>
+                    Row replacement \(R_1 \leftarrow R_1 - R_2\).
+                    \[
+                    \left[
+                    \begin{array}{cc|c}
+                    1 & 0 & 1 \\
+                    0 & 1 & 2
+                    \end{array}
+                    \right]
+                    \]
+                  </li>
+                </ol>
+
+                <p><b>Solution</b></p>
+                \[
+                (x,\,y) = (1,\,2).
+                \]
+              </div>
+            </div>
+          </div>
         </div>
       </details>
 
@@ -316,4 +314,133 @@ description: "Your Guide to the Matrix"
   </details>
 </div>
 
+<div class="flashcard">
+  <details>
+    <summary>Leave it to the Germans to prefix one of the most hated concepts in linear algebra.</summary>
+    <div class="back">
+      <small>Yeah, <span class="define">'eigen'<span class="tooltip>Oh, apparently it was Hilbert. Translates to 'own' or 'self'. Idk I'd go with the prefix 'scheisse-' (I'll let you look that one up.</span></span> is German.</small>
+      <details class="dropdown-block">
+        <summary>Definition & core rewrite</summary>
+        <div class="content">
+          <p>
+            For a square matrix \(A\), a scalar \(\lambda\) and nonzero vector \(\vec\eta\) with
+            \[
+            A\vec\eta=\lambda\vec\eta
+            \]
+            make \(\lambda\) an <b>eigenvalue</b> and \(\vec\eta\) an <b>eigenvector</b> of \(A\).
+            Equivalently,
+            \[
+            (A-\lambda I)\vec\eta=\vec 0 .
+            \]
+            To get nontrivial \(\vec\eta\) we need \(A-\lambda I\) singular, i.e.
+            \[
+            \det(A-\lambda I)=0 .
+            \]
+          </p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Characteristic polynomial & multiplicity</summary>
+        <div class="content">
+          <ul>
+            <li>\(\det(A-\lambda I)=0\) is an \(n^{\text{th}}\)-degree polynomial in \(\lambda\) (the <b>characteristic polynomial</b>).</li>
+            <li>Counting multiplicity, an \(n\times n\) matrix has \(n\) eigenvalues.</li>
+            <li><b>Simple</b> eigenvalue: occurs once in the list; corresponding eigenvectors are linearly independent across distinct simple eigenvalues.</li>
+            <li>Eigenvalue of multiplicity \(k>1\): has between \(1\) and \(k\) linearly independent eigenvectors.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Complex pairs (real matrices)</summary>
+        <div class="content">
+          <p>
+            If \(A\) is real and \(\lambda=a+bi\) is an eigenvalue with eigenvector \(\vec\eta\),
+            then \(\overline{\lambda}=a-bi\) is also an eigenvalue with eigenvector \(\overline{\vec\eta}\)
+            (complex conjugates occur in pairs).
+          </p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Computation procedure (consolidated)</summary>
+        <div class="content">
+          <ol>
+            <li>Form the characteristic equation \(\det(A-\lambda I)=0\) and solve for eigenvalues.</li>
+            <li>For each eigenvalue \(\lambda\), solve the homogeneous system \((A-\lambda I)\vec\eta=\vec0\) to get the eigenvectors (any nonzero vector in the null space).</li>
+            <li>For repeated eigenvalues, find as many linearly independent eigenvectors as the null space allows (between 1 and the algebraic multiplicity).</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Example: Finding eigenvalues/eigenvectors of \(A=\begin{pmatrix}0&1&1\\[2pt]1&0&1\\[2pt]1&1&0\end{pmatrix}\)</summary>
+        <div class="content">
+          <p><b>Step 1 — Eigenvalues.</b></p>
+          \[
+          \det(A-\lambda I)
+          =\left|\begin{array}{ccc}
+          -\lambda&1&1\\
+          1&-\lambda&1\\
+          1&1&-\lambda
+          \end{array}\right|
+          =-\lambda^{3}+3\lambda+2
+          =(\lambda-2)(\lambda+1)^2 .
+          \]
+          \[
+          \Rightarrow\quad \lambda_1=2,\qquad \lambda_{2,3}=-1\ (\text{double}).
+          \]
+
+          <p><b>Step 2 — Eigenvectors for \(\lambda=2\).</b></p>
+          Solve \((A-2I)\vec\eta=\vec0\):
+          \[
+          \left[\begin{array}{ccc|c}
+          -2&1&1&0\\
+          1&-2&1&0\\
+          1&1&-2&0
+          \end{array}\right]
+          \;\xrightarrow{\text{row ops}}\;
+          \left[\begin{array}{ccc|c}
+          1&0&-1&0\\
+          0&1&-1&0\\
+          0&0&0&0
+          \end{array}\right].
+          \]
+          From the reduced system: \(\eta_1=\eta_3,\ \eta_2=\eta_3\).
+          Hence \(\vec\eta=(t,t,t)\). Choose \(t=1\):
+          \[
+          \boxed{\ \vec\eta^{(1)}=\begin{pmatrix}1\\[2pt]1\\[2pt]1\end{pmatrix}\ }.
+          \]
+
+          <p><b>Step 3 — Eigenvectors for \(\lambda=-1\).</b></p>
+          Solve \((A+I)\vec\eta=\vec0\):
+          \[
+          \left[\begin{array}{ccc|c}
+          1&1&1&0\\
+          1&1&1&0\\
+          1&1&1&0
+          \end{array}\right]
+          \ \Rightarrow\ \eta_1+\eta_2+\eta_3=0 .
+          \]
+          A convenient parametrization is
+          \[
+          \vec\eta=\begin{pmatrix}-\eta_2-\eta_3\\[2pt]\eta_2\\[2pt]\eta_3\end{pmatrix}.
+          \]
+          One possible basis for the eigenspace:
+          \[
+          \boxed{\ \begin{aligned}
+          \vec\eta^{(2)}&=\begin{pmatrix}-1\\1\\0\end{pmatrix},\\
+          \vec\eta^{(3)}&=\begin{pmatrix}-1\\0\\1\end{pmatrix}
+          \end{aligned}\ }
+          \quad\text{(two linearly independent eigenvectors).}
+          \]
+
+          <p><b>Summary.</b> \(\ \lambda_1=2\) with eigenspace \(\operatorname{span}\{(1,1,1)^T\}\); \(\ \lambda_{2,3}=-1\) with a two-dimensional eigenspace orthogonal to \((1,1,1)^T\) (e.g., spanned by the two vectors above).</p>
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
 
