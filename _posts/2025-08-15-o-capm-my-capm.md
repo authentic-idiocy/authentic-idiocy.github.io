@@ -321,4 +321,4 @@ description: "wish me luck on my interview RIP"
   </details>
 </div>
 
-
+{% include technical-appendix.html content="" %}
