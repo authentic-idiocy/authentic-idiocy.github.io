@@ -155,5 +155,165 @@ description: "Your Guide to the Matrix"
   </details>
 </div>
 
+<div class="flashcard">
+  <details>
+    <summary>We've reached the singularity.</summary>
+    <div class="back">
+
+      <details class="dropdown-block">
+        <summary>Matrix & size notation</summary>
+        <div class="content">
+          <p>
+            A matrix \(A\) with entries \(a_{ij}\) and size \(n\times m\) is written
+          </p>
+          \[
+          A=\big(a_{ij}\big)_{n\times m}
+          =
+          \begin{pmatrix}
+          a_{11}&a_{12}&\cdots&a_{1m}\\
+          a_{21}&a_{22}&\cdots&a_{2m}\\
+          \vdots&\vdots&\ddots&\vdots\\
+          a_{n1}&a_{n2}&\cdots&a_{nm}
+          \end{pmatrix}.
+          \]
+          <p>The size may be subscripted when needed. </p>
+          <p><i>Vectors:</i> column \(n\times 1\) and row \(1\times m\) matrices are often called vectors:
+          \(\;x=\big(x_1,\dots,x_n\big)^T,\; y=(y_1,\dots,y_m)\).</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Special matrices</summary>
+        <div class="content">
+          <ul>
+            <li><b>Square:</b> \(n\times n\); “main diagonal” runs upper-left \(\to\) lower-right.</li>
+            <li><b>Zero matrix:</b> \(0_{n\times m}\) (all entries \(0\)).</li>
+            <li><b>Identity:</b> \(I_n\) (diagonal \(1\)’s, elsewhere \(0\)); behaves like “1” in matrix arithmetic.</li>
+          </ul>
+          \[
+          0_{n\times m}=\begin{pmatrix}0&\cdots&0\\ \vdots&\ddots&\vdots\\ 0&\cdots&0\end{pmatrix},\qquad
+          I_n=\begin{pmatrix}1&0&\cdots&0\\0&1&\cdots&0\\ \vdots&\vdots&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}.
+          \]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Arithmetic on matrices</summary>
+        <div class="content">
+          <ul>
+            <li><b>Add/Subtract (same size only):</b> \((a_{ij})\pm(b_{ij})=(a_{ij}\pm b_{ij})\).</li>
+            <li><b>Scalar multiply:</b> \(\alpha(a_{ij})=(\alpha\,a_{ij})\).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Matrix multiplication</summary>
+        <div class="content">
+          <p>
+            If \(A_{n\times p}\) and \(B_{p\times m}\), then the product \(C=AB\) is \(n\times m\) with
+            \[
+            c_{ij}=\sum_{k=1}^{p} a_{ik}\,b_{kj}.
+            \]
+            <b>Compatibility:</b> columns of \(A\) must equal rows of \(B\). <b>Non-commutativity:</b> even when both are defined, \(AB\) need not equal \(BA\).
+          </p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Determinant</summary>
+        <div class="content">
+          <p>
+            The determinant maps a square matrix to a number: \(\det(A)=|A|\).
+            For \(2\times2\) and \(3\times3\),
+          </p>
+          \[
+          \left|\begin{array}{cc} a&c\\ b&d\end{array}\right|=ad-cb,\qquad
+          \left|\begin{array}{ccc}
+          a_{11}&a_{12}&a_{13}\\
+          a_{21}&a_{22}&a_{23}\\
+          a_{31}&a_{32}&a_{33}
+          \end{array}\right|=
+          a_{11}\left|\begin{array}{cc}a_{22}&a_{23}\\ a_{32}&a_{33}\end{array}\right|
+          -a_{12}\left|\begin{array}{cc}a_{21}&a_{23}\\ a_{31}&a_{33}\end{array}\right|
+          +a_{13}\left|\begin{array}{cc}a_{21}&a_{22}\\ a_{31}&a_{32}\end{array}\right|.
+          \]
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Inverse matrix</summary>
+        <div class="content">
+          <p>
+            For square \(A\), an inverse \(A^{-1}\) satisfies \(AA^{-1}=A^{-1}A=I_n\).
+            To compute: augment with identity and row-reduce
+            \[
+            \big(A\;\big|\;I_n\big)\;\longrightarrow\;\big(I_n\;\big|\;A^{-1}\big),
+            \]
+            if possible; failure means the inverse does not exist.
+          </p>
+          <p><b>Fact.</b> If \(A\) is <i>nonsingular</i>, then \(A^{-1}\) exists; if \(A\) is <i>singular</i>, \(A^{-1}\) does not exist.</p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Systems in matrix form</summary>
+        <div class="content">
+          <p>
+            A system can be written \(A\vec x=\vec b\) with augmented matrix \((A\;\vec b)\).
+            Three possibilities: no solution, exactly one, or infinitely many.
+            For square \(A\):
+          </p>
+          <ul>
+            <li>If \(A\) is nonsingular ⇒ exactly one solution.</li>
+            <li>If \(A\) is singular ⇒ either none or infinitely many.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Homogeneous systems</summary>
+        <div class="content">
+          <p>
+            \(A\vec x=\vec 0\) always has the trivial solution \(\vec x=\vec 0\).
+            If \(A\) is nonsingular ⇒ only the trivial solution; if \(A\) is singular ⇒ infinitely many nonzero solutions.
+          </p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Linear independence / dependence</summary>
+        <div class="content">
+          <p>
+            Vectors \(\{\vec x_1,\dots,\vec x_n\}\) are <b>linearly dependent</b> if
+            \[
+            c_1\vec x_1+\cdots+c_n\vec x_n=\vec 0
+            \]
+            for some constants not all zero; otherwise they are <b>linearly independent</b>.
+          </p>
+          <p>
+            If each vector has \(n\) components, form
+            \[
+            X=\big(\vec x_1\ \vec x_2\ \cdots\ \vec x_n\big).
+            \]
+            Then: \(X\) nonsingular (\(\det X\ne 0\)) ⇒ independent; \(X\) singular (\(\det X=0\)) ⇒ dependent, and the constants come from solving \(X\vec c=\vec 0\).
+          </p>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>Non-examples & cautions</summary>
+        <div class="content">
+          <ul>
+            <li>\(A+B\) undefined if sizes differ.</li>
+            <li>Even when both defined, \(AB\ne BA\) in general.</li>
+            <li>Inverse need not exist (singular matrices).</li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+  </details>
+</div>
 
 
