@@ -241,6 +241,7 @@ header{
   margin:1.5rem 0;
   width:100%;
   overflow-wrap:anywhere;
+  overflow: visible;
 }
 
 /* the clickable “front” */
@@ -254,6 +255,7 @@ header{
   list-style:none;                    /* hide ▶ marker */
   transition:color .22s, box-shadow .22s, border-color .22s;
   overflow-wrap:anywhere;
+  overflow: visible;                  /* allow tooltips to escape */
 }
 
 /* hover glow (card + text together) */
@@ -276,7 +278,8 @@ summary::marker{ display:none; }
   border-radius:0 0 .5rem .5rem;
   color:var(--fg-light);
   overflow-x: auto;                   /* prevent content spill */
-  overflow-wrap: anywhere; 
+  overflow-y: visible;                /* keep tooltip fully visible */
+  overflow-wrap: anywhere;
 }
 
 /* subtle slide-down effect */
@@ -295,6 +298,7 @@ details.dropdown-block{
   background:linear-gradient(135deg, rgba(108,0,224,0.08), rgba(255,0,160,0.08));
   box-shadow:0 0 12px rgba(255,0,160,0.25);
   overflow-wrap:anywhere;
+  overflow: visible;                  /* keep tooltips above borders */
 }
 details.dropdown-block > summary{
   padding:1rem 1.25rem;
@@ -321,6 +325,7 @@ details.dropdown-block .content{
   padding:0 1.25rem 1.25rem;
   color:var(--fg-light);
   overflow-x:auto;
+  overflow-y:visible;                 /* allow tooltip to overflow above */
   overflow-wrap:anywhere;
 }
 
@@ -482,3 +487,82 @@ details[open] > summary.silk-hover {
 /* 5 ▸ Dark‑mode code blocks get hacker‑green text */
 pre, code { color: #00FF7F; background: #111; }
 
+/* ── WIP hover tooltip placeholder ─────────────────────────────── */
+.wip-link {
+  position: relative;
+  cursor: not-allowed;
+  border-bottom: 1px dashed var(--accent);
+}
+
+.wip-link::after {
+  content: "this post is undergoing idiocy authentication.";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  transform: translate(-50%, 0) scale(0.95);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--fg-light);
+  background: var(--bg-dark);
+  border: 2px dashed var(--primary);
+  border-radius: 8px;
+  box-shadow: 0 0 12px var(--accent);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 1000;
+}
+
+.wip-link:hover::after,
+.wip-link:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, -0.4rem) scale(1);
+}
+
+/* ─── Technical Appendix Divider ─────────────────────────────────────────── */
+.technical-appendix {
+  margin: 2rem 0;
+}
+
+.technical-appendix summary {
+  background: linear-gradient(90deg, #6C00E0, #FF00A0);
+  color: var(--fg-light);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-family: "Fira Code", monospace;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+}
+
+.technical-appendix summary .headline {
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.technical-appendix summary .subhead {
+  font-size: 0.75rem;
+  font-weight: 400;
+  margin-top: 0.25rem;
+  color: var(--fg-light);
+  opacity: 0.8;
+}
+
+.technical-appendix summary::-webkit-details-marker { display: none; }
+
+.technical-appendix[open] summary {
+  box-shadow: 0 0 12px rgba(255, 0, 160, 0.5);
+}
+
+.technical-appendix .appendix-content {
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--primary);
+  border-top: none;
+  background: #0e0e10;
+  border-radius: 0 0 8px 8px;
+}
