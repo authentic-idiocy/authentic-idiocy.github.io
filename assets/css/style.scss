@@ -104,7 +104,7 @@ main, .post{
   box-shadow: 0 0 .5rem var(--accent);
   width: 100%;
   max-width: min(90vw, 1200px);
-  overflow-x: auto;
+  overflow: visible;
   overflow-wrap: anywhere;
 }
 /* center post content within the page */
