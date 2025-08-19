@@ -353,8 +353,8 @@ description: "wish me luck on my interview RIP"
           \qquad 
           \operatorname{Var}(\beta_i\mid\text{data})=\frac{\tau^2 s_i^2}{\tau^2+s_i^2}.
           \]</p>
-          <p><small><strong class="define">Deriving the shrinkage estimator (a ruler from the base, I thought...)
-            <div class="tooltip">
+          <div class="define">
+            <p><small><strong>Deriving the shrinkage estimator (a ruler from the base, I thought...)</strong></small></p>
               <h3>Setup</h3>
               <p>We observe an OLS beta estimate \(\hat\beta_i\) for asset \(i\) with known sampling variance \(s_i^2\), and we place a Normal prior on the true beta \(\beta_i\).</p>
               <p>\[
@@ -468,7 +468,7 @@ description: "wish me luck on my interview RIP"
               \]</p>
               <p>Equivalently, in variance space, weights are \(\tau^2\) vs \(s_i^2\). If data are precise (\(s_i^2 \downarrow\)), the posterior leans toward \(\hat\beta_i\). If data are noisy, it leans toward \(\beta_{0,i}\). The posterior variance is <strong>smaller</strong> than either \(s_i^2\) or \(\tau^2\) because precisions add.</p>
             </div>
-          </strong></small></p>
+          </div>
           <ul>
             <li>If \(\hat\beta_i\) is <strong>precise</strong> (\(s_i^2\downarrow\)), \(w_i\to 1\) ⇒ little shrinkage.</li>
             <li>If \(\hat\beta_i\) is <strong>noisy</strong>, \(w_i\to 0\) ⇒ strong pull toward \(\beta_{0,i}\).</li>
