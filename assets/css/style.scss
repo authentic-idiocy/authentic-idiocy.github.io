@@ -277,8 +277,7 @@ summary::marker{ display:none; }
   border-top:0;                       /* seamless join */
   border-radius:0 0 .5rem .5rem;
   color:var(--fg-light);
-  overflow-x: auto;                   /* prevent content spill */
-  overflow-y: visible;                /* keep tooltip fully visible */
+  overflow: visible;                /* keep tooltip fully visible */
   overflow-wrap: anywhere;
 }
 
@@ -324,8 +323,7 @@ details.dropdown-block[open] > summary{
 details.dropdown-block .content{
   padding:0 1.25rem 1.25rem;
   color:var(--fg-light);
-  overflow-x:auto;
-  overflow-y:visible;                 /* allow tooltip to overflow above */
+  overflow:visible;                 /* allow tooltip to overflow above */
   overflow-wrap:anywhere;
 }
 /* ======  Split dropdown with sliding arrow  ====== */
