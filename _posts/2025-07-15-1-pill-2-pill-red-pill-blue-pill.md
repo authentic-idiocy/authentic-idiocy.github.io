@@ -318,7 +318,7 @@ description: "Your Guide to the Matrix"
   <details>
     <summary>Leave it to the Germans to prefix one of the most hated concepts in linear algebra.</summary>
     <div class="back">
-      <small>Yeah, <span class="define">'eigen'<span class="tooltip>Oh, apparently it was Hilbert. Translates to 'own' or 'self'. Idk I'd go with the prefix 'scheisse-' (I'll let you look that one up.</span></span> is German.</small>
+      <small>Yeah, <span class="define">'eigen'<span class="tooltip">Oh, apparently it was Hilbert. Translates to 'own' or 'self'. Idk I'd go with the prefix 'scheisse-' (I'll let you look that one up.)</span></span> is German.</small>
       <details class="dropdown-block">
         <summary>Definition & core rewrite</summary>
         <div class="content">
