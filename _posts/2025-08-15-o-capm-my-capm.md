@@ -321,4 +321,189 @@ description: "wish me luck on my interview RIP"
   </details>
 </div>
 
-{% include technical-appendix.html content="" %}
+{% capture appendix %}
+<div class="flashcard">
+  <details>
+    <summary>For all the dudes out there with shrinking feet</summary>
+    <div class="back">
+      <p>tldr: treat the <em>true</em> beta as a random variable with a prior (usually near 1 for equities), and combine that prior with the noisy OLS beta you estimate from returns. The posterior mean is a <strong>shrunk</strong> beta—pulled toward the prior by an amount that depends on the OLS standard error.</p>
+
+      <details class="dropdown-block">
+        <summary>What it is (model)</summary>
+        <div class="content">
+          <p>For asset \(i\) with excess returns \(r_{i,t}\) and market \(r_{M,t}\),</p>
+          <p>\[
+          r_{i,t}=\alpha_i+\beta_i\,r_{M,t}+\varepsilon_{i,t},\qquad \varepsilon_{i,t}\sim \mathcal N(0,\sigma_\varepsilon^2).
+          \]</p>
+          <p>OLS gives \(\hat\beta_i\) and its sampling variance</p>
+          <p>\[
+          s_i^2 \;=\; \widehat{\operatorname{Var}}(\hat\beta_i\mid\beta_i)
+          \;=\; \frac{\hat\sigma_{\varepsilon,i}^2}{\sum_{t}(r_{M,t}-\bar r_M)^2}.
+          \]</p>
+          <p>Place a Normal prior on the true beta:</p>
+          <p>\[
+          \beta_i \sim \mathcal N(\beta_{0,i},\,\tau^2).
+          \]</p>
+          <p>Conjugacy ⇒ posterior mean (the shrinkage estimator):</p>
+          <p>\[
+          \tilde\beta_i
+          = \underbrace{\frac{\tau^2}{\tau^2+s_i^2}}_{w_i}\,\hat\beta_i
+          \;+\;
+          \underbrace{\frac{s_i^2}{\tau^2+s_i^2}}_{1-w_i}\,\beta_{0,i},
+          \qquad 
+          \operatorname{Var}(\beta_i\mid\text{data})=\frac{\tau^2 s_i^2}{\tau^2+s_i^2}.
+          \]</p>
+          <p><small><strong class="define">Deriving the shrinkage estimator (a ruler from the base, I thought...)
+            <div class="tooltip">
+              <h3>Setup</h3>
+              <p>We observe an OLS beta estimate \(\hat\beta_i\) for asset \(i\) with known sampling variance \(s_i^2\), and we place a Normal prior on the true beta \(\beta_i\).</p>
+              <p>\[
+              \hat\beta_i \mid \beta_i \sim \mathcal{N}\!\left(\beta_i,\, s_i^2\right)
+              \]</p>
+              <p>\[
+              \beta_i \sim \mathcal{N}\!\left(\beta_{0,i},\, \tau^2\right)
+              \]</p>
+              <p>Goal: compute the posterior \(p(\beta_i \mid \hat\beta_i)\) and extract its mean and variance.</p>
+
+              <h3>Derivation — by completing the square</h3>
+              <p><strong>1) Write the unnormalized posterior density.</strong></p>
+              <p>\[
+              p(\beta_i \mid \hat\beta_i) \ \propto\ p(\hat\beta_i \mid \beta_i)\,p(\beta_i)
+              \]</p>
+              <p>\[
+              \propto \exp\!\left(-\frac{1}{2}\frac{(\hat\beta_i-\beta_i)^2}{s_i^2}\right)\,
+              \exp\!\left(-\frac{1}{2}\frac{(\beta_i-\beta_{0,i})^2}{\tau^2}\right)
+              \]</p>
+
+              <p><strong>2) Combine exponents and expand the squares.</strong></p>
+              <p>\[
+              -\frac{1}{2}\Bigg[
+              \frac{(\hat\beta_i-\beta_i)^2}{s_i^2}+\frac{(\beta_i-\beta_{0,i})^2}{\tau^2}
+              \Bigg]
+              =
+              -\frac{1}{2}\Bigg[
+              \left(\frac{1}{s_i^2}+\frac{1}{\tau^2}\right)\beta_i^2
+              -2\left(\frac{\hat\beta_i}{s_i^2}+\frac{\beta_{0,i}}{\tau^2}\right)\beta_i
+              +\text{const}
+              \Bigg]
+              \]</p>
+              <p>Define the <strong>precisions</strong> to keep notation clean</p>
+              <p>\[
+              \lambda := \frac{1}{s_i^2}, \qquad \kappa := \frac{1}{\tau^2}
+              \]</p>
+              <p>and set</p>
+              <p>\[
+              A := \lambda+\kappa, \qquad B := \lambda\,\hat\beta_i+\kappa\,\beta_{0,i}
+              \]</p>
+              <p>Then the exponent becomes</p>
+              <p>\[
+              -\frac{1}{2}\Big[A\,\beta_i^2-2B\,\beta_i+\text{const}\Big]
+              \]</p>
+
+              <p><strong>3) Complete the square in \(\beta_i\).</strong></p>
+              <p>\[
+              A\,\beta_i^2-2B\,\beta_i
+              =
+              A\Big(\beta_i-\frac{B}{A}\Big)^2 - \frac{B^2}{A}
+              \]</p>
+              <p>Thus</p>
+              <p>\[
+              p(\beta_i \mid \hat\beta_i)\ \propto\
+              \exp\!\left(-\frac{1}{2}A\Big(\beta_i-\frac{B}{A}\Big)^2\right)
+              \]</p>
+              <p>This is the kernel of a Normal with mean \(B/A\) and variance \(1/A\).</p>
+              <p>\[
+              \beta_i \mid \hat\beta_i \sim \mathcal{N}\!\left(\frac{B}{A},\, \frac{1}{A}\right)
+              \]</p>
+
+              <p><strong>4) Undo the shorthand \(A,B,\lambda,\kappa\).</strong></p>
+              <p>Posterior <strong>mean</strong>:</p>
+              <p>\[
+              \frac{B}{A}
+              =
+              \frac{\lambda\,\hat\beta_i+\kappa\,\beta_{0,i}}{\lambda+\kappa}
+              =
+              \frac{\hat\beta_i/s_i^2+\beta_{0,i}/\tau^2}{1/s_i^2+1/\tau^2}
+              =
+              \frac{\tau^2\,\hat\beta_i+s_i^2\,\beta_{0,i}}{\tau^2+s_i^2}
+              \]</p>
+              <p>Posterior <strong>variance</strong>:</p>
+              <p>\[
+              \frac{1}{A}=\frac{1}{\lambda+\kappa}
+              =
+              \frac{1}{1/s_i^2+1/\tau^2}
+              =
+              \frac{\tau^2 s_i^2}{\tau^2+s_i^2}
+              \]</p>
+
+              <p><strong>5) Put the mean into "weighted average" form.</strong></p>
+              <p>Define the shrinkage weight</p>
+              <p>\[
+              w_i := \frac{\tau^2}{\tau^2+s_i^2}
+              \]</p>
+              <p>Then</p>
+              <p>\[
+              \tilde\beta_i := \mathbb{E}[\beta_i \mid \hat\beta_i]
+              = w_i\,\hat\beta_i + (1-w_i)\,\beta_{0,i}
+              \]</p>
+              <p>and</p>
+              <p>\[
+              \operatorname{Var}(\beta_i \mid \hat\beta_i) = \frac{\tau^2 s_i^2}{\tau^2+s_i^2}
+              \]</p>
+
+              <h3>In English</h3>
+              <p>Bayes turns two Normal sources of information into a <strong>precision-weighted average</strong>:</p>
+              <p>\[
+              \tilde\beta_i
+              =
+              \underbrace{\frac{1}{s_i^2}}_{\text{data precision}}
+              \Big/
+              \underbrace{\left(\frac{1}{s_i^2}+\frac{1}{\tau^2}\right)}_{\text{total precision}}
+              \cdot \hat\beta_i
+              \;+\;
+              \underbrace{\frac{1}{\tau^2}}_{\text{prior precision}}
+              \Big/
+              \underbrace{\left(\frac{1}{s_i^2}+\frac{1}{\tau^2}\right)}_{\text{total precision}}
+              \cdot \beta_{0,i}
+              \]</p>
+              <p>Equivalently, in variance space, weights are \(\tau^2\) vs \(s_i^2\). If data are precise (\(s_i^2 \downarrow\)), the posterior leans toward \(\hat\beta_i\). If data are noisy, it leans toward \(\beta_{0,i}\). The posterior variance is <strong>smaller</strong> than either \(s_i^2\) or \(\tau^2\) because precisions add.</p>
+            </div>
+          </strong></small></p>
+          <ul>
+            <li>If \(\hat\beta_i\) is <strong>precise</strong> (\(s_i^2\downarrow\)), \(w_i\to 1\) ⇒ little shrinkage.</li>
+            <li>If \(\hat\beta_i\) is <strong>noisy</strong>, \(w_i\to 0\) ⇒ strong pull toward \(\beta_{0,i}\).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="dropdown-block">
+        <summary>How to do this (practical steps)</summary>
+        <div class="content">
+          <p><strong>A. Pick/estimate the prior \((\beta_{0,i},\tau^2)\).</strong></p>
+          <ul>
+            <li>Easiest (Vasicek/empirical Bayes, market-wide):
+              \(\beta_{0,i}=\bar{\hat\beta}\) or simply \(1\);
+              \(\tau^2 = \max\{0,\,\operatorname{Var}_\text{cross}(\hat\beta_i)-\overline{s_i^2}\}\).</li>
+          </ul>
+          
+          <p><strong>B. Compute OLS betas and errors.</strong></p>
+          <ul>
+            <li>For each asset, run the regression, get \(\hat\beta_i\) and \(s_i^2\) (use Newey–West if you want to be robust).</li>
+          </ul>
+          
+          <p><strong>C. Shrink.</strong></p>
+          <ul>
+            <li>Apply \(\tilde\beta_i=w_i\hat\beta_i+(1-w_i)\beta_{0,i}\) with \(w_i=\tau^2/(\tau^2+s_i^2)\).</li>
+          </ul>
+          
+          <p><strong>D. Re-scale (optional but recommended).</strong></p>
+          <ul>
+            <li>Enforce the identity \(\sum_i v_i\,\tilde\beta_i=1\) (value-weighted to your market proxy) by multiplying all \(\tilde\beta_i\) by a common scalar so the weighted average is 1.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </details>
+</div>
+{% endcapture %}
+{% include technical-appendix.html content=appendix %}
