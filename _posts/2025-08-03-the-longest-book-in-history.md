@@ -13,10 +13,10 @@ description: "Flex a single sentence and skip more than 4k pages. You’re welco
     <summary class="silk-hover">Yeah I used to go to bed early too, then I discovered HBO.</summary>
     <div class="back">
       <ul>
-        <li>Title of post = 1st line of Marcel Proust's absolute unit of a <span class="define" data-def="no, that's fake news. A 7-book series is a heptalogy. Thanks, JK Rowling for the correction.">septology: </span> <em>À la recherche du temps perdu</em></li>
+        <li>Title of post = 1st line of Marcel Proust's absolute unit of a <span class="define">septology:<span class="tooltip">no, that's fake news. A 7-book series is a heptalogy. Thanks, JK Rowling for the correction.</span></span> <em>À la recherche du temps perdu</em></li>
         <ul>
-          <li>Or I guess if you are <span class="define" data-def="Literal translation: A stinky American">un américain puant</span>, <em>Rembrance of Things Past (alt. In Search of Lost Time)</em></li>
-          <li>So the whole <span class="define" data-def="Longtemps, je me suis couché de bonne heure, in Francais, for the blue-bloods.">'early to bed'</span> quote is also the 1st line of the 1st volume, <em><span class="define" data-def="Swann's Way. But c'mon, doesn't the French read so much fancier?!">Du côté de chez Swann</span></em></li>
+          <li>Or I guess if you are <span class="define">un américain puant<span class="tooltip">Literal translation: A stinky American</span></span>, <em>Rembrance of Things Past (alt. In Search of Lost Time)</em></li>
+          <li>So the whole <span class="define">'early to bed'<span class="tooltip">Longtemps, je me suis couché de bonne heure, in Francais, for the blue-bloods.</span></span> quote is also the 1st line of the 1st volume, <em><span class="define">Du côté de chez Swann<span class="tooltip">Swann's Way. But c'mon, doesn't the French read so much fancier?!</span></span></em></li>
         </ul>
         <li>Proust shat these 7 bad boys out over the course of 14 years, from 1913 to 1927.</li>
         <ul>
@@ -35,7 +35,7 @@ description: "Flex a single sentence and skip more than 4k pages. You’re welco
       <ul>
         <li>No, not the yellow-raincoated girl, I, as an almost-thirty-something adult, am jealous of, and wish the worst for.</li>
         <li>The cookie. Marcel dunks it in his lime-flower tea, eats it, and it, how you say, <i>sends him</i> (to a moment of his past, that is)</li>
-        <li>No lie. It's the time-travel mechanism throughout this monstrosity. He calls them <span class="define" data-def="Involuntary memories for the crude. I just call them cringe moments.">mémoire involontaires</span></li>
+        <li>No lie. It's the time-travel mechanism throughout this monstrosity. He calls them <span class="define">mémoire involontaires<span class="tooltip">Involuntary memories for the crude. I just call them cringe moments.</span></span></li>
       </ul>
     </div>
   </details>
