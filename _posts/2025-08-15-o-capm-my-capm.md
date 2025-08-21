@@ -542,7 +542,36 @@ description: "wish me luck on my interview RIP"
           \]</p>
           
           <p>using linearity and the fact that \(h\) is non-random.</p>
+
+          <p><strong>Covariance of Each Asset & Portfolio Returns</strong></p>
+          <p>\[
+          \operatorname{Cov}\!\big(R,\;h^\top R\big)=Vh.
+          \]</p>
           
+          <p><strong>Derivation</strong></p>
+          <p>\[
+          \operatorname{Cov}(R,\;h^\top R)
+          =\mathbb{E}\!\big[(R-\mu)\,(h^\top R-\mathbb{E}[h^\top R])\big].
+          \]</p>
+          
+          <p>\[
+          \mathbb{E}[h^\top R]=h^\top\mu
+          \;\Rightarrow\;
+          h^\top R-\mathbb{E}[h^\top R]
+          =h^\top(R-\mu).
+          \]</p>
+          
+          <p>\[
+          \operatorname{Cov}(R,\;h^\top R)
+          =\mathbb{E}\!\big[(R-\mu)\,h^\top(R-\mu)\big].
+          \]</p>
+          
+          <p>\[
+          \operatorname{Cov}(R,\;h^\top R)
+          =\mathbb{E}\!\big[(R-\mu)(R-\mu)^\top\big]\,h
+          =Vh.
+          \]</p>
+
           <p><strong>Characteristic Portfolios</strong></p>
           <ul>
             <li>Assets have attributes (betas, \(E/P\), sector, …). To any attribute vector \(\mathbf{a}^T=\{a_1,\dots,a_N\}\) associate a <strong>characteristic portfolio</strong> \(\mathbf{h}_a\) that uniquely captures that attribute.</li>
