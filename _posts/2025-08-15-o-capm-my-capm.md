@@ -542,7 +542,7 @@ description: "wish me luck on my interview RIP"
           \]</p>
           
           <p>using linearity and the fact that \(h\) is non-random.</p>
-
+          
           <p><strong>Covariance of Each Asset & Portfolio Returns</strong></p>
           <p>\[
           \operatorname{Cov}\!\big(R,\;h^\top R\big)=Vh.
@@ -571,7 +571,7 @@ description: "wish me luck on my interview RIP"
           =\mathbb{E}\!\big[(R-\mu)(R-\mu)^\top\big]\,h
           =Vh.
           \]</p>
-
+          
           <p><strong>Characteristic Portfolios</strong></p>
           <ul>
             <li>Assets have attributes (betas, \(E/P\), sector, …). To any attribute vector \(\mathbf{a}^T=\{a_1,\dots,a_N\}\) associate a <strong>characteristic portfolio</strong> \(\mathbf{h}_a\) that uniquely captures that attribute.</li>
@@ -611,6 +611,183 @@ description: "wish me luck on my interview RIP"
           <p>\[
           \sigma_{a,d} \;=\; a_q\,\sigma_d^2 \;=\; d_q\,\sigma_a^2 
           \]</p>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Prop. 1 Proof</summary>
+        <div class="content">
+          <p><strong>1) Existence/uniqueness and closed form for \(h_a\)</strong></p>
+          <p><strong>Optimization problem:</strong></p>
+          <p>\[
+          \min_{h\in\mathbb{R}^N}\; h^\top V h
+          \quad\text{s.t.}\quad
+          a^\top h = 1.
+          \]</p>
+          
+          <p><strong>Lagrangian:</strong></p>
+          <p>\[
+          L(h,\lambda)=f(h)-\lambda\big(g(h)-1\big)
+          = h^\top V h-\lambda\big(a^\top h-1\big).
+          \]</p>
+          
+          <p><strong>FOC:</strong></p>
+          <p>\[
+          \nabla f(h)=\lambda\,\nabla g(h),
+          \qquad
+          g(h)=1.
+          \]</p>
+          
+          <p>Compute the gradients:</p>
+          <p>\[
+          \nabla f(h)=2Vh
+          \quad(\text{since }V=V^\top\text{ is a covariance matrix}),
+          \qquad
+          \nabla g(h)=a.
+          \]</p>
+          
+          <p>Set them equal and solve:</p>
+          <p>\[
+          2Vh=\lambda a
+          \;\Rightarrow\;
+          Vh=\frac{\lambda}{2}\,a
+          \;\Rightarrow\;
+          h=\frac{\lambda}{2}\,V^{-1}a.
+          \]</p>
+          
+          <p>Enforce the constraint \(a^\top h=1\):</p>
+          <p>\[
+          1=a^\top h
+          = a^\top\!\left(\frac{\lambda}{2}V^{-1}a\right)
+          = \frac{\lambda}{2}\,a^\top V^{-1}a
+          \;\Rightarrow\;
+          \lambda=\frac{2}{a^\top V^{-1}a}.
+          \]</p>
+          
+          <p>Plug back:</p>
+          <p>\[
+          \boxed{\,h_a=\frac{V^{-1}a}{a^\top V^{-1}a}\,}.
+          \]</p>
+          
+          <p><strong>Existence/uniqueness.</strong> \(V\succ0\Rightarrow f(h)=h^\top Vh\) is strictly convex and \(\nabla^2 f(h)=2V\succ0\). The feasible set \(\{h:a^\top h=1\}\) is a nonempty affine hyperplane and is convex. A strictly convex function on a convex set has a unique minimizer, so \(h_a\) above is the unique solution.</p>
+          
+          <p>(and for below parts of proof, for brevity):</p>
+          <p>\[
+          \text{ define }c_a:=a^\top V^{-1}a>0
+          \]</p>
+          
+          <p><strong>2) Variance of the characteristic portfolio</strong></p>
+          <p>\[
+          \sigma_a^2:=\operatorname{Var}(h_a^\top R)=h_a^\top V h_a
+          \]</p>
+          
+          <p>Plug \(h_a=(V^{-1}a)/c_a\):</p>
+          <p>\[
+          \begin{aligned}
+          h_a^\top V h_a
+          &=\left(\frac{V^{-1}a}{c_a}\right)^\top V \left(\frac{V^{-1}a}{c_a}\right)\\[4pt]
+          &=\frac{a^\top V^{-1} V V^{-1} a}{c_a^2}\\[4pt]
+          &=\frac{a^\top V^{-1} a}{c_a^2}\\[4pt]
+          &=\frac{c_a}{c_a^2}
+          =\frac{1}{c_a}
+          =\boxed{\frac{1}{a^\top V^{-1}a}}
+          \end{aligned}
+          \]</p>
+          
+          <p>which is the stated formula.</p>
+          
+          <p><strong>3) Betas w.r.t. \(h_a\) equal the attribute \(a\)</strong></p>
+          <p>For any reference portfolio \(P\) with weights \(h_P\), define the vector of asset betas <strong>with respect to \(P\)</strong> by</p>
+          <p>\[
+          \beta^{(P)}:=\frac{\operatorname{Cov}(R,\,R_P)}{\operatorname{Var}(R_P)}
+          =\frac{V h_P}{h_P^\top V h_P}
+          \]</p>
+          
+          <p>because \(\operatorname{Cov}(R,\,h_P^\top R)=Vh_P\) and \(\operatorname{Var}(R_P)=h_P^\top V h_P\).</p>
+          
+          <p>Set \(P=h_a\). Then</p>
+          <p>\[
+          V h_a = V\left(\frac{V^{-1}a}{c_a}\right)=\frac{a}{c_a}
+          \]</p>
+          
+          <p>and from item 2,</p>
+          <p>\[
+          \sigma_a^2=h_a^\top V h_a=\frac{1}{c_a}
+          \]</p>
+          
+          <p>so</p>
+          <p>\[
+          \beta^{(h_a)}
+          =\frac{V h_a}{\sigma_a^2}
+          =\frac{\frac{a}{c_a}}{\frac{1}{c_a}}
+          =\boxed{a}
+          \]</p>
+          
+          <p>i.e., each asset's beta to the characteristic portfolio equals its attribute value.</p>
+          
+          <p><strong>4) Covariance between two characteristic portfolios (Eq. 2A.4)</strong></p>
+          <p>Let \(d\in\mathbb{R}^N\) be a second attribute with characteristic portfolio \(h_d=\dfrac{V^{-1}d}{d^\top V^{-1}d}\) and variance \(\sigma_d^2=\frac{1}{c_d}\).</p>
+          
+          <p>Define the <strong>cross-exposures</strong></p>
+          <p>\[
+          a_{h_d}:=a^\top h_d
+          \quad\text{(exposure of \(h_d\) to attribute \(a\))},\qquad
+          d_{h_a}:=d^\top h_a
+          \quad\text{(exposure of \(h_a\) to attribute \(d\))}.
+          \]</p>
+          
+          <p>Compute the covariance:</p>
+          <p>\[
+          \sigma_{a,d}
+          :=\operatorname{Cov}(R_{h_a},R_{h_d})
+          = h_a^\top V h_d.
+          \]</p>
+          
+          <p>Two equivalent ways to evaluate the scalar \(h_a^\top V h_d\):</p>
+          
+          <p><strong>Route A (push \(V\) to the left using \(Vh_a=a/c_a\)):</strong></p>
+          <p>\[
+          h_a^\top V h_d
+          =(Vh_a)^\top h_d
+          =\left(\frac{a}{c_a}\right)^\top h_d
+          =\frac{a^\top h_d}{c_a}
+          =a_{h_d}\,\sigma_a^2.
+          \]</p>
+          
+          <p><strong>Route B (push \(V\) to the right using \(Vh_d=d/c_d\)):</strong></p>
+          <p>\[
+          h_a^\top V h_d
+          =h_a^\top\left(\frac{d}{c_d}\right)
+          =\frac{d^\top h_a}{c_d}
+          =d_{h_a}\,\sigma_d^2.
+          \]</p>
+          
+          <p>Hence</p>
+          <p>\[
+          \boxed{\,\sigma_{a,d}=a_{h_d}\,\sigma_a^2
+          = d_{h_a}\,\sigma_d^2\,}.
+          \]</p>
+          
+          <p><strong>Quick consistency checks</strong></p>
+          <ul>
+            <li><strong>Unit exposure:</strong> By construction \(a^\top h_a=1\) and \(d^\top h_d=1\).</li>
+            <li><strong>Symmetry:</strong> \(\sigma_{a,d}=\sigma_{d,a}\) is obvious from \(h_a^\top V h_d\) being a scalar and from the two routes above.</li>
+          </ul>
+          
+          <p><strong>In english (what was the point)</strong></p>
+          <ul>
+            <li>\(\mathbf{h}_a\) is the <strong>min-variance portfolio</strong> that loads <strong>one unit</strong> on attribute \(\mathbf{a}\). It's the orthogonal-projection analogue in mean–variance space.
+              <ul>
+                <li>The characteristic portfolio \(h_a\) is "the cheapest way" (lowest variance) to get one unit of attribute \(a\). Its weights are the <strong>generalized regression coefficients</strong> of \(a\) on the assets under metric \(V\): \(V^{-1}a\) normalized to unit exposure.</li>
+              </ul>
+            </li>
+            <li>The optimizer solution gives closed-form <strong>weights</strong>, <strong>risk</strong>, and <strong>betas</strong>; together they show that "betas to the characteristic portfolio = the attribute itself."
+              <ul>
+                <li>the characteristic portfolio is the <strong>factor-mimicking portfolio</strong> for \(a\).</li>
+                <li>Cross-covariances equal "other attribute exposure \(\times\) variance": covariance is large either because the two attributes load on each other (large cross-exposure) or because the target attribute is intrinsically volatile (large \(\sigma^2\)).</li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </details>
     </div>
