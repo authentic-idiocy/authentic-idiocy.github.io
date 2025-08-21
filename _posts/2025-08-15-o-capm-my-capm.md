@@ -850,6 +850,10 @@ description: "wish me luck on my interview RIP"
           =1
           \]</p>
           
+          <p><b>In words:</b> change the <b>units</b> of the attribute, not the economics. If you double the attribute scale, you need half as much portfolio to get one unit of exposure; variance scales like a square.</p>
+          
+          <p><b>Why it's important:</b> invariance to labeling. Whether \(a\) is "beta in %" or "beta in decimals," your exposure mechanism behaves consistently.</p>
+          
           <p><strong>Mixture part a) Linear combination of attributes</strong></p>
           <p>Let \(a=\kappa_d d+\kappa_f f\). Define</p>
           <p>\[
@@ -940,9 +944,12 @@ description: "wish me luck on my interview RIP"
           =\frac{\kappa_d^2}{\sigma_d^2}
           +\frac{\kappa_f^2}{\sigma_f^2}\;}
           \]</p>
+          
+          <p><b>In words:</b> the <b>portfolio map is linear</b> under the \(V^{-1}\) metric. A composite attribute is implemented by a matching composite of its characteristic portfolios, with weights adjusted by their variances. The variance formula is just the usual "sum plus cross-term"; if \(h_d\) and \(h_f\) are uncorrelated, it becomes Pythagorean.</p>
+          
+          <p><b>Why it's important:</b> you can modularly build complex factors from a base library of characteristic portfolios, and you can <b>orthogonalize</b> them by making \(d,f\) \(V^{-1}\)-orthogonal, giving uncorrelated factor returns.</p>
         </div>
       </details>
-    </div>
   </details>
 </div>
 {% endcapture %}
