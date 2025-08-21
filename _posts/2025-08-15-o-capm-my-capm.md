@@ -505,5 +505,87 @@ description: "wish me luck on my interview RIP"
     </div>
   </details>
 </div>
+
+<div class="flashcard">
+  <details>
+    <summary>Markowitz, Markowitz... (a la 'Malkovich, Malkovich' from 'Being John Malkovich')</summary>
+    <div class="back">
+      <details class="dropdown-block">
+        <summary>Notation & Setup</summary>
+        <div class="content">
+          <p><strong>Notation</strong></p>
+          <ul>
+            <li>\(N\) assets, return covariance \(V\in\mathbb{R}^{N\times N}\), \(V\succ 0\).</li>
+            <li>Attribute (characteristic) vector \(a\in\mathbb{R}^N\).</li>
+            <li>Portfolio weights \(h\in\mathbb{R}^N\).</li>
+            <li>Exposure of portfolio \(h\) to attribute \(a\) is the scalar \(a^\top h\).</li>
+            <li>The characteristic portfolio for \(a\) is the minimum-variance portfolio with unit exposure \(a^\top h=1\). We'll denote it \(h_a\).</li>
+          </ul>
+          
+          <p><strong>Variance of Portfolio Returns</strong></p>
+          <p>\(R\in\mathbb{R}^N\) is the <strong>random vector of asset returns</strong> for one period.
+          Let \(\mu:=\mathbb{E}[R]\) and \(V:=\operatorname{Cov}(R)=\mathbb{E}\!\big[(R-\mu)(R-\mu)^\top\big]\), with \(V\succ0\).
+          For any deterministic portfolio weights \(h\), the portfolio return is the scalar \(R_h:=h^\top R\), and</p>
+          
+          <p>\[
+          \operatorname{Var}(R_h)=\operatorname{Var}(h^\top R)=h^\top V h
+          \]</p>
+          
+          <p>since</p>
+          
+          <p>\[
+          \operatorname{Var}(h^\top R)
+          =\mathbb{E}\!\big[(h^\top(R-\mu))^2\big]
+          =\mathbb{E}\!\big[h^\top(R-\mu)(R-\mu)^\top h\big]
+          =h^\top\,\mathbb{E}\!\big[(R-\mu)(R-\mu)^\top\big]\,h
+          =h^\top V h
+          \]</p>
+          
+          <p>using linearity and the fact that \(h\) is non-random.</p>
+          
+          <p><strong>Characteristic Portfolios</strong></p>
+          <ul>
+            <li>Assets have attributes (betas, \(E/P\), sector, …). To any attribute vector \(\mathbf{a}^T=\{a_1,\dots,a_N\}\) associate a <strong>characteristic portfolio</strong> \(\mathbf{h}_a\) that uniquely captures that attribute.</li>
+            <li><strong>Exposure</strong> of portfolio \(\mathbf{h}_p\) to attribute \(\mathbf{a}\):</li>
+          </ul>
+          <p>\[
+          a_p \;=\; \sum_{k} a_k\,h_{pk}.
+          \]</p>
+          <p>This machinery lets us measure portfolio exposure to an attribute via covariance with the attribute's characteristic portfolio, and also invert the mapping (find which attribute a given portfolio best expresses).</p>
+          
+          <p><strong>Proposition 1</strong></p>
+          <ol>
+            <li><strong>Existence/uniqueness (unit-exposure, min-risk):</strong> For any attribute \(\mathbf{a}\neq \mathbf{0}\), there is a unique portfolio \(\mathbf{h}_a\) with <strong>unit exposure</strong> to \(\mathbf{a}\) and <strong>minimum variance</strong>. Its holdings are</li>
+          </ol>
+          <p>\[
+          \mathbf{h}_a \;=\; \frac{\mathbf{V}^{-1}\mathbf{a}}{\mathbf{a}^T \mathbf{V}^{-1}\mathbf{a}} 
+          \]</p>
+          <p>(Characteristic portfolios need not be fully invested; they may be long/short and leveraged. In practice we can combine with a benchmark to deleverage when building investable portfolios.)</p>
+          
+          <ol start="2">
+            <li><strong>Variance of the characteristic portfolio:</strong></li>
+          </ol>
+          <p>\[
+          \sigma_a^2 \;=\; \mathbf{h}_a^T \mathbf{V}\,\mathbf{h}_a \;=\; \frac{1}{\mathbf{a}^T \mathbf{V}^{-1}\mathbf{a}} 
+          \]</p>
+          
+          <ol start="3">
+            <li><strong>Betas to \(\mathbf{h}_a\):</strong> The vector of asset betas <strong>with respect to</strong> portfolio \(\mathbf{h}_a\) equals the attribute:</li>
+          </ol>
+          <p>\[
+          \mathbf{a} \;=\; \frac{\mathbf{V}\,\mathbf{h}_a}{\sigma_a^{2}} 
+          \]</p>
+          
+          <ol start="4">
+            <li><strong>Two attributes \(\mathbf{a},\mathbf{d}\):</strong> With characteristic portfolios \(\mathbf{h}_a,\mathbf{h}_d\) and exposures \(a_q\) and \(d_q\) (defined in the text), the covariance satisfies</li>
+          </ol>
+          <p>\[
+          \sigma_{a,d} \;=\; a_q\,\sigma_d^2 \;=\; d_q\,\sigma_a^2 
+          \]</p>
+        </div>
+      </details>
+    </div>
+  </details>
+</div>
 {% endcapture %}
 {% include technical-appendix.html content=appendix %}
