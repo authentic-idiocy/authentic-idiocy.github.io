@@ -307,3 +307,166 @@ description: "information action ratio."
     </div>
   </details>
 </div>
+<div class="flashcard">
+  <details>
+    <summary>The Residual Frontier: The Manager's Opportunity Set</summary>
+    <div class="back">
+      <p><strong>Idea.</strong><br>
+      Plot expected residual return \(\alpha_p\) against residual risk \(\omega_p\). The <b>ex-ante information ratio</b> determines the <i>slope</i> of the best attainable trade-off. The manager's <b>residual frontier</b> is the straight line through the origin with that slope; feasible (sub-optimal) portfolios lie on or <b>below</b> this line.</p>
+      
+      <p><strong>Geometry.</strong><br>
+      Benchmark \(B\) and cash sit at the origin since both have zero residual return and zero residual risk. Portfolios constructed from the manager's alphas that <i>fully exploit</i> the information lie <b>on</b> the line; all others lie <b>under</b> it.</p>
+      <div id="residual-frontier-fig-5-combined" style="width:980px;height:560px;"></div>
+      <div id="residual-frontier-fig-5-combined-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
+      
+      <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+      <script>
+      function renderResidualFrontierCombined() {
+        // ===== Axes grid (ω in %, α in %) =====
+        const toPct = x => x; // keep in [0, 0.12] but show as % via tickformat
+      
+        // ===== Residual frontiers (Fig. 5.2) =====
+        const IRs = [
+          { ir: 1.00, dash: "solid",  width: 3, name: "IR = 1.00" },
+          { ir: 0.75, dash: "dot",    width: 3, name: "IR = 0.75" },
+          { ir: 0.50, dash: "dash",   width: 3, name: "IR = 0.50" },
+        ];
+      
+        const xMin = 0.0, xMax = 0.12, Nx = 121;
+        const omega = Array.from({length: Nx}, (_, i) => xMin + i*(xMax - xMin)/(Nx - 1));
+      
+        const frontierTraces = IRs.map(({ir, dash, width, name}) => ({
+          x: omega.map(toPct),
+          y: omega.map(w => ir*w),
+          mode: "lines",
+          line: { dash, width },
+          name,
+          hovertemplate: "ω=%{x:.1%}<br>α=%{y:.1%}<extra>"+name+"</extra>"
+        }));
+      
+        // ===== Points on IR=1 frontier (Fig. 5.1 P1–P6 + Q) =====
+        const IR1 = 1.0;
+        const Pks = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]; // 1% … 6% residual risk
+        const Ptext = ["P1","P2","P3","Q","P5","P6"];     // label Q near the middle as in fig
+      
+        const Ptrace = {
+          x: Pks,
+          y: Pks.map(w => IR1*w),
+          mode: "markers+text",
+          type: "scatter",
+          name: "Fig. 5.1 points",
+          marker: { size: 9, symbol: "circle" },
+          text: Ptext,
+          textposition: ["bottom right","top left","bottom left","top right","bottom left","top left"],
+          hovertemplate: "%{text}<br>ω=%{x:.1%}<br>α=%{y:.1%}<extra></extra>"
+        };
+      
+        // Explicit Q (so it’s easy to style)
+        const Qw = 0.04, Qa = IR1*Qw;
+        const Qtrace = {
+          x: [Qw], y: [Qa],
+          mode: "markers+text",
+          name: "Q",
+          marker: { size: 11, symbol: "diamond-open" },
+          text: ["Q"],
+          textposition: "top center",
+          hovertemplate: "Q<br>ω=%{x:.1%}<br>α=%{y:.1%}<extra></extra>"
+        };
+      
+        // Benchmark/cash at the origin: B
+        const Btrace = {
+          x: [0], y: [0],
+          mode: "markers+text",
+          name: "B (benchmark & cash)",
+          marker: { size: 10, symbol: "square" },
+          text: ["B"],
+          textposition: "bottom right",
+          hovertemplate: "B<br>ω=0.0%<br>α=0.0%<extra></extra>"
+        };
+      
+        // ===== Annotations to mirror captions =====
+        const annotations = [
+          { x: 0.095, y: 0.095, text: "IR = 1", showarrow: false, font: {size: 12}},
+          { x: 0.095, y: 0.071, text: "IR = 0.75", showarrow: false, font: {size: 12}},
+          { x: 0.095, y: 0.048, text: "IR = 0.50", showarrow: false, font: {size: 12}}
+        ];
+      
+        const layout = {
+          title: "Residual Frontier & Opportunities (Combined: Figures 5.1 & 5.2)",
+          xaxis: { title: "ω (residual risk)", range: [0, 0.12], tickformat: ".0%", zeroline: false },
+          yaxis: { title: "α (expected residual return)", range: [0, 0.12], tickformat: ".0%", rangemode: "tozero" },
+          template: "plotly_white",
+          legend: { orientation: "h", y: 1.12 },
+          margin: { l: 70, r: 20, t: 70, b: 55 },
+          annotations
+        };
+      
+        const traces = [...frontierTraces, Ptrace, Qtrace, Btrace];
+        Plotly.newPlot("residual-frontier-fig-5-combined", traces, layout,
+                       {displayModeBar: true, responsive: true});
+      
+        // ===== Info + intuition (below the figure) =====
+        document.getElementById("residual-frontier-fig-5-combined-info").innerHTML = `
+        <p>
+          <strong>What you're seeing (both figures combined):</strong>
+          The straight rays from the origin are residual frontiers \\(\\alpha_p = IR\\,\\omega_p\\) for three information ratios
+          (solid: 1.00; dotted: 0.75; dashed: 0.50). The black markers (P1–P6) and Q sit on the \\(IR=1\\) frontier,
+          and B is the origin (benchmark/cash), where both residual return and residual risk are zero.
+        </p>
+        <ul>
+          <li><em>Opportunity = slope.</em> A manager’s ex-ante information ratio fixes the frontier’s slope. Higher IR rotates the line upward, expanding the set of attainable \\((\\omega,\\alpha)\\) pairs.</li>
+          <li><em>Feasible set.</em> Portfolios lie on or below the frontier implied by the manager’s IR; moving along a given frontier scales both \\(\\omega_p\\) and \\(\\alpha_p\\) proportionally.</li>
+          <li><em>Comparing managers (Fig. 5.2 idea).</em> Points available on \\(IR=1\\) are not available to an \\(IR=0.5\\) manager; the latter’s best achievable \\(\\alpha\\) at any \\(\\omega\\) is lower.</li>
+          <li><em>Normalization.</em> B (benchmark) and cash anchor the origin because their residual return is zero; hence \\(\\alpha_B=0\\) and \\(\\omega_B=0\\).</li>
+        </ul>
+        <p style="opacity:0.85;">
+          <small>Note: Numerical placements are illustrative to recreate the diagrams’ geometry; the theory is the linear relation
+          \\(\\alpha_p = IR\\,\\omega_p\\) and the comparison of opportunity sets across IR levels.</small>
+        </p>`;
+      }
+      // Render now
+      renderResidualFrontierCombined();
+      </script>
+
+      <details class="dropdown-block">
+        <summary>Link to the optimization definition</summary>
+        <div class="content">
+          <p>The manager's information ratio is defined as the maximum attainable ratio over feasible portfolios:</p>
+          <p>\[
+          IR \;=\; \Max\{\alpha_p/\omega_p \mid P\}
+          \]</p>
+          <p>Any portfolio \(Q\) that attains this maximum lies on the frontier and satisfies \(IR=IR_Q\).</p>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Comparing managers</summary>
+        <div class="content">
+          <p>Different managers have different frontiers (different slopes). A higher \(IR\) rotates the frontier <b>upward</b>, enlarging the opportunity set; points available to a higher-\(IR\) manager are not available to a lower-\(IR\) manager. This does <b>not</b> mean a lower-\(IR\) manager cannot mechanically hold those same stocks; rather, their information will not <i>lead</i> them to portfolios achieving those \((\omega,\alpha)\) pairs.</p>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>"Budget constraint" form</summary>
+        <div class="content">
+          <p>Along the frontier the trade-off is linear:</p>
+          <p>\[
+          \alpha_p \;=\; IR \cdot \omega_p 
+          \]</p>
+          <p>At best, increases in expected residual return require <b>proportional</b> increases in residual risk; scaling active positions moves you <i>along</i> the line (both \(\alpha_p\) and \(\omega_p\) scale together, leaving \(IR\) unchanged).</p>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>En ingles (and a lil bit o' math.)</summary>
+        <div class="content">
+          <ul>
+            <li>The residual frontier is the active-risk analogue of the mean-variance capital market line: it is the set \(\{(\omega_p,\alpha_p): \alpha_p \le IR \cdot \omega_p\}\) with equality for optimized portfolios.</li>
+            <li>\(IR\) is the <i>sufficient statistic</i> for opportunity quality; it fully characterizes the frontier's slope and, hence, the manager's achievable conversion of information into residual return per unit of active risk.</li>
+            <li>Benchmarks/cash anchor the origin; feasible portfolios live on/below the ray; improving information (better forecasts or better use of them) <b>raises the slope</b>.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </details>
+</div>
