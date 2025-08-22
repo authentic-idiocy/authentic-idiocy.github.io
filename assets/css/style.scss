@@ -346,11 +346,18 @@ details.dropdown-slider > summary{
   font-weight:600;
   background:#141417;
   color:var(--primary);
-  display:flex;
-  align-items:center;
-  justify-content:center;
   position:relative;
+  text-align:center;
   transition:flex-basis .4s ease, color .2s ease, background .2s ease;
+}
+details.dropdown-slider > summary .summary-body{
+  display:none;
+  margin-top:1rem;
+  color:var(--fg-light);
+  font-weight:400;
+}
+details.dropdown-slider[open] > summary .summary-body{
+  display:block;
 }
 details.dropdown-slider > summary::marker,
 details.dropdown-slider > summary::-webkit-details-marker{display:none;}
