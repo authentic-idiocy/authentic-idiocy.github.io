@@ -1066,6 +1066,53 @@ description: "wish me luck on my interview RIP"
           <p><b>En mas ingles.</b> Characteristic portfolios are "least-wiggle" (min-variance) portfolios achieving <b>unit exposure</b> to the chosen attribute; covariances follow from the orthogonal-projection geometry and exposure identities.</p>
         </div>
       </details>
+      <details class="dropdown-block">
+        <summary>Portfolio \(q\)</summary>
+        <div class="content">
+          <p>The <b>expected excess returns</b> \(\mathbf{f}\) have <b>portfolio \(q\)</b> as their characteristic portfolio.</p>
+          
+          <p><strong>Sharpe Ratio</strong></p>
+          <p>For any risky portfolio \(P\) \((\sigma_P>0)\), the Sharpe ratio is</p>
+          <p>\[
+          \mathrm{SR}_P \;=\; \frac{f_P}{\sigma_P}
+          \]</p>
+          
+          <p><strong>Proposition 2: Portfolio with the Maximum Sharpe Ratio</strong></p>
+          <p>Let \(q\) be the <b>characteristic portfolio</b> of the expected excess returns \(\mathbf{f}\):</p>
+          <p>\[
+          \mathbf{h}_q \;=\; \frac{\mathbf{V}^{-1}\mathbf{f}}{\mathbf{f}^{\!T}\mathbf{V}^{-1}\mathbf{f}}
+          \]</p>
+          
+          <p>Then</p>
+          <p>\[
+          \mathrm{SR}_q \;=\; \max_P \mathrm{SR}_P \;=\; \big(\mathbf{f}^{\!T}\mathbf{V}^{-1}\mathbf{f}\big)^{1/2}
+          \]</p>
+          
+          <p>\[
+          f_q \;=\; 1
+          \]</p>
+          
+          <p>\[
+          \sigma_q^2 \;=\; \frac{1}{\mathbf{f}^{\!T}\mathbf{V}^{-1}\mathbf{f}}
+          \]</p>
+          
+          <p><b>3. (property)</b></p>
+          <p>\[
+          \mathbf{f} \;=\; \frac{\mathbf{V}\mathbf{h}_q}{\sigma_q^2} \;=\; \Big(\frac{\mathbf{V}\mathbf{h}_q}{\sigma_q}\Big)\,\mathrm{SR}_q
+          \]</p>
+          
+          <p><b>4.</b> If \(\rho_{p,q}\) is the correlation between portfolios \(P\) and \(q\), then</p>
+          <p>\[
+          \mathrm{SR}_P \;=\; \rho_{p,q}\,\mathrm{SR}_q
+          \]</p>
+          
+          <p><b>5.</b> The <b>fraction invested in risky assets</b> for \(q\) is</p>
+          <p>\[
+          e_q \;=\; \frac{f_C\,\sigma_q^2}{\sigma_C^2}
+          \]</p>
+        </div>
+      </details>
+    </div>
   </details>
 </div>
 {% endcapture %}
