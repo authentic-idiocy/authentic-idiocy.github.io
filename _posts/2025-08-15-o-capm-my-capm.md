@@ -1224,11 +1224,161 @@ description: "wish me luck on my interview RIP"
           e_q=\frac{f_C\,\sigma_q^2}{\sigma_C^2}.
           \]</p>
           
-          <p><b>En ingles:</b><br>
-          * \(q\) is the <b>tangency (max-Sharpe)</b> portfolio. Its weights (\(h_q\)) are the min-variance portfolio with <b>unit exposure</b> to \(\mathbf{f}\).<br>
-          * Because \(f_q=1\) and \(\sigma_q=1/\mathrm{SR}_q\), item (3) shows a key identity: <b>expected returns</b> are proportional to <b>betas with respect to \(q\)</b>, scaled by \(\mathrm{SR}_q\).<br>
-          * Any portfolio's Sharpe is its <b>correlation</b> with \(q\) times \(\mathrm{SR}_q\). If you're uncorrelated with \(q\), your Sharpe must be zero.<br>
-          * \(e_q\) tells you how levered/under-invested the tangency portfolio is relative to "fully invested" \(C\).</p>
+          <b>En ingles:</b><br>
+          <ul>
+            <li> \(q\) is the <b>tangency (max-Sharpe)</b> portfolio. Its weights (\(h_q\)) are the min-variance portfolio with <b>unit exposure</b> to \(\mathbf{f}\).</li>
+            <li> Because \(f_q=1\) and \(\sigma_q=1/\mathrm{SR}_q\), item (3) shows a key identity: <b>expected returns</b> are proportional to <b>betas with respect to \(q\)</b>, scaled by \(\mathrm{SR}_q\).</li>
+            <li> Any portfolio's Sharpe is its <b>correlation</b> with \(q\) times \(\mathrm{SR}_q\). If you're uncorrelated with \(q\), your Sharpe must be zero.</li>
+            <li> \(e_q\) tells you how levered/under-invested the tangency portfolio is relative to "fully invested" \(C\).</li>
+          </ul>
+        </div>
+      </details>
+      <details class="dropdown-block">
+        <summary>Seeking \(\alpha\)</summary>
+        <div class="content">
+          <p><strong>Portfolio \(A\)</strong></p>
+          <p>Define <b>alpha</b> as</p>
+          <p>\[
+          \boldsymbol{\alpha} \;=\; \mathbf{f} \;-\; \boldsymbol{\beta}\,f_B,
+          \]</p>
+          
+          <p>and let \(\mathbf{h}_\alpha\) be the <b>characteristic portfolio for alpha</b> (the min-risk portfolio with alpha \(=100\%\)). By the mixture (linear combination) corollary one can express \(\mathbf{h}_f\) in terms of \(\mathbf{h}_\beta\) and \(\mathbf{h}_q\). From Prop. 1 Item 4,</p>
+          <p>\[
+          \sigma_{\beta,\alpha} \;=\; \alpha_B\,\sigma_\beta^2 \;=\; \beta_\alpha\,\sigma_\alpha^2.
+          \]</p>
+          
+          <p>But \(\alpha_B=0\) <b>by construction</b>, hence portfolios \(A\) and \(B\) are <b>uncorrelated</b>, and \(\beta_\alpha=0\).</p>
+          
+          <p>The text then notes it is often convenient to assume there exists a <b>fully invested portfolio</b> that explains expected excess returns (true, e.g., if \(f_C>0\)); this assumption will be used going forward.</p>
+        </div>
+      </details>
+      <details class="dropdown-block">
+        <summary>Desperately seeking alpha</summary>
+        <div class="content">
+          <p><strong>Definitions & setup</strong></p>
+          <ul>
+            <li>Benchmark \(B\) has weights \(h_B\) and beta attribute</li>
+          </ul>
+          <p>\[
+          \beta=\frac{Vh_B}{\sigma_B^2}.
+          \]</p>
+          
+          <ul>
+            <li>Let \(f\) be expected excess returns.</li>
+            <li>Define <b>alpha</b> (asset-level) as</li>
+          </ul>
+          <p>\[
+          \alpha = f - \beta\, f_B,
+          \]</p>
+          
+          <p>where \(f_B := f^\top h_B\).</p>
+          
+          <ul>
+            <li>Let \(h_\alpha\) be the <b>characteristic portfolio</b> for \(\alpha\) (min-variance portfolio with unit exposure to \(\alpha\)).</li>
+          </ul>
+          
+          <p><strong>Step 1 — Express \(h_\alpha\) as a mixture of \(h_q\) and \(h_\beta\) via Eq. (2A.5)</strong></p>
+          <p>From the definition \(\alpha = 1\cdot f + (-f_B)\cdot \beta\), apply the linear-combination identity (See Mixture formula) with attributes \(d=f\) and \(f=\beta\). Recall:</p>
+          
+          <ul>
+            <li>The characteristic portfolio of \(f\) is \(q\): \(h_q=\dfrac{V^{-1}f}{f^\top V^{-1}f}\).</li>
+            <li>The characteristic portfolio of \(\beta\) is \(h_\beta=h_B\).</li>
+          </ul>
+          
+          <p>Thus,</p>
+          <p>\[
+          h_\alpha
+          = \left(\frac{1\cdot \sigma_\alpha^2}{\sigma_q^2}\right) h_q
+          + \left(\frac{-f_B\cdot \sigma_\alpha^2}{\sigma_\beta^2}\right) h_\beta
+          = \frac{\sigma_\alpha^2}{\sigma_q^2}\,h_q
+          -\frac{f_B\,\sigma_\alpha^2}{\sigma_\beta^2}\,h_\beta.
+          \]</p>
+          
+          <p>This is exactly the "matching weighted combination" statement specialized to \(\alpha=f - \beta f_B\).</p>
+          
+          <p><strong>Step 2 — Compute \(\alpha_B\) and show it is zero</strong></p>
+          <p>By definition, the <b>exposure</b> of portfolio \(B\) to attribute \(\alpha\) is</p>
+          <p>\[
+          \alpha_B := \alpha^\top h_B
+          = (f - \beta f_B)^\top h_B
+          = f_B - f_B\,\beta^\top h_B.
+          \]</p>
+          
+          <p>But</p>
+          <p>\[
+          \beta^\top h_B
+          = \left(\frac{Vh_B}{\sigma_B^2}\right)^\top h_B
+          = \frac{h_B^\top V h_B}{\sigma_B^2}
+          = \frac{\sigma_B^2}{\sigma_B^2}
+          = 1.
+          \]</p>
+          
+          <p>Hence</p>
+          <p>\[
+          \alpha_B = f_B - f_B\cdot 1 = 0.
+          \]</p>
+          
+          <p><strong>Step 3 — Use Prop. 1 Item 4 to connect covariances and exposures</strong></p>
+          <p>Recall (or just look at the Prop. 1 stuff again), for any two attributes \(a,d\) with characteristic portfolios \(h_a,h_d\),</p>
+          <p>\[
+          \sigma_{a,d} = a_{h_d}\,\sigma_a^2 = d_{h_a}\,\sigma_d^2,
+          \]</p>
+          
+          <p>where \(a_{h_d}:=a^\top h_d\) and \(d_{h_a}:=d^\top h_a\).</p>
+          
+          <p>Apply this with \(a=\beta\) and \(d=\alpha\). Then</p>
+          <ul>
+            <li>\(a_{h_d}=\beta_{h_\alpha}=\beta_\alpha\),</li>
+            <li>\(d_{h_a}=\alpha_{h_\beta}=\alpha_B\),</li>
+            <li>\(h_\beta=h_B\).</li>
+          </ul>
+          
+          <p>Therefore,</p>
+          <p>\[
+          \sigma_{\beta,\alpha} = \beta_\alpha\,\sigma_\beta^2 = \alpha_B\,\sigma_\alpha^2.
+          \]</p>
+          
+          <p>From Step 2, \(\alpha_B=0\). Since \(\sigma_\alpha^2>0\) (strictly, by \(V\succ0\) and \(\alpha\neq 0\) unless the model is degenerate), we get</p>
+          <p>\[
+          \sigma_{\beta,\alpha} = 0,
+          \qquad
+          \beta_\alpha\,\sigma_\beta^2 = 0
+          \;\Rightarrow\;
+          \beta_\alpha = 0
+          \quad (\text{because } \sigma_\beta^2>0).
+          \]</p>
+          
+          <p><b>Conclusions.</b></p>
+          <ul>
+            <li>Portfolios \(A\) and \(B\) are <b>uncorrelated</b>: \(\sigma_{\beta,\alpha}=0\).</li>
+            <li>The <b>beta exposure of \(A\)</b> is zero: \(\beta_\alpha=0\) (i.e., \(h_\alpha\) is \(\beta\)-neutral).</li>
+          </ul>
+          
+          <p><strong>Step 4 — Why the "fully invested explainer" assumption is convenient</strong></p>
+          <p><b>What "fully-invested explainer" means:</b></p>
+          
+          <p>"\(Q\) explains \(f\)" ⇔ the expected excess-return vector \(f\) is proportional to the beta vector <b>with respect to \(Q\)</b>:</p>
+          <p>\[
+          f \;=\; f_C\,\beta^{(\text{w.r.t.\ }Q)}
+          \quad\text{where}\quad
+          \beta^{(\text{w.r.t.\ }Q)}=\frac{Vh_Q}{\sigma_Q^2}.
+          \]</p>
+          
+          <p>Equivalently, for every asset \(i\) and every portfolio \(P\),</p>
+          <p>\[
+          f_i=\beta_i^{(Q)}\,f_C,
+          \qquad
+          f_P=\beta_P^{(Q)}\,f_C.
+          \]</p>
+          
+          <p>So \(f_C\) is the <b>market price of risk</b> and \(\beta^{(Q)}\) are the <b>prices per unit of risk exposure</b>.</p>
+          
+          <p>Recall the fraction of risky assets invested in \(q\),</p>
+          <p>\[
+          e_q = \frac{f_C\,\sigma_q^2}{\sigma_C^2}.
+          \]</p>
+          
+          <p>If \(f_C>0\), then \(e_q>0\). You can scale \(q\) to be fully invested without changing its Sharpe ratio and still have it <b>explain \(f\)</b> (Recall, \(f=(Vh_q/\sigma_q^2)\)). This gives a convenient <b>fully invested</b> factor that prices expected excess returns and keeps the decomposition \(\alpha = f - \beta f_B\) clean in practice.</p>
         </div>
       </details>
     </div>
