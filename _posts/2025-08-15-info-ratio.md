@@ -470,3 +470,266 @@ description: "information action ratio."
     </div>
   </details>
 </div>
+<div class="flashcard">
+  <details>
+    <summary>The Active Management Objective</summary>
+    <div class="back">
+      <details class="dropdown-block">
+        <summary>Objective</summary>
+        <div class="content">
+          <p>Maximize <b>value added</b> from residual (active) return. Define</p>
+          <p>\[
+          \text{VA}[P] \;=\; \alpha_p \;-\; \lambda_r \cdot \omega_p^{2}
+          \]</p>
+          
+          <ul>
+            <li>\(\alpha_p\): expected <b>residual return</b> of portfolio \(P\).</li>
+            <li>\(\omega_p\): <b>residual risk</b> (active risk; st. dev.).</li>
+            <li>\(\lambda_r>0\): <b>aversion to residual risk</b>; converts residual <i>variance</i> into a <b>loss in alpha</b>.</li>
+          </ul>
+          
+          <p><b>Wat It Mean.</b><br>
+          VA credits forecasted skill (\(\alpha_p\)) and debits risk (\(\lambda_r \omega_p^2\)). The quadratic penalty mirrors mean-variance preferences specialized to residual (benchmark-neutral) returns: utility is linear in mean, quadratic in variance.</p>
+          
+          <p><b>NB:</b><br>
+          Benchmark timing is ignored, so <b>active return = residual return</b> and <b>active risk = residual risk</b>.</p>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Loss in alpha (risk penalty)</summary>
+        <div class="content">
+          <p>For any fixed \(\lambda_r\), the <b>loss in alpha</b> due to bearing residual risk \(\omega_p\) is</p>
+          <p>\[
+          \text{Loss}(\omega_p) \;=\; \lambda_r \cdot \omega_p^{2}.
+          \]</p>
+          
+          <p>Higher \(\lambda_r\) ⇒ steeper penalty; the loss rises with the <b>square</b> of risk.</p>
+          <!-- Figure 5.3 — Loss in alpha (separate block) -->
+          <div id="fig-5-3" style="width:960px;height:520px;"></div>
+          <div id="fig-5-3-info" style="font-size:0.9em; opacity:0.95; margin:8px 0 24px;"></div>
+          
+          <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+          <script>
+          (function renderFig53() {
+            // Percent tick helpers
+            const tickVals = (max=12, step=2) => Array.from({length: Math.floor(max/step)+1}, (_,i)=> i*step);
+            const tickText = vals => vals.map(v => v.toFixed(0) + "%");
+          
+            // ω from 0%..12% sampled finely (use "percent points" axis)
+            const wMaxPP = 12, Nw = 121;
+            const wPP = Array.from({length: Nw}, (_,i)=> i*(wMaxPP)/(Nw-1)); // 0..12
+          
+            // Loss in alpha curves: Loss(ω) = λ_r * ω^2  (three λ_r levels)
+            const lambdas = [
+              {lam: 0.05, dash: "dot",    name: "λ = 0.05"},
+              {lam: 0.10, dash: "dash",   name: "λ = 0.10"},
+              {lam: 0.15, dash: "solid",  name: "λ = 0.15"}
+            ];
+            const lossTraces = lambdas.map(({lam, dash, name}) => ({
+              x: wPP,
+              y: wPP.map(w => lam*w*w),
+              mode: "lines",
+              line: {width: 3, dash},
+              name,
+              hovertemplate: "ω=%{x:.1f}%<br>Loss in α=%{y:.2f}%<extra>"+name+"</extra>"
+            }));
+          
+            const xt = tickVals(12,2), yt = tickVals(16,2);
+            const layout53 = {
+              title: "Figure 5.3 — Loss in α:  λ<sub>r</sub> · ω²",
+              xaxis: {title: "ω", range: [0,12], tickvals: xt, ticktext: tickText(xt), zeroline: false},
+              yaxis: {title: "Loss in α", range: [0,16], tickvals: yt, ticktext: tickText(yt), rangemode: "tozero"},
+              template: "plotly_white",
+              legend: {orientation: "h", y: 1.12},
+              margin: {l: 70, r: 20, t: 70, b: 55}
+            };
+          
+            Plotly.newPlot("fig-5-3", lossTraces, layout53, {displayModeBar:true, responsive:true});
+          
+            document.getElementById("fig-5-3-info").innerHTML = `
+              <p><strong>Loss in α.</strong> With residual-risk aversion \\(\\lambda_r\\),
+              the penalty for bearing residual risk \\(\\omega\\) is quadratic: \\(\\text{Loss}(\\omega)=\\lambda_r\\,\\omega^2\\).
+              Higher \\(\\lambda_r\\) means greater aversion, so the curve bends up more sharply; for a fixed \\(\\lambda_r\\),
+              loss grows with the square of risk.</p>
+            `;
+          })();
+          </script>
+
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Lines of equal value added (indifference curves)</summary>
+        <div class="content">
+          <p>Holding VA constant at some level \(c\), rearrange the objective:</p>
+          <p>\[
+          \alpha_p \;=\; c \;+\; \lambda_r \cdot \omega_p^{2}.
+          \]</p>
+          
+          <p>These are <b>upward-opening parabolas</b> in the \((\omega_p,\alpha_p)\) plane. For a given \(\lambda_r\) they are <b>parallel</b> (same curvature) and represent all portfolios that deliver the same certainty-equivalent value added \(c\).</p>
+          <!-- Figure 5.4 — Constant value-added lines (separate block) -->
+          <div id="fig-5-4" style="width:960px;height:520px;"></div>
+          <div id="fig-5-4-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
+          
+          <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+          <script>
+          (function renderFig54() {
+            const tickVals = (max=12, step=2) => Array.from({length: Math.floor(max/step)+1}, (_,i)=> i*step);
+            const tickText = vals => vals.map(v => v.toFixed(0) + "%");
+          
+            const wMaxPP = 12, Nw = 121;
+            const wPP = Array.from({length: Nw}, (_,i)=> i*(wMaxPP)/(Nw-1)); // 0..12
+          
+            // α(ω) for constant value added: α = VA + λ_r * ω^2  (λ_r = 0.10 as in figure)
+            const lambdaVA = 0.10;
+            const VAlevels = [
+              {va: 2.500, dash: "dash",    name: "VA = 2.500%"},
+              {va: 1.400, dash: "dashdot", name: "VA = 1.400%"},
+              {va: 0.625, dash: "solid",   name: "VA = 0.625%"}
+            ];
+            const aTraces = VAlevels.map(({va, dash, name}) => ({
+              x: wPP,
+              y: wPP.map(w => va + lambdaVA*w*w),
+              mode: "lines",
+              line: {width: 3, dash},
+              name,
+              hovertemplate: "ω=%{x:.1f}%<br>α=%{y:.2f}%<extra>"+name+"</extra>"
+            }));
+          
+            const xt = tickVals(12,2), yt = tickVals(14,2);
+            const layout54 = {
+              title: "Figure 5.4 — Constant Value-Added Lines:  α = VA + λ<sub>r</sub> · ω²  (λ<sub>r</sub>=0.10)",
+              xaxis: {title: "ω", range: [0,12], tickvals: xt, ticktext: tickText(xt), zeroline: false},
+              yaxis: {title: "α", range: [0,14], tickvals: yt, ticktext: tickText(yt), rangemode: "tozero"},
+              template: "plotly_white",
+              legend: {orientation: "h", y: 1.12},
+              margin: {l: 70, r: 20, t: 70, b: 55}
+            };
+          
+            Plotly.newPlot("fig-5-4", aTraces, layout54, {displayModeBar:true, responsive:true});
+          
+            document.getElementById("fig-5-4-info").innerHTML = `
+              <p><strong>Constant value-added curves.</strong>
+                For fixed \\(\\lambda_r\\), an indifference set is \\(\\alpha = \\text{VA} + \\lambda_r\\,\\omega^2\\).
+                These parabolas are parallel; higher \\(\\text{VA}\\) shifts the curve upward.
+                Each point on a given curve yields the same risk-adjusted residual return (same VA): increasing \\(\\omega\\)
+                requires a compensating rise in \\(\\alpha\\) equal to \\(\\lambda_r\\,\\omega^2\\).</p>
+            `;
+          })();
+          </script>
+
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Certainty-equivalent interpretation</summary>
+        <div class="content">
+          <p>VA is the <span class="define">certainty-equivalent residual return
+            <div class="tooltip">
+              <div style="max-width: 500px">
+                <h4>Gettin' assy (economicsy): What is a certainty equivalent (CE)?</h4>
+                <p><b>Definition (general).</b> For any risky payoff \(X\) and utility \(U(\cdot)\), the <b>certainty equivalent</b> \(c\) is the sure amount that makes you indifferent to \(X\):</p>
+                <p>\[
+                U(c)=\mathbb{E}[U(X)].
+                \]</p>
+                
+                <p><b>Here (residual, mean-variance form).</b> Utility for an active portfolio \(P\) is taken to be</p>
+                <p>\[
+                U(P)=\alpha_p-\lambda_r\,\omega_p^2,
+                \]</p>
+                <p>i.e., linear in expected residual return \(\alpha_p\) and quadratic penalty in residual variance \(\omega_p^2\) with aversion \(\lambda_r>0\).</p>
+                
+                <p>A <b>residual risk-free</b> payoff of amount \(c\) has \(\omega=0\), so its utility is \(U(c)=c\). Indifference to the risky active \(P\) means</p>
+                <p>\[
+                c=\alpha_p-\lambda_r\,\omega_p^2.
+                \]</p>
+                
+                <p>That \(c\) is the <b>certainty-equivalent residual return</b>:</p>
+                <p>\[
+                \boxed{\text{CE}=\alpha_p-\lambda_r\,\omega_p^2\;}
+                \]</p>
+                
+                <h4>En ingles</h4>
+                <p>CE is the <b>risk-adjusted alpha</b>: the guaranteed residual return you'd accept instead of taking the risky active position \((\alpha_p,\omega_p)\) given aversion \(\lambda_r\).<br>
+                Equivalently, the <b>residual risk premium</b> you're implicitly paying is</p>
+                <p>\[
+                \alpha_p-\text{CE}=\lambda_r\,\omega_p^2.
+                \]</p>
+              </div>
+            </div>
+          </span>:</p>
+          <p>\[
+          \text{CE} \;=\; \alpha_p \;-\; \lambda_r \cdot \omega_p^{2}.
+          \]</p>
+          
+          <p>An investor with residual-risk aversion \(\lambda_r\) is indifferent between a risky active portfolio \((\alpha_p,\omega_p)\) and receiving the sure residual return <b>CE</b> on a residual risk-free investment.</p>
+        </div>
+      </details>
+      
+      <details class="dropdown-block">
+        <summary>Connection to the residual frontier</summary>
+        <div class="content">
+          <p>With opportunity set (frontier) \(\alpha_p = IR \cdot \omega_p\), the VA to be maximized is</p>
+          <p>\[
+          \text{VA}(\omega_p) \;=\; IR \cdot \omega_p \;-\; \lambda_r \cdot \omega_p^{2}.
+          \]</p>
+          
+          <p>First-order condition (tangency of frontier and indifference parabola):</p>
+          
+          <ul>
+            <li>Differentiate w.r.t. \(\omega_p\):</li>
+          </ul>
+          <p>\[
+          \frac{d}{d\omega_p}\mathrm{VA}(\omega_p) \;=\; IR \;-\; 2\lambda_r\,\omega_p .
+          \]</p>
+          
+          <ul>
+            <li>Set the derivative to zero:</li>
+          </ul>
+          <p>\[
+          IR - 2\lambda_r\,\omega_p^{*}=0
+          \quad\Longrightarrow\quad
+          \boxed{\ \omega_p^{*}=\dfrac{IR}{2\lambda_r}\ }.
+          \]</p>
+          
+          <ul>
+            <li>Equivalently, rearranging the FOC:</li>
+          </ul>
+          <p>\[
+          \boxed{\ IR \;=\; 2\lambda_r\,\omega_p^{*}\ }.
+          \]</p>
+          
+          <ul>
+            <li>Second derivative (concavity check)</li>
+          </ul>
+          <p>\[
+          \frac{d^2}{d\omega_p^2}\mathrm{VA}(\omega_p) = -2\lambda_r \;<\;0
+          \]</p>
+          
+          <p>(since \(\lambda_r>0\). So the critical point is a <b>global maximum</b>.)</p>
+          
+          <p>Hence the <b>optimal active risk</b> and <b>return</b> are</p>
+          <p>\[
+          \omega_p^{*} \;=\; \frac{IR}{2\lambda_r},
+          \qquad
+          \alpha_p^{*} \;=\; IR \cdot \omega_p^{*} \;=\; \frac{IR^{2}}{2\lambda_r},
+          \]</p>
+          
+          <p>and the <b>maximum value added</b> is</p>
+          <p>\[
+          \text{VA}^{*} \;=\; \frac{IR^{2}}{4\lambda_r}.
+          \]</p>
+          
+          <p><b>Interpretation</b></p>
+          <ul>
+            <li>\(IR\) = <b>frontier slope</b> (opportunity quality).</li>
+            <li>\(\lambda_r\) = <b>curvature</b> of the indifference parabola (tolerance for residual risk).</li>
+            <li>Optimal aggressiveness scales <b>up</b> with \(IR\) and <b>down</b> with \(\lambda_r\):
+              \(\omega_p^{*}\propto IR/\lambda_r\), \(\alpha_p^{*}\propto IR^{2}/\lambda_r\), \(\mathrm{VA}^{*}\propto IR^{2}/\lambda_r\).</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </details>
+</div>
