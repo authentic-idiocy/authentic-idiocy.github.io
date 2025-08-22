@@ -950,6 +950,122 @@ description: "wish me luck on my interview RIP"
           <p><b>Why it's important:</b> you can modularly build complex factors from a base library of characteristic portfolios, and you can <b>orthogonalize</b> them by making \(d,f\) \(V^{-1}\)-orthogonal, giving uncorrelated factor returns.</p>
         </div>
       </details>
+      <details class="dropdown-block">
+        <summary>Characteristic Portfolio Examples: Charles and Bob</summary>
+        <div class="content">
+          <p><strong>Portfolio \(C\): The minimum-risk fully invested characteristic portfolio</strong></p>
+          <ul>
+            <li>Let the <b>attribute</b> be the all-ones vector</li>
+          </ul>
+          <p>\[
+          \mathbf{e}^{\!T}=\{1,1,\ldots,1\}
+          \]</p>
+          
+          <p>The <b>exposure</b> of portfolio \(p\) to \(\mathbf{e}\) is \(e_p=\sum_n h_{pn}\) (its investment level). If \(e_p=1\), the portfolio is <b>fully invested</b>.</p>
+          
+          <p><b>Attribute & exposure.</b><br>
+          Exposure of any portfolio \(h\) to "fully invested" is</p>
+          <p>\[
+          e_h := e^\top h.
+          \]</p>
+          
+          <p><b>Characteristic portfolio for \(e\).</b> By Prop 1. Item 1,</p>
+          <p>\[
+          h_C=\frac{V^{-1}e}{e^\top V^{-1}e}.
+          \]</p>
+          
+          <p><b>Variance.</b> By Prop 1. Item 2,</p>
+          <p>\[
+          \sigma_C^2
+          = h_C^\top V h_C
+          = \frac{1}{\,e^\top V^{-1}e\,}.
+          \]</p>
+          
+          <p><b>Betas wrt \(h_a\)</b> By Prop 1. Item 3,</p>
+          <p>\[
+          Vh_C=\sigma_C^2\,e
+          \quad\Longleftrightarrow\quad
+          e=\frac{Vh_C}{\sigma_C^2}.
+          \]</p>
+          
+          <p><b>"Every asset has beta 1 w.r.t. \(C\)".</b><br>
+          Asset-level betas relative to \(C\) are</p>
+          <p>\[
+          \beta^{(C)}=\frac{Vh_C}{\sigma_C^2}=e,
+          \]</p>
+          <p>so each asset's beta to \(C\) is \(1\).</p>
+          
+          <p><b>Covariance of any portfolio \(P\) with \(C\).</b> Using Item 4,</p>
+          <p>\[
+          \sigma_{P,C}
+          = h_P^\top V h_C
+          = h_P^\top(\sigma_C^2 e)
+          = \sigma_C^2\,e_P,
+          \]</p>
+          <p>so if \(P\) is fully invested \((e_P=1)\) then \(\sigma_{P,C}=\sigma_C^2\).</p>
+          
+          <p><b>En ingles.</b> \(C\) is the unique minimum-variance fully-invested portfolio. Because \(Vh_C=\sigma_C^2 e\), every asset (and any fully invested portfolio) "lines up" with \(C\): their covariance with \(C\) is just their investment level times \(\sigma_C^2\).</p>
+          
+          <p><b>En mas ingles.</b> In \(C\), each asset's <b>marginal contribution to risk</b> is proportional to its beta to the portfolio. If those contributions weren't identical, you could trade to reduce total risk, contradicting minimality. Since the portfolio's own beta to itself is 1, each asset's beta to \(C\) must be 1.</p>
+          
+          <p><strong>Portfolio \(B\): The benchmark</strong></p>
+          <p><b>Define the beta attribute via \(B\).</b></p>
+          <p>\[
+          \beta := \frac{\operatorname{Cov}(R,\,R_B)}{\operatorname{Var}(R_B)}
+          = \frac{Vh_B}{\sigma_B^2}.
+          \]</p>
+          
+          <p><b>Characteristic portfolio of \(\beta\) equals \(B\).</b> By Prop 1. Item 1,</p>
+          <p>\[
+          h_\beta=\frac{V^{-1}\beta}{\beta^\top V^{-1}\beta}.
+          \]</p>
+          
+          <p>Plug \(\beta=\dfrac{Vh_B}{\sigma_B^2}\):</p>
+          <p>\[
+          V^{-1}\beta=\frac{1}{\sigma_B^2}h_B,
+          \qquad
+          \beta^\top V^{-1}\beta
+          =\frac{1}{\sigma_B^4}\,h_B^\top V h_B
+          =\frac{1}{\sigma_B^2}.
+          \]</p>
+          
+          <p>Hence</p>
+          <p>\[
+          h_\beta=\frac{(1/\sigma_B^2)h_B}{\,1/\sigma_B^2\,}
+          =\boxed{\,h_B\,}.
+          \]</p>
+          
+          <p><b>Variance of the \(\beta\) characteristic portfolio.</b></p>
+          <p>\[
+          \sigma_\beta^2
+          =\frac{1}{\beta^\top V^{-1}\beta}
+          =\boxed{\,\sigma_B^2\,}.
+          \]</p>
+          
+          <p><b>En ingles:</b> the <b>benchmark is the min-risk portfolio among all \(\beta=1\) portfolios</b> (it has the same systematic risk as any \(\beta=1\) portfolio and <b>zero residual risk</b>, so its total risk is the smallest).</p>
+          
+          <p><strong>Relationship between \(B\) and \(C\) (Prop 1. Item 4 with \(a=\beta,\;d=e\)).</strong></p>
+          <p>\[
+          \sigma_{B,C}
+          = \beta_C\,\sigma_\beta^2
+          = e_B\,\sigma_C^2,
+          \]</p>
+          
+          <p>where</p>
+          <p>\[
+          \beta_C:=\beta^\top h_C,\qquad e_B:=e^\top h_B.
+          \]</p>
+          
+          <ul>
+            <li>If \(B\) is fully invested, then \(e_B=1\Rightarrow\sigma_{B,C}=\sigma_C^2\).</li>
+            <li>In general \(\beta_C=\sigma_{B,C}/\sigma_B^2\); it need not equal \(1\) unless additional normalization is imposed.</li>
+          </ul>
+          
+          <p><b>En ingles.</b> Defining the beta attribute with respect to \(B\) makes \(B\) itself the minimum-variance portfolio among all portfolios with beta-one exposure. The covariance link \(\sigma_{B,C}=e_B\sigma_C^2=\beta_C\sigma_B^2\) cleanly separates "how much \(B\) is invested" \((e_B)\) from "how much \(C\) loads on the \(\beta\) attribute" \((\beta_C)\).</p>
+          
+          <p><b>En mas ingles.</b> Characteristic portfolios are "least-wiggle" (min-variance) portfolios achieving <b>unit exposure</b> to the chosen attribute; covariances follow from the orthogonal-projection geometry and exposure identities.</p>
+        </div>
+      </details>
   </details>
 </div>
 {% endcapture %}
