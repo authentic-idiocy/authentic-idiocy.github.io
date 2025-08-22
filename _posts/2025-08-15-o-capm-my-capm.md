@@ -1112,6 +1112,125 @@ description: "wish me luck on my interview RIP"
           \]</p>
         </div>
       </details>
+      <details class="dropdown-block">
+        <summary>Prop. 2 Proof There it is</summary>
+        <div class="content">
+          <p><strong>Setup</strong></p>
+          <ul>
+            <li>Random asset-return vector \(R\in\mathbb{R}^N\), mean excess return \(f:=\mathbb{E}[R]\), covariance \(V\succ0\).</li>
+            <li>Portfolio \(h\) has excess mean \(f_P:=h^\top f\) and variance \(\sigma_P^2:=h^\top Vh\).</li>
+            <li>Sharpe ratio (for \(\sigma_P>0\)):</li>
+          </ul>
+          <p>\[
+          \mathrm{SR}_P \;=\; \frac{f_P}{\sigma_P}.
+          \]</p>
+          
+          <p>Let \(q\) denote the characteristic portfolio of the attribute \(a=f\):</p>
+          <p>\[
+          h_q \;=\; \frac{V^{-1}f}{f^\top V^{-1}f}.
+          \]</p>
+          
+          <p>By Prop. 1:</p>
+          <p>\[
+          f_q \;=\; f^\top h_q \;=\; 1,
+          \qquad
+          \sigma_q^2 \;=\; h_q^\top Vh_q \;=\; \frac{1}{f^\top V^{-1}f},
+          \qquad
+          Vh_q \;=\; \sigma_q^2 f.
+          \]</p>
+          
+          <p><strong>Step 1 — Scale invariance of \(\mathrm{SR}\) (why we can normalize \(f_P=1\))</strong></p>
+          <p>For any \(\kappa>0\),</p>
+          <p>\[
+          f_{\kappa h}=\kappa f_P
+          \]</p>
+          <p>\[
+          \sigma_{\kappa h}=\kappa \sigma_P
+          \]</p>
+          <p>\[
+          \mathrm{SR}_{\kappa h}=\frac{f_{\kappa h}}{\sigma_{\kappa h}}=\frac{\kappa f_P}{\kappa \sigma_P}=\mathrm{SR}_P.
+          \]</p>
+          
+          <p>If \(f_P<0\), replace \(h\) by \(-h\) to flip the sign (Sharpe changes sign). Thus we may restrict attention to \(f_P>0\).</p>
+          
+          <p><b>Normalization (the key step).</b> For any \(h\) with \(f_P>0\), choose \(\kappa:=1/f_P\) and set \(\tilde h:=\kappa h\). Then</p>
+          <p>\[
+          f_{\tilde P}=f^\top \tilde h=\kappa f_P=1
+          \]</p>
+          <p>\[
+          \sigma_{\tilde P}=\kappa \sigma_P=\frac{\sigma_P}{f_P}
+          \]</p>
+          <p>\[
+          \mathrm{SR}_{\tilde P}=\frac{f_{\tilde P}}{\sigma_{\tilde P}}=\frac{1}{\sigma_{\tilde P}}=\frac{f_P}{\sigma_P}=\mathrm{SR}_P.
+          \]</p>
+          
+          <p>Therefore</p>
+          <p>\[
+          \max_P \mathrm{SR}_P
+          =\max_{h:\,f^\top h=1}\frac{1}{\sigma_P}
+          =\frac{1}{\min_{h:\,f^\top h=1}\sigma_P}.
+          \]</p>
+          
+          <p><strong>Step 2 — Solve the inner minimization via the characteristic portfolio of \(f\)</strong></p>
+          <p>The unit-exposure, minimum-variance problem with attribute \(f\) has the unique solution (see Prop 1 above):</p>
+          <p>\[
+          h_q=\frac{V^{-1}f}{f^\top V^{-1}f}.
+          \]</p>
+          
+          <p>From Proposition 1:</p>
+          <p>\[
+          f_q=f^\top h_q=1 
+          \]</p>
+          <p>\[
+          \sigma_q^2=h_q^\top Vh_q=\frac{1}{f^\top V^{-1}f}.
+          \]</p>
+          
+          <p>Hence the maximal Sharpe is:</p>
+          <p>\[
+          \mathrm{SR}_q=\frac{f_q}{\sigma_q}=\frac{1}{\sigma_q}=\big(f^\top V^{-1}f\big)^{1/2}.
+          \]</p>
+          
+          <p><strong>Step 3 — Property linking \(f\), \(h_q\), and \(\sigma_q\)</strong></p>
+          <p>Apply result from Prop. 1 Item 3 \(Vh_a=\sigma_a^2 a\) to \(a=f\):</p>
+          <p>\[
+          f=\frac{Vh_q}{\sigma_q^2}
+          \]</p>
+          <p>\[
+          f=\left(\frac{Vh_q}{\sigma_q}\right)\mathrm{SR}_q.
+          \]</p>
+          
+          <p><strong>Step 4 — Any portfolio's Sharpe via correlation with \(q\)</strong></p>
+          <p>Premultiply the first equality in prev. step by \(h_P^\top\) and divide by \(\sigma_P\):</p>
+          <p>\[
+          \mathrm{SR}_P
+          =\frac{f_P}{\sigma_P}
+          =\frac{h_P^\top Vh_q}{\sigma_P\,\sigma_q^2}
+          =\left(\frac{\sigma_{p,q}}{\sigma_P\,\sigma_q}\right)\left(\frac{1}{\sigma_q}\right)
+          =\rho_{p,q}\,\mathrm{SR}_q,
+          \]</p>
+          
+          <p>so</p>
+          <p>\[
+          \mathrm{SR}_P=\rho_{p,q}\,\mathrm{SR}_q.
+          \]</p>
+          
+          <p><strong>Step 5 — Fraction invested in risky assets for \(q\)</strong></p>
+          <p>Let \(C\) be the characteristic portfolio of \(e\) (the all-ones attribute).<br>
+          By Prop. 1 Item 4 applied to \(f\) and \(e\):</p>
+          <p>\[
+          \sigma_{q,C}=f_C\,\sigma_q^2=e_q\,\sigma_C^2
+          \]</p>
+          <p>\[
+          e_q=\frac{f_C\,\sigma_q^2}{\sigma_C^2}.
+          \]</p>
+          
+          <p><b>En ingles:</b><br>
+          * \(q\) is the <b>tangency (max-Sharpe)</b> portfolio. Its weights (\(h_q\)) are the min-variance portfolio with <b>unit exposure</b> to \(\mathbf{f}\).<br>
+          * Because \(f_q=1\) and \(\sigma_q=1/\mathrm{SR}_q\), item (3) shows a key identity: <b>expected returns</b> are proportional to <b>betas with respect to \(q\)</b>, scaled by \(\mathrm{SR}_q\).<br>
+          * Any portfolio's Sharpe is its <b>correlation</b> with \(q\) times \(\mathrm{SR}_q\). If you're uncorrelated with \(q\), your Sharpe must be zero.<br>
+          * \(e_q\) tells you how levered/under-invested the tangency portfolio is relative to "fully invested" \(C\).</p>
+        </div>
+      </details>
     </div>
   </details>
 </div>
