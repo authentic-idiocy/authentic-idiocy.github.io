@@ -790,27 +790,27 @@ description: "wish me luck on my interview RIP"
           </ul>
         </div>
       </details>
-      <details class="dropdown-block">
-        <summary>The Scaling & Mixture Corollaries</summary>
+      <details class="dropdown-slider">
+        <summary>
+          <div class="summary-title">The Scaling & Mixture Corollaries</div>
+          <div class="summary-body">
+            <p><b>Scaling:</b> For positive scalar \(\kappa\), the characteristic portfolio of \(\kappa \mathbf{a}\) rescales to preserve unit exposure (i.e., \(\mathbf{h}_{\kappa a} = \mathbf{h}_a/\kappa\)).</p>
+
+            <p><b>Linear combination of attributes:</b> If \(\mathbf{a}\) is a weighted combination of attributes \(\mathbf{d}\) and \(\mathbf{f}\), say \(\mathbf{a}=\kappa_d \mathbf{d}+\kappa_f \mathbf{f}\), then the corresponding characteristic portfolio is the matching weighted combination:</p>
+
+            <p>\[
+            \mathbf{h}_a \;=\; \Big(\frac{\kappa_d \sigma_d^2}{\sigma_a^2}\Big)\mathbf{h}_d \;+\; \Big(\frac{\kappa_f \sigma_f^2}{\sigma_a^2}\Big)\mathbf{h}_f
+            \]</p>
+
+            <p>with</p>
+
+            <p>\[
+            \frac{1}{\sigma_a^2} \;=\; \frac{\kappa_d^2}{\sigma_d^2} \;+\; \frac{\kappa_f^2}{\sigma_f^2}.
+            \]</p>
+          </div>
+        </summary>
         <div class="content">
-          <p><b>Scaling:</b> For positive scalar \(\kappa\), the characteristic portfolio of \(\kappa \mathbf{a}\) rescales to preserve unit exposure (i.e., \(\mathbf{h}_{\kappa a} = \mathbf{h}_a/\kappa\)).</p>
-          
-          <p><b>Linear combination of attributes:</b> If \(\mathbf{a}\) is a weighted combination of attributes \(\mathbf{d}\) and \(\mathbf{f}\), say \(\mathbf{a}=\kappa_d \mathbf{d}+\kappa_f \mathbf{f}\), then the corresponding characteristic portfolio is the matching weighted combination:</p>
-          
-          <p>\[
-          \mathbf{h}_a \;=\; \Big(\frac{\kappa_d \sigma_d^2}{\sigma_a^2}\Big)\mathbf{h}_d \;+\; \Big(\frac{\kappa_f \sigma_f^2}{\sigma_a^2}\Big)\mathbf{h}_f 
-          \]</p>
-          
-          <p>with</p>
-          
-          <p>\[
-          \frac{1}{\sigma_a^2} \;=\; \frac{\kappa_d^2}{\sigma_d^2} \;+\; \frac{\kappa_f^2}{\sigma_f^2}. 
-          \]</p>
-        </div>
-      </details>
-      <details class="dropdown-block">
-        <summary>The Proof of the Scaling & Mixture Corollaries</summary>
-        <div class="content">
+          <p><strong>The Proof of the Scaling & Mixture Corollaries</strong></p>
           <p><strong>Scaling</strong></p>
           <p><b>Goal.</b> Show for \(\kappa>0\):</p>
           <p>\[
