@@ -858,3 +858,211 @@ description: "information action ratio."
     </div>
   </details>
 </div>
+<div class="flashcard">
+  <details>
+    <summary>The Information Ratio is the Key to Active Management</summary>
+    <div class="back">
+      <p>The results from maximizing the value added objective highlight a central result: regardless of risk tolerance, investors who maximize value added will <b>choose the strategy/manager with the highest \(IR\)</b>. Differences across investors arise only in <b>aggressiveness</b> (how far along the frontier they move), which is pinned down by</p>
+      
+      <p>\[
+      \omega_p^{*} \;=\; \frac{IR}{2\lambda_r}
+      \]</p>
+      
+      <p>and yields</p>
+      
+      <p>\[
+      \alpha_p^{*} \;=\; IR \cdot \omega_p^{*} \;=\; \frac{IR^{2}}{2\lambda_r},
+      \qquad
+      \text{VA}^{*} \;=\; \frac{IR^{2}}{4\lambda_r}.
+      \]</p>
+      
+      <details class="dropdown-block">
+        <summary>The \(\beta=1\) Frontier</summary>
+        <div class="content">
+          <p><b>Definition.</b> In the total-risk / total-return view (ignoring benchmark timing), the portfolios selected will lie on the <b>\(\beta=1\) frontier</b>: the set of efficient portfolios with <b>beta equal to 1</b> that minimize total risk for each expected return. These need not be fully invested.</p>
+          
+          <p><b>Comparative geometry.</b></p>
+          <ul>
+            <li>"Efficient frontier" (with a risk-free asset) is the straight line through the risk-free point \(F\) and a tangency portfolio \(Q\).</li>
+            <li>The <b>fully invested</b> efficient frontier begins at \(C\) and passes through \(Q\).</li>
+            <li>The <b>\(\beta=1\) efficient frontier</b> starts at the <b>benchmark</b> \(B\) and runs through a point \(P\).</li>
+          </ul>
+          
+          <p><b>Interpretation.</b></p>
+          <ul>
+            <li>The benchmark \(B\) is the <b>minimum-risk</b> \(\beta=1\) portfolio because it has <b>zero residual risk</b>.</li>
+            <li>Any other \(\beta=1\) portfolio has the same systematic risk as \(B\) but <b>more residual risk</b>.</li>
+            <li>Some portfolios outside the \(\beta=1\) frontier can dominate it in mean-variance terms, but they typically involve <b>large active risk</b>, exposing the manager to <b>business risk</b> of poor <b>relative</b> performance.</li>
+          </ul>
+          
+          <p><b>Intersection and constraints.</b></p>
+          <ul>
+            <li>The \(\beta=1\) frontier and the fully invested frontier <b>cross</b> at a point that typically involves <b>high residual risk</b>.</li>
+            <li>If we impose a <b>no-active-cash</b> condition, the \(\beta=1\) no-active-cash frontier is a <b>parabola centered at \(B\)</b> and passing through a portfolio \(Y\).</li>
+            <li>Combining constraints (full investment + \(\beta=1\)) <b>reduces opportunities</b>; unconstrained frontiers dominate constrained ones.</li>
+          </ul>
+
+          <!-- One figure with TWO side-by-side plots:
+               LEFT = Fig. 5.7  (efficient frontiers: CML, fully-invested, β=1)
+               RIGHT = Fig. 5.8 (β=1 frontier + β=1 no-active-cash parabola; crossing & Y)
+          -->
+          <div style="display:flex; gap:18px; width:1220px; max-width:100%;">
+            <div id="fig-57-left"  style="flex:1; min-width:520px; height:520px;"></div>
+            <div id="fig-58-right" style="flex:1; min-width:520px; height:520px;"></div>
+          </div>
+          <div id="fig-57-58-info" style="font-size:0.9em; opacity:0.95; margin-top:10px;"></div>
+          
+          <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+          <script>
+          (function render57and58() {
+            // ===== Shared helpers & parameters =====
+            const sigmaGrid = (max=45, n=181) => Array.from({length:n}, (_,i)=> i*max/(n-1)); // σ from 0..45
+            const tick = (max, step) => ({vals: Array.from({length: Math.floor(max/step)+1}, (_,i)=> i*step),
+                                          text: Array.from({length: Math.floor(max/step)+1}, (_,i)=> (i*step).toFixed(0))});
+          
+            // "Book-like" stylized parameters to recreate geometry (illustrative, not data-driven)
+            const mu_f = 5.0;          // risk-free return level (F on μ-axis)
+            const slopeCML = 0.70;     // capital-market-line slope (Sharpe)
+            const muB  = 8.0;          // benchmark μ (point B)
+            const sigB = 15.0;         // benchmark σ (point B)
+            // Fully-invested efficient frontier (concave): μ_FI(σ) = a + b σ − c σ²
+            const aFI = 1.0, bFI = 0.95, cFI = 0.010;
+          
+            // β=1 frontier (starts at B, concave up): μ_β1(σ) = μB + b1(σ−sigB) − k1(σ−sigB)²
+            const b1 = 0.90, k1 = 0.020;
+          
+            // ===== LEFT: Figure 5.7 =====
+            const sL = sigmaGrid(45, 181);
+            const muCML   = sL.map(s => mu_f + slopeCML*s);
+            const muFI    = sL.map(s => aFI + bFI*s - cFI*s*s);
+            const muBeta1 = sL.map(s => muB + b1*(s - sigB) - k1*(s - sigB)*(s - sigB));
+          
+            // Points (approximate placements to mirror the diagram)
+            const sC = 10,  muC = aFI + bFI*sC - cFI*sC*sC;             // C on FI frontier
+            // Q = intersection of CML and FI
+            function intersectLineCurve() {
+              // Solve for s where mu_f + m s = a + b s − c s²  =>  c s² + (m-b)s + (mu_f - a) = 0
+              const A = cFI, B = (slopeCML - bFI), C0 = (mu_f - aFI);
+              const disc = Math.sqrt(B*B - 4*A*C0);
+              const s1 = (-B + disc)/(2*A), s2 = (-B - disc)/(2*A);
+              return s1 > 0 ? s1 : s2;
+            }
+            const sQ = intersectLineCurve(), muQ = mu_f + slopeCML*sQ;
+          
+            // Choose a representative P on β=1 frontier (inside CML)
+            const sP = 22, muP = muB + b1*(sP - sigB) - k1*(sP - sigB)*(sP - sigB);
+          
+            // Down-sloping dominated line "R" (purely visual, to echo the sketch)
+            const muR = sL.map(s => mu_f - 0.9*s);
+          
+            const leftTraces = [
+              // Efficient frontier (fully invested)
+              {x:sL, y:muFI, mode:"lines", name:"Fully-invested frontier", line:{width:3, dash:"dot"},
+               hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>Fully invested</extra>"},
+              // β=1 frontier (starts at benchmark B)
+              {x:sL, y:muBeta1, mode:"lines", name:"β = 1 frontier", line:{width:3, dash:"dash"},
+               hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>β = 1</extra>"},
+              // Capital market line
+              {x:sL, y:muCML, mode:"lines", name:"Efficient frontier (CML)", line:{width:3},
+               hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>CML</extra>"},
+              // Downward line R (dominated)
+              {x:sL, y:muR, mode:"lines", name:"R (dominated region guide)", line:{width:2, dash:"dashdot"},
+               hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>R</extra>"},
+              // Points F, C, Q, B, P
+              {x:[0], y:[mu_f], mode:"markers+text", name:"F", marker:{size:10, symbol:"square"},
+               text:["F"], textposition:"left center", hovertemplate:"F<br>σ=0<br>μ="+mu_f.toFixed(1)+"<extra></extra>"},
+              {x:[sC], y:[muC], mode:"markers+text", name:"C", marker:{size:9, symbol:"circle"},
+               text:["C"], textposition:"bottom right", hovertemplate:"C<br>σ=%{x:.0f}<br>μ=%{y:.1f}<extra></extra>"},
+              {x:[sQ], y:[muQ], mode:"markers+text", name:"Q", marker:{size:11, symbol:"diamond-open"},
+               text:["Q"], textposition:"top left", hovertemplate:"Q<br>σ=%{x:.0f}<br>μ=%{y:.1f}<extra></extra>"},
+              {x:[sigB], y:[muB], mode:"markers+text", name:"B", marker:{size:10, symbol:"square"},
+               text:["B"], textposition:"right center", hovertemplate:"B<br>σ="+sigB.toFixed(0)+"<br>μ="+muB.toFixed(1)+"<extra></extra>"},
+              {x:[sP], y:[muP], mode:"markers+text", name:"P", marker:{size:9, symbol:"circle"},
+               text:["P"], textposition:"bottom left", hovertemplate:"P<br>σ=%{x:.0f}<br>μ=%{y:.1f}<extra></extra>"}
+            ];
+          
+            const xt = tick(45,5), yt = tick(35,5);
+            const layoutLeft = {
+              title: "Efficient Frontiers (CML, Fully Invested, and β = 1)",
+              xaxis: {title:"σ (total risk)", range:[0,45], tickvals:xt.vals, ticktext:xt.text, zeroline:false},
+              yaxis: {title:"μ (expected total return)", range:[-15,35], tickvals:yt.vals, ticktext:yt.text},
+              template:"plotly_white",
+              legend:{orientation:"h", y:1.12},
+              margin:{l:70, r:20, t:70, b:55}
+            };
+          
+            Plotly.newPlot("fig-57-left", leftTraces, layoutLeft, {displayModeBar:true, responsive:true});
+          
+            // ===== RIGHT: Figure 5.8 =====
+            // β=1 frontier (same as left)
+            const beta1Trace = {x:sL, y:muBeta1, mode:"lines", name:"β = 1 frontier", line:{width:3, dash:"dash"},
+              hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>β = 1</extra>"};
+          
+            // Fully invested frontier (same as left)
+            const fiTrace = {x:sL, y:muFI, mode:"lines", name:"Fully-invested frontier", line:{width:3, dash:"dot"},
+              hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>Fully invested</extra>"};
+          
+            // No-active-cash β=1 frontier: parabola centered at B and passing through Y
+            // Choose Y on the CML at σ_Y; solve a so that μ_parab(σ_Y) = μ_CML(σ_Y)
+            const sigY = 28.0, muY = mu_f + slopeCML*sigY;
+            const aParab = (muY - muB)/((sigY - sigB)*(sigY - sigB)); // μ = μB + a(σ−σB)^2
+            const muParab = sL.map(s => muB + aParab*(s - sigB)*(s - sigB));
+          
+            const nacTrace = {x:sL, y:muParab, mode:"lines", name:"β = 1 (no active cash) — parabola",
+              line:{width:3}, hovertemplate:"σ=%{x:.0f}<br>μ=%{y:.1f}<extra>β = 1, no active cash</extra>"};
+          
+            // Crossing point (β=1 with fully-invested): solve numerically
+            function intersectCurves(y1, y2, xs) {
+              let sCross = xs[0], minGap = 1e9;
+              xs.forEach((s,i)=>{const g=Math.abs(y1[i]-y2[i]); if(g<minGap){minGap=g; sCross=s;}});
+              const i = xs.indexOf(sCross);
+              return {s:sCross, mu:(y1[i]+y2[i])/2};
+            }
+            const cross = intersectCurves(muBeta1, muFI, sL); // approx crossing
+          
+            const rightTraces = [
+              fiTrace, beta1Trace, nacTrace,
+              {x:[sigB], y:[muB], mode:"markers+text", name:"B", marker:{size:10, symbol:"square"},
+               text:["B"], textposition:"right center", hovertemplate:"B<br>σ="+sigB.toFixed(0)+"<br>μ="+muB.toFixed(1)+"<extra></extra>"},
+              {x:[sigY], y:[muY], mode:"markers+text", name:"Y", marker:{size:11, symbol:"diamond-open"},
+               text:["Y"], textposition:"top center", hovertemplate:"Y<br>σ=%{x:.0f}<br>μ=%{y:.1f}<extra></extra>"},
+              {x:[cross.s], y:[cross.mu], mode:"markers+text", name:"Crossing", marker:{size:9, symbol:"circle"},
+               text:["cross"], textposition:"bottom left", hovertemplate:"Crossing<br>σ=%{x:.0f}<br>μ=%{y:.1f}<extra></extra>"},
+              {x:[0], y:[mu_f], mode:"markers+text", name:"F", marker:{size:10, symbol:"square"},
+               text:["F"], textposition:"left center", hovertemplate:"F<br>σ=0<br>μ="+mu_f.toFixed(1)+"<extra></extra>"}
+            ];
+          
+            const layoutRight = {
+              title: "Figure 5.8 — β = 1 Frontier with No-Active-Cash Constraint (Parabola through Y, centered at B)",
+              xaxis: {title:"σ (total risk)", range:[0,45], tickvals:xt.vals, ticktext:xt.text, zeroline:false},
+              yaxis: {title:"μ (expected total return)", range:[-15,35], tickvals:yt.vals, ticktext:yt.text},
+              template:"plotly_white",
+              legend:{orientation:"h", y:1.12},
+              margin:{l:70, r:20, t:70, b:55}
+            };
+          
+            Plotly.newPlot("fig-58-right", rightTraces, layoutRight, {displayModeBar:true, responsive:true});
+          
+            // ===== Info / intuition =====
+            document.getElementById("fig-57-58-info").innerHTML = `
+              <p><strong>Left (Figure 5.7).</strong>
+                Three efficient objects are overlaid: the straight <em>capital market line</em> (CML) from risk-free \\(F\\) through \\(Q\\),
+                the <em>fully-invested</em> frontier (concave curve via \\(C\\) and \\(Q\\)), and the <em>β = 1</em> frontier that starts at the benchmark \\(B\\).
+                The benchmark is the minimum-risk portfolio with \\(β=1\\) (zero residual risk). Any other \\(β=1\\) portfolio (e.g., \\(P\\))
+                has the <em>same</em> systematic risk but <em>more</em> residual risk. Portfolios above the \\(β=1\\) frontier often carry large active risk,
+                which creates business risk of poor <em>relative</em> performance.</p>
+          
+              <p><strong>Right (Figure 5.8).</strong>
+                The \\(β=1\\) frontier and the fully-invested frontier <em>cross</em> at high \\(σ\\) (marked “cross”).
+                Imposing a <em>no-active-cash</em> condition yields the <em>β=1</em> no-active-cash frontier, a parabola centered at \\(B\\)
+                and passing through \\(Y\\). This constraint shrinks opportunity: the unconstrained frontiers dominate the constrained one.
+                (Geometry replicated; numbers are illustrative to match the page diagrams.)</p>
+            `;
+          })();
+          </script>
+
+        </div>
+      </details>
+    </div>
+  </details>
+</div>
