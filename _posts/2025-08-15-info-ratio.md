@@ -831,7 +831,9 @@ description: "information action ratio."
           
           <p>and the <b>maximum value added</b> is</p>
           <p>\[
-          \text{VA}^{*} \;=\; \frac{IR^{2}}{4\lambda_r}.
+          \text{VA}^{*} \;=\; \text{VA}[\omega_p^{*}]
+          \;=\; \frac{IR^{2}}{4\lambda_r}
+          \;=\; \frac{\omega_p^{*} \cdot IR}{2}
           \]</p>
           
           <p><b>Interpretation</b></p>
@@ -839,13 +841,17 @@ description: "information action ratio."
             <li>\(IR\) = <b>frontier slope</b> (opportunity quality).</li>
             <li>\(\lambda_r\) = <b>curvature</b> of the indifference parabola (tolerance for residual risk).</li>
             <li>Optimal aggressiveness scales <b>up</b> with \(IR\) and <b>down</b> with \(\lambda_r\):
-              \(\omega_p^{*}\propto IR/\lambda_r\), \(\alpha_p^{*}\propto IR^{2}/\lambda_r\), \(\mathrm{VA}^{*}\propto IR^{2}/\lambda_r\).</li>
-          </ul>
-          <strong>Preferences Meet Opportunities</strong>
-          <ul>
-            <li><b>Opportunities:</b> the frontier \(\alpha=IR\omega\) fixes the <b>best attainable</b> trade-off given the manager's information.</li>
-            <li><b>Preferences:</b> \(\lambda_r\) pins the shape of the <b>VA parabolas</b>.</li>
-            <li><b>Choice:</b> the <b>optimal portfolio</b> lies at the <b>tangency</b> between the frontier and one VA curve; higher VA curves that sit entirely above the frontier are <b>infeasible</b>, curves below are <b>dominated</b>.</li>
+              \(\omega_p^{*}\propto IR/\lambda_r\), \(\alpha_p^{*}\propto IR^{2}/\lambda_r\), \(\mathrm{VA}^{*}\propto IR^{2}/\lambda_r\).
+              <ul>
+                <li>Specifically:
+                  <ul>
+                    <li>Ability to add value <b>increases with the square</b> of \(IR\).</li>
+                    <li>Ability to add value <b>decreases</b> as residual risk aversion \(\lambda_r\) rises.</li>
+                    <li>A manager's \(IR\) therefore determines their <b>potential</b> to add value, while \(\lambda_r\) governs how aggressively that potential is used.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </details>
