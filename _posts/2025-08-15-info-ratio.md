@@ -1066,3 +1066,343 @@ description: "information action ratio."
     </div>
   </details>
 </div>
+<div class="flashcard">
+  <details>
+    <summary>Forecast Alphas Directly!</summary>
+    <div class="back">
+      <p><b>Premise.</b> We manage <b>relative to a benchmark</b> and (fur now, KISS) ignore <b>benchmark timing</b>. Therefore we <b>need alphas</b>. Rather than forecasting expected returns and then transforming them, we can <b>skip the intermediates and forecast alphas directly</b>.</p>
+      
+      <p><b>A simple direct-forecasting recipe.</b></p>
+      <ol>
+        <li>Rank stocks into bins (e.g., strong buy / buy / hold / sell / strong sell).</li>
+        <li>Assign each bin an <b>alpha</b> (e.g., \(+2\%, +1\%, 0\%, -1\%, -2\%\)).</li>
+        <li>Compute the <b>benchmark average alpha</b>. If it equals zero, stop. If not, <b>neutralize</b> by subtracting "benchmark-average \(\times\) beta" from each stock's alpha so that the benchmark-weighted alpha is zero.</li>
+      </ol>
+      
+      <p><b>Theory point.</b><br>
+      This construction <b>avoids forecasting quantities</b> (like the benchmark's expected return) that <b>don't affect</b> the active portfolio and yields a <b>benchmark-neutral</b> alpha vector. With no constraints, the optimal portfolio produced by these alphas will have <b>\(\beta=1\)</b>.</p>
+      
+      <p><b>Why this is enough.</b></p>
+      <ul>
+        <li>We <b>don't need laserlike precision</b> in alpha forecasts; FLAM shows that even <b>low per-asset accuracy</b> can produce useful portfolio-level results if we keep the signal simple and pointed in the right direction.</li>
+        <li>It is <b>not difficult</b> to forecast <b>alphas directly</b>, even if forecasting the full set of expected returns with precision is hard.</li>
+        <li>The approach extends: e.g., do the ranking <b>by sector</b> first, then assign alphas within sectors; ensure <b>benchmark neutrality</b> after any refinement.</li>
+      </ul>
+      
+      <details class="dropdown-block">
+        <summary>Formal link to \(\beta=1\) Proof There it Is</summary>
+        <div class="content">
+          <p><strong>Problem</strong></p>
+          <p>Given stock alphas \(\alpha\), covariance \(V\succ0\), residual-risk aversion \(\lambda_r>0\), benchmark weights \(h_B\), and stock betas \(\beta=\dfrac{Vh_B}{\sigma_B^2}\), choose <b>active</b> holdings \(h_p^{a}\) to</p>
+          <p>\[
+          \max_{h_p^{a}}\;\; \Phi(h_p^{a})
+          := (h_p^{a})^\top \alpha\;-\;\lambda_r\,(h_p^{a})^\top V h_p^{a}.
+          \]</p>
+          <p>("Ignoring constraints" = unconstrained, so no Lagrange multiplier is needed.)</p>
+          
+          <p><strong>Gradient and first-order condition (FOC)</strong></p>
+          <p>Write \(\Phi(h)=h^\top\alpha-\lambda_r\,h^\top Vh\) with \(h:=h_p^{a}\).</p>
+          <ul>
+            <li>\(\nabla_h(h^\top\alpha)=\alpha\).</li>
+            <li>Since \(V=V^\top\), \(\nabla_h(h^\top Vh)=(V+V^\top)h=2Vh\).</li>
+          </ul>
+          <p>Thus</p>
+          <p>\[
+          \nabla_h\Phi(h)=\alpha-2\lambda_r Vh.
+          \]</p>
+          <p>FOC Set gradient to zero:</p>
+          <p>\[
+          \alpha-2\lambda_r Vh=0
+          \quad\Longrightarrow\quad
+          Vh=\frac{1}{2\lambda_r}\,\alpha
+          \quad\Longrightarrow\quad
+          \boxed{\,h_p^{a}=\frac{1}{2\lambda_r}\,V^{-1}\alpha\,}.
+          \]</p>
+          <p>Because \(-\lambda_r h^\top Vh\) is strictly concave ( \(V\succ0\) ), this stationary point is the unique maximizer.</p>
+          
+          <p><strong>Zero active beta (uses the benchmark-neutralization step)</strong></p>
+          <p>Let the <b>benchmark-weighted alpha</b> be \(\alpha_B:=\alpha^\top h_B\). By the recipe's neutralization, \(\alpha_B=0\).</p>
+          <p>Start from the FOC in the form \( \alpha=2\lambda_r Vh_p^{a}\) and premultiply by \(h_B^\top\):</p>
+          <p>\[
+          \underbrace{h_B^\top \alpha}_{=\alpha_B=0}
+          \;=\;
+          2\lambda_r\,h_B^\top V h_p^{a}.
+          \]</p>
+          <p>Use the identity from \(\beta=\dfrac{Vh_B}{\sigma_B^2}\):</p>
+          <p>\[
+          h_B^\top V \;=\; (Vh_B)^\top=\big(\sigma_B^2\beta\big)^\top
+          =\sigma_B^2\beta^\top.
+          \]</p>
+          <p>Therefore</p>
+          <p>\[
+          0 \;=\; 2\lambda_r\,\sigma_B^2\,\beta^\top h_p^{a}
+          \quad\Longrightarrow\quad
+          \boxed{\,\beta^\top h_p^{a}=0\,}
+          \qquad\text{(zero active beta)}.
+          \]</p>
+          
+          <p><strong>Portfolio beta equals 1</strong></p>
+          <p>Total holdings \(h_p=h_B+h_p^{a}\). Portfolio beta (relative to \(B\)) is</p>
+          <p>\[
+          \beta(h_p)=\beta^\top h_p
+          =\beta^\top h_B+\beta^\top h_p^{a}.
+          \]</p>
+          <p>By definition of \(\beta\), the benchmark's own beta is one:</p>
+          <p>\[
+          \beta^\top h_B
+          =\frac{(Vh_B)^\top h_B}{\sigma_B^2}
+          =\frac{h_B^\top Vh_B}{\sigma_B^2}
+          =\frac{\sigma_B^2}{\sigma_B^2}=1.
+          \]</p>
+          <p>Combine with \(\beta^\top h_p^{a}=0\):</p>
+          <p>\[
+          \boxed{\,\beta(h_p)=1\,}.
+          \]</p>
+          
+          <p><b>En Ingles</b></p>
+          <ul>
+            <li>The unconstrained mean-variance active optimizer is \(h_p^{a}\propto V^{-1}\alpha\).</li>
+            <li>Benchmark-neutralization (\(\alpha_B=0\)) forces the optimizer's <b>active beta to zero</b>.</li>
+            <li>Adding this active to the benchmark leaves the <b>total portfolio's beta at 1</b>.</li>
+          </ul>
+        </div>
+      </details>
+      <div id="alpha-forecasting-fig" style="width:980px;height:560px;"></div>
+      <div id="alpha-forecasting-fig-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
+      
+      <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+      <script>
+        // ============================================================
+        // Plot: Direct-forecasting recipe → neutral alphas → β=1 frontier
+        // ============================================================
+        function renderAlphaForecasting() {
+          // ---------- 1) Synthetic universe ----------
+          const N = 40;                                  // stocks
+          const rng = () => Math.random();
+      
+          // Helper: Dirichlet(1,...,1) for benchmark weights h_B
+          const dirichlet1 = (n) => {
+            const xs = Array.from({length: n}, () => -Math.log(1 - rng())); // Exp(1)
+            const s = xs.reduce((a,b)=>a+b,0);
+            return xs.map(v => v/s);
+          };
+      
+          const hB = dirichlet1(N);                      // benchmark weights (sum=1)
+      
+          // Idiosyncratic variances (diagonal V for clarity)
+          const idioVar = Array.from({length:N}, () => {
+            const s = 0.15 + 0.25*rng();                 // st.dev in [15%, 40%] (arbitrary units)
+            return s*s;
+          });
+      
+          // Covariance V = diag(idioVar); its inverse
+          const VinvDiag = idioVar.map(v => 1.0/v);
+      
+          // Make betas consistent with h_B: β = (V h_B) / (h_B^T V h_B)
+          const VhB = hB.map((w,i) => idioVar[i]*w);
+          const sigmaB2 = hB.reduce((acc, w, i) => acc + w*VhB[i], 0);
+          const beta = VhB.map(x => x / sigmaB2);
+      
+          // ---------- 2) Direct-forecasting recipe ----------
+          // (a) Rank→bins via a noisy score; (b) assign bin alphas; (c) neutralize by α ← α - α_B β
+          // Five bins: strong sell / sell / hold / buy / strong buy
+          const binLabels = ['SSell','Sell','Hold','Buy','SBuy'];
+          const binAlpha  = [-0.02, -0.01, 0.00, 0.01, 0.02];   // ±2%, ±1%, 0%
+      
+          // Rank via score; compute quantile thresholds
+          const score = Array.from({length:N}, () => (Math.sqrt(-2*Math.log(1-rng()))*Math.cos(2*Math.PI*rng()))); // N(0,1)
+          const idx = [...Array(N).keys()].sort((i,j)=>score[i]-score[j]);
+          const q = [0.2,0.4,0.6,0.8,1.0].map(x => Math.floor(x*N)-1);
+      
+          const bin = Array(N).fill(0);
+          idx.forEach((id, k) => {
+            bin[id] = (k<=q[0])?0:(k<=q[1])?1:(k<=q[2])?2:(k<=q[3])?3:4;
+          });
+      
+          const alphaRaw = bin.map(b => binAlpha[b]);
+          const alphaB = alphaRaw.reduce((acc,a,i)=>acc + a*hB[i], 0);       // benchmark-average alpha
+          const alphaNeu = alphaRaw.map((a,i) => a - alphaB*beta[i]);        // α ← α - α_B β
+      
+          // ---------- 3) Active optimizer direction (unconstrained) ----------
+          // h_A ∝ V^{-1} α (scale irrelevant for geometry)
+          const hA = alphaNeu.map((a,i) => VinvDiag[i]*a);
+      
+          // Checks (theory): α_B = 0 by construction; active beta β^T h_A should be 0.
+          const activeBeta = beta.reduce((acc,b,i)=>acc + b*hA[i], 0);       // ≈ 0 numerically
+      
+          // Residual risk & return along the active ray t·h_A (β=0 so total β stays 1 when added to h_B)
+          const alphaA = alphaNeu.reduce((acc,a,i)=>acc + a*hA[i], 0);
+          const omegaA = Math.sqrt(hA.reduce((acc,hi,i)=>acc + hi*hi*idioVar[i], 0));
+          const IR_A   = alphaA / omegaA;
+      
+          // Sample the β=1 frontier created by total portfolios h(t)=h_B + t h_A (in residual (α,ω)-space)
+          const tMax = 2.0, Nt = 60;
+          const tGrid = Array.from({length:Nt}, (_,k)=> -tMax + 2*tMax*k/(Nt-1));
+          const alphaLine = tGrid.map(t => t*alphaA);
+          const omegaLine = tGrid.map(t => Math.abs(t)*omegaA);
+      
+          // ---------- 4) Panel A: stock-level scatter before vs after neutralization ----------
+          const colors = ['#e64b5d','#f28e2b','#9e9e9e','#4e79a7','#59a14f']; // 5 bins
+          const traceRaw = {
+            x: beta,
+            y: alphaRaw,
+            mode: 'markers',
+            name: 'α (raw)',
+            marker: {size: 8, opacity: 0.85, color: bin.map(b=>colors[b])},
+            hovertemplate: 'β=%{x:.2f}<br>α_raw=%{y:.2%}<br>bin=%{text}<extra></extra>',
+            text: bin.map(b=>binLabels[b]),
+            xaxis: 'x', yaxis: 'y'
+          };
+      
+          const traceNeu = {
+            x: beta,
+            y: alphaNeu,
+            mode: 'markers',
+            name: 'α (neutral)',
+            marker: {size: 9, symbol: 'star', line:{width:1}, color: '#111'},
+            hovertemplate: 'β=%{x:.2f}<br>α_neu=%{y:.2%}<extra></extra>',
+            xaxis: 'x', yaxis: 'y'
+          };
+      
+          // Connect each stock (raw→neutral) with a dashed segment
+          const xSeg = [], ySeg = [];
+          for (let i=0;i<N;i++){
+            xSeg.push(beta[i]);   ySeg.push(alphaRaw[i]);
+            xSeg.push(beta[i]);   ySeg.push(alphaNeu[i]);
+            xSeg.push(null);      ySeg.push(null); // gap between segments
+          }
+          const traceSeg = {
+            x: xSeg, y: ySeg, mode: 'lines', name: 'neutralization: α ← α - α_B β',
+            line: {dash: 'dot', width: 1.5, color: 'rgba(50,50,50,0.5)'},
+            hoverinfo: 'skip', xaxis: 'x', yaxis: 'y', showlegend: true
+          };
+      
+          // α_B horizontal line
+          const shapeAlphaB = {
+            type: 'line', xref: 'x', yref: 'y',
+            x0: Math.min(...beta)-0.05, x1: Math.max(...beta)+0.05, y0: alphaB, y1: alphaB,
+            line:{color:'#d62728', width:1.5, dash:'dash'}
+          };
+      
+          // ---------- 5) Panel B: β=1 frontier in residual (α, ω) space ----------
+          const traceFrontier = {
+            x: omegaLine, y: alphaLine, mode:'lines',
+            name: 'β=1 frontier: h = h_B + t·h_A',
+            line: {width: 3, color: '#4e79a7'},
+            hovertemplate: 'ω=%{x:.2%}<br>α=%{y:.2%}<extra></extra>',
+            xaxis: 'x2', yaxis: 'y2'
+          };
+      
+          const traceApoint = {
+            x: [omegaA], y: [alphaA], mode: 'markers+text',
+            name: 'A (unit active)',
+            marker: {size: 10, color:'#111'},
+            text: ['A'], textposition: 'top center',
+            hovertemplate: 'ω_A=%{x:.2%}<br>α_A=%{y:.2%}<extra></extra>',
+            xaxis: 'x2', yaxis: 'y2'
+          };
+      
+          const traceOrigin = {
+            x: [0], y: [0], mode: 'markers+text',
+            name: 'B (no active)',
+            marker: {size: 9, color:'#9e9e9e'},
+            text: ['B'], textposition: 'top right',
+            hovertemplate: 'ω=0<br>α=0<extra></extra>',
+            xaxis: 'x2', yaxis: 'y2'
+          };
+      
+          // Slope annotation line (IR_A)
+          const slopeShape = {
+            type:'line', xref:'x2', yref:'y2',
+            x0: 0, y0: 0, x1: omegaA, y1: alphaA,
+            line: {color:'#111', width:1.5, dash:'dot'}
+          };
+      
+          // ---------- 6) Layout (two panels) ----------
+          const layout = {
+            template: 'plotly_white',
+            margin: {l:60, r:30, t:55, b:55},
+            legend: {orientation:'h', y: 1.16},
+            title: {text: "Direct Forecasting → Benchmark-Neutral α and the β = 1 Frontier"},
+            grid: {rows:1, columns:2, pattern:'independent'},
+            // Panel A
+            xaxis:  {title: "β (stock)", zeroline:false},
+            yaxis:  {title: "α (stock)", tickformat: ".1%", zeroline:false},
+            shapes: [shapeAlphaB, slopeShape],
+            annotations: [
+              // Panel A annotations
+              {
+                x: Math.max(...beta), y: alphaB, xref:'x', yref:'y',
+                text: "benchmark-average α_B", showarrow:false, xanchor:'right', yanchor:'bottom',
+                font:{color:'#d62728', size:12}, bgcolor:'rgba(255,255,255,0.4)', bordercolor:'#d62728'
+              },
+              {
+                x: 0.02, y: 1.12, xref:'paper', yref:'paper',
+                text: "<b>Panel A</b>: stock-level α before (colored by bin) and after neutralization (★).",
+                showarrow:false, align:'left'
+              },
+              // Panel B annotations
+              {
+                x: 0.98, y: 1.12, xref:'paper', yref:'paper',
+                text: "<b>Panel B</b>: residual (α, ω) line for total portfolios h = h_B + t·h_A (β≡1).",
+                showarrow:false, align:'right'
+              },
+              {
+                x: omegaA, y: alphaA, xref:'x2', yref:'y2',
+                text: `IR_A = α_A / ω_A = ${IR_A.toFixed(2)}`,
+                showarrow:true, ax:-30, ay:-30, arrowwidth:1.2, borderpad:3,
+                bgcolor:'rgba(255,255,255,0.7)'
+              },
+              {
+                x: 0, y: 0, xref:'x2', yref:'y2',
+                text: "slope = IR_A", showarrow:false, yshift:-22, font:{size:12, color:'#111'}
+              }
+            ],
+            // Panel B axes
+            xaxis2: {title: "ω (residual risk)", tickformat: ".1%", rangemode:'tozero', zeroline:false},
+            yaxis2: {title: "α (residual return)", tickformat: ".1%", rangemode:'tozero', zeroline:false}
+          };
+      
+          const data = [traceSeg, traceRaw, traceNeu, traceFrontier, traceOrigin, traceApoint];
+      
+          Plotly.newPlot("alpha-forecasting-fig", data, layout,
+                         {displayModeBar: true, responsive: true});
+      
+          // ---------- 7) Info/intuition below plot ----------
+          const avgAlphaRaw = (100*alphaB).toFixed(2);
+          const betaDothA   = activeBeta; // ~ 0
+          const betaDotStr  = Math.abs(betaDothA) < 1e-10 ? "≈ 0" : betaDothA.toFixed(6);
+      
+          document.getElementById("alpha-forecasting-fig-info").innerHTML = `
+            <p><strong>Direct-forecasting recipe (Panel A).</strong>
+            Stocks are ranked into bins and assigned bin-level alphas \\(\\alpha_i\\in\\{-2\\%,-1\\%,0,1\\%,2\\%\\}\\).
+            The benchmark-average alpha is \\(\\alpha_B=\\alpha^\\top h_B=${avgAlphaRaw}\\%\\).
+            To <em>neutralize</em>, set \\(\\tilde\\alpha\\leftarrow \\alpha-\\alpha_B\\,\\beta\\).
+            Then \\(\\tilde\\alpha^\\top h_B=\\alpha_B-\\alpha_B\\,\\beta^\\top h_B=0\\) since \\(\\beta^\\top h_B=1\\).
+            The dashed segments show the per-stock adjustment \\(\\alpha_i\\to\\tilde\\alpha_i\\).</p>
+      
+            <p><strong>β-neutral optimal active & the β=1 frontier (Panel B).</strong>
+            With neutralized alphas, the unconstrained mean–variance active is
+            \\(h_A\\propto V^{-1}\\tilde\\alpha\\).
+            Its beta is <em>zero</em>: \\(\\beta^\\top h_A = (Vh_B/\\sigma_B^2)^\\top V^{-1}\\tilde\\alpha
+            = h_B^\\top\\tilde\\alpha/\\sigma_B^2 = 0\\).
+            Therefore total portfolios \\(h(t)=h_B+t\\,h_A\\) satisfy \\(\\beta(h(t))\\equiv 1\\) for all \\(t\\).
+            In residual (\\(\\alpha,\\omega\\)) space, this generates a straight line through the origin with slope
+            \\(IR_A=\\alpha_A/\\omega_A\\) (dotted segment). Point <b>B</b> is “benchmark only” (no active);
+            point <b>A</b> is one unit of the optimal active.</p>
+      
+            <p><strong>Takeaways.</strong>
+            (i) Neutralization removes irrelevant level effects (benchmark timing) by enforcing \\(\\alpha_B=0\\).
+            (ii) The optimizer then produces a β-neutral active, so scaling that active on top of the benchmark
+            moves you along the <em>β=1 frontier</em>.
+            (iii) The slope equals the information ratio of the active, so sizing is a one-parameter choice.</p>
+          `;
+        }
+      
+        // Render on load
+        renderAlphaForecasting();
+      </script>
+
+    </div>
+  </details>
+</div>
