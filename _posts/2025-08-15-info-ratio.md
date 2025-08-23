@@ -568,56 +568,169 @@ description: "information action ratio."
           \]</p>
           
           <p>These are <b>upward-opening parabolas</b> in the \((\omega_p,\alpha_p)\) plane. For a given \(\lambda_r\) they are <b>parallel</b> (same curvature) and represent all portfolios that deliver the same certainty-equivalent value added \(c\).</p>
-          <!-- Figure 5.4 — Constant value-added lines (separate block) -->
-          <div id="fig-5-4" style="width:960px;height:520px;"></div>
-          <div id="fig-5-4-info" style="font-size:0.9em; opacity:0.95; margin-top:8px;"></div>
+          <!-- One figure with TWO side-by-side plots:
+               LEFT = Fig. 5.4 & Fig. 5.5 combined
+               RIGHT = Fig. 5.6
+          -->
+          <div style="display:flex; gap:18px; width:1220px; max-width:100%;">
+            <div id="fig-5455-left" style="flex:1; min-width:520px; height:520px;"></div>
+            <div id="fig-56-right" style="flex:1; min-width:520px; height:520px;"></div>
+          </div>
+          <div id="fig-54556-info" style="font-size:0.9em; opacity:0.95; margin-top:10px;"></div>
           
           <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
           <script>
-          (function renderFig54() {
+          (function render54556() {
+            // ===== helpers =====
             const tickVals = (max=12, step=2) => Array.from({length: Math.floor(max/step)+1}, (_,i)=> i*step);
             const tickText = vals => vals.map(v => v.toFixed(0) + "%");
+            const wPP = Array.from({length: 121}, (_,i)=> i*(12)/(121-1)); // ω from 0%..12% in "percent points"
           
-            const wMaxPP = 12, Nw = 121;
-            const wPP = Array.from({length: Nw}, (_,i)=> i*(wMaxPP)/(Nw-1)); // 0..12
+            // ===== parameters from the screenshots' captions =====
+            const lambda_r = 0.10;   // moderate residual-risk aversion
+            const IR = 0.75;         // residual frontier slope in Fig. 5.5
           
-            // α(ω) for constant value added: α = VA + λ_r * ω^2  (λ_r = 0.10 as in figure)
-            const lambdaVA = 0.10;
+            // ===== LEFT PLOT (Fig. 5.4 + Fig. 5.5 combined) =====
+            // Constant VA parabolas: α = VA + λ_r * ω^2
             const VAlevels = [
               {va: 2.500, dash: "dash",    name: "VA = 2.500%"},
               {va: 1.400, dash: "dashdot", name: "VA = 1.400%"},
               {va: 0.625, dash: "solid",   name: "VA = 0.625%"}
             ];
-            const aTraces = VAlevels.map(({va, dash, name}) => ({
+            const vaTraces = VAlevels.map(({va, dash, name}) => ({
               x: wPP,
-              y: wPP.map(w => va + lambdaVA*w*w),
+              y: wPP.map(w => va + lambda_r*w*w),
               mode: "lines",
               line: {width: 3, dash},
               name,
               hovertemplate: "ω=%{x:.1f}%<br>α=%{y:.2f}%<extra>"+name+"</extra>"
             }));
           
-            const xt = tickVals(12,2), yt = tickVals(14,2);
-            const layout54 = {
-              title: "Figure 5.4 — Constant Value-Added Lines:  α = VA + λ<sub>r</sub> · ω²  (λ<sub>r</sub>=0.10)",
-              xaxis: {title: "ω", range: [0,12], tickvals: xt, ticktext: tickText(xt), zeroline: false},
-              yaxis: {title: "α", range: [0,14], tickvals: yt, ticktext: tickText(yt), rangemode: "tozero"},
+            // Residual frontier: α = IR * ω
+            const frontier = {
+              x: wPP,
+              y: wPP.map(w => IR*w),
+              mode: "lines",
+              line: {width: 3},
+              name: "Residual Frontier (IR=0.75)",
+              hovertemplate: "ω=%{x:.1f}%<br>α=%{y:.2f}%<extra>Residual Frontier</extra>"
+            };
+          
+            // Tangency / optimum (P*): ω* = IR/(2 λ_r), α* = IR * ω*
+            const wStar = IR/(2*lambda_r);              // 3.75%
+            const aStar = IR * wStar;                   // 2.8125%
+            const Pstar = {
+              x: [wStar], y: [aStar],
+              mode: "markers+text",
+              marker: {size: 11, symbol: "diamond-open"},
+              text: ["P*"],
+              textposition: "top center",
+              name: "P*",
+              hovertemplate: "P*<br>ω=%{x:.2f}%<br>α=%{y:.2f}%<extra></extra>"
+            };
+          
+            // One feasible point on the frontier with lower VA (P0): solve VA = 0.625 on α=IR ω
+            const VA0 = 0.625;
+            const disc = Math.sqrt(IR*IR - 4*lambda_r*VA0);
+            const w0_small = (IR - disc)/(2*lambda_r);  // smaller intersection
+            const a0 = IR * w0_small;
+            const P0 = {
+              x: [w0_small], y: [a0],
+              mode: "markers+text",
+              marker: {size: 9, symbol: "circle"},
+              text: ["P0"],
+              textposition: "bottom right",
+              name: "P0",
+              hovertemplate: "P0<br>ω=%{x:.2f}%<br>α=%{y:.2f}%<extra></extra>"
+            };
+          
+            // Origin label "B" (benchmark & cash)
+            const B = {
+              x: [0], y: [0],
+              mode: "markers+text",
+              marker: {size: 10, symbol: "square"},
+              text: ["B"],
+              textposition: "bottom right",
+              name: "B",
+              hovertemplate: "B<br>ω=0.00%<br>α=0.00%<extra></extra>"
+            };
+          
+            const xt = tickVals(12,2), ytLeft = tickVals(14,2);
+            const layoutLeft = {
+              title: "Figures 5.4 + 5.5 — Constant Value-Added Lines & Residual Frontier (λ<sub>r</sub>=0.10, IR=0.75)",
+              xaxis: {title: "ω (residual risk)", range: [0,12], tickvals: xt, ticktext: tickText(xt), zeroline: false},
+              yaxis: {title: "α (expected residual return)", range: [0,14], tickvals: ytLeft, ticktext: tickText(ytLeft), rangemode: "tozero"},
               template: "plotly_white",
               legend: {orientation: "h", y: 1.12},
               margin: {l: 70, r: 20, t: 70, b: 55}
             };
           
-            Plotly.newPlot("fig-5-4", aTraces, layout54, {displayModeBar:true, responsive:true});
+            Plotly.newPlot("fig-5455-left", [...vaTraces, frontier, Pstar, P0, B], layoutLeft,
+                           {displayModeBar:true, responsive:true});
           
-            document.getElementById("fig-5-4-info").innerHTML = `
-              <p><strong>Constant value-added curves.</strong>
-                For fixed \\(\\lambda_r\\), an indifference set is \\(\\alpha = \\text{VA} + \\lambda_r\\,\\omega^2\\).
-                These parabolas are parallel; higher \\(\\text{VA}\\) shifts the curve upward.
-                Each point on a given curve yields the same risk-adjusted residual return (same VA): increasing \\(\\omega\\)
-                requires a compensating rise in \\(\\alpha\\) equal to \\(\\lambda_r\\,\\omega^2\\).</p>
+            // ===== RIGHT PLOT (Fig. 5.6) — VA(ω) = IR·ω − λ_r·ω², show P* maximum =====
+            const wPP10 = Array.from({length: 101}, (_,i)=> i*(10)/(101-1)); // 0..10%
+            const VAcurve = {
+              x: wPP10,
+              y: wPP10.map(w => IR*w - lambda_r*w*w),
+              mode: "lines",
+              line: {width: 3},
+              name: "VA(ω) = IR·ω − λ<sub>r</sub>·ω²",
+              hovertemplate: "ω=%{x:.1f}%<br>VA=%{y:.2f}%<extra>Value Added</extra>"
+            };
+            const VAmax = {
+              x: [wStar], y: [IR*wStar - lambda_r*wStar*wStar],
+              mode: "markers+text",
+              marker: {size: 11, symbol: "diamond-open"},
+              text: ["P*"],
+              textposition: "top center",
+              name: "P*",
+              hovertemplate: "P* (max VA)<br>ω=%{x:.2f}%<br>VA=%{y:.2f}%<extra></extra>"
+            };
+          
+            const ytRight = [-3,-2,-1,0,1,2];
+            const ytRightText = ytRight.map(v => (v>=0? v.toFixed(0): v.toFixed(0)) + "%");
+            const layoutRight = {
+              title: "Figure 5.6 — Value Added vs. Residual Risk (IR=0.75, λ<sub>r</sub>=0.10)",
+              xaxis: {title: "ω", range: [0,10], tickvals: tickVals(10,2), ticktext: tickText(tickVals(10,2)), zeroline: false},
+              yaxis: {title: "Value Added", range: [-3, 2], tickvals: ytRight, ticktext: ytRightText},
+              template: "plotly_white",
+              legend: {orientation: "h", y: 1.12},
+              margin: {l: 70, r: 20, t: 70, b: 55},
+              shapes: [
+                // vertical guide at ω*
+                {type:"line", xref:"x", yref:"paper", x0:wStar, x1:wStar, y0:0, y1:1, line:{width:1, dash:"dot"}}
+              ],
+              annotations: [
+                {x:wStar, y:-2.7, text:"ω* = IR/(2λ)", showarrow:false, font:{size:11}}
+              ]
+            };
+          
+            Plotly.newPlot("fig-56-right", [VAcurve, VAmax], layoutRight,
+                           {displayModeBar:true, responsive:true});
+          
+            // ===== Info / intuition =====
+            document.getElementById("fig-54556-info").innerHTML = `
+              <p><strong>Left (Figures 5.4 + 5.5 combined).</strong>
+                The curved lines are constant value–added sets \\(\\alpha = \\text{VA} + \\lambda_r\\,\\omega^2\\) with \\(\\lambda_r=0.10\\)
+                and VA levels 0.625%, 1.400%, and 2.500%. The straight ray from the origin is the residual frontier
+                \\(\\alpha = IR\\,\\omega\\) with \\(IR=0.75\\). Tangency at <em>P*</em> (\\(\\omega^* = IR/(2\\lambda_r) = 3.75\\%\\))
+                is the optimal active risk: any higher VA curve lies <em>above</em> the frontier (infeasible),
+                and any other point on the frontier yields lower VA (e.g., <em>P0</em> on the VA=0.625% curve).
+                Benchmark/cash sits at B = (0,0).</p>
+          
+              <p><strong>Right (Figure 5.6).</strong>
+                Holding the frontier fixed, value added as a function of aggressiveness is a concave parabola
+                \\(\\text{VA}(\\omega)= IR\\,\\omega - \\lambda_r\\,\\omega^2\\). The maximum occurs at the same
+                \\(\\omega^* = IR/(2\\lambda_r)\\) as on the left. This is the tangency condition in a different view:
+                slope of VA (\\(IR - 2\\lambda_r\\,\\omega\\)) equals zero at \\(\\omega^*\\).</p>
+          
+              <p style="opacity:0.85;"><small>Numbers chosen only to mirror the chapter’s figures:
+                \\(IR=0.75\\), \\(\\lambda_r=0.10\\). Labels and styling replicate the screenshots’ annotations.</small></p>
             `;
           })();
           </script>
+
 
         </div>
       </details>
@@ -727,6 +840,12 @@ description: "information action ratio."
             <li>\(\lambda_r\) = <b>curvature</b> of the indifference parabola (tolerance for residual risk).</li>
             <li>Optimal aggressiveness scales <b>up</b> with \(IR\) and <b>down</b> with \(\lambda_r\):
               \(\omega_p^{*}\propto IR/\lambda_r\), \(\alpha_p^{*}\propto IR^{2}/\lambda_r\), \(\mathrm{VA}^{*}\propto IR^{2}/\lambda_r\).</li>
+          </ul>
+          <strong>Preferences Meet Opportunities</strong>
+          <ul>
+            <li><b>Opportunities:</b> the frontier \(\alpha=IR\omega\) fixes the <b>best attainable</b> trade-off given the manager's information.</li>
+            <li><b>Preferences:</b> \(\lambda_r\) pins the shape of the <b>VA parabolas</b>.</li>
+            <li><b>Choice:</b> the <b>optimal portfolio</b> lies at the <b>tangency</b> between the frontier and one VA curve; higher VA curves that sit entirely above the frontier are <b>infeasible</b>, curves below are <b>dominated</b>.</li>
           </ul>
         </div>
       </details>
