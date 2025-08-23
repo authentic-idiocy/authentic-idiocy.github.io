@@ -793,7 +793,10 @@ description: "wish me luck on my interview RIP"
       <details class="dropdown-slider">
         <summary>
           <div class="summary-title">The Scaling & Mixture Corollaries</div>
-          <div class="summary-body">
+        </summary>
+        <input type="checkbox" id="scaling-mixture-toggle" class="slider-toggle">
+        <div class="slider-container">
+          <div class="primary">
             <p><b>Scaling:</b> For positive scalar \(\kappa\), the characteristic portfolio of \(\kappa \mathbf{a}\) rescales to preserve unit exposure (i.e., \(\mathbf{h}_{\kappa a} = \mathbf{h}_a/\kappa\)).</p>
 
             <p><b>Linear combination of attributes:</b> If \(\mathbf{a}\) is a weighted combination of attributes \(\mathbf{d}\) and \(\mathbf{f}\), say \(\mathbf{a}=\kappa_d \mathbf{d}+\kappa_f \mathbf{f}\), then the corresponding characteristic portfolio is the matching weighted combination:</p>
@@ -807,147 +810,148 @@ description: "wish me luck on my interview RIP"
             <p>\[
             \frac{1}{\sigma_a^2} \;=\; \frac{\kappa_d^2}{\sigma_d^2} \;+\; \frac{\kappa_f^2}{\sigma_f^2}.
             \]</p>
+            <label for="scaling-mixture-toggle" class="split-arrow"></label>
           </div>
-        </summary>
-        <div class="content">
-          <p><strong>The Proof of the Scaling & Mixture Corollaries</strong></p>
-          <p><strong>Scaling</strong></p>
-          <p><b>Goal.</b> Show for \(\kappa>0\):</p>
-          <p>\[
-          h_{\kappa a}=\frac{h_a}{\kappa}
-          \]</p>
-          <p>\[
-          \sigma_{\kappa a}^2=\frac{\sigma_a^2}{\kappa^2}
-          \]</p>
-          
-          <p><b>Definition (Item 1).</b></p>
-          <p>\[
-          h_x=\frac{V^{-1}x}{x^\top V^{-1}x},\qquad
-          \sigma_x^2=\frac{1}{x^\top V^{-1}x}
-          \]</p>
-          
-          <p><b>Apply with \(x=\kappa a\).</b></p>
-          <p>\[
-          h_{\kappa a}
-          =\frac{V^{-1}(\kappa a)}{(\kappa a)^\top V^{-1}(\kappa a)}
-          =\frac{\kappa V^{-1}a}{\kappa^2\,a^\top V^{-1}a}
-          =\frac{1}{\kappa}\,\frac{V^{-1}a}{a^\top V^{-1}a}
-          =\frac{h_a}{\kappa}
-          \]</p>
-          
-          <p>\[
-          \sigma_{\kappa a}^2
-          =\frac{1}{(\kappa a)^\top V^{-1}(\kappa a)}
-          =\frac{1}{\kappa^2\,a^\top V^{-1}a}
-          =\frac{\sigma_a^2}{\kappa^2}
-          \]</p>
-          
-          <p><b>Unit-exposure check.</b></p>
-          <p>\[
-          (\kappa a)^\top h_{\kappa a}
-          =(\kappa a)^\top\!\left(\frac{h_a}{\kappa}\right)
-          =a^\top h_a
-          =1
-          \]</p>
-          
-          <p><b>In words:</b> change the <b>units</b> of the attribute, not the economics. If you double the attribute scale, you need half as much portfolio to get one unit of exposure; variance scales like a square.</p>
-          
-          <p><b>Why it's important:</b> invariance to labeling. Whether \(a\) is "beta in %" or "beta in decimals," your exposure mechanism behaves consistently.</p>
-          
-          <p><strong>Mixture part a) Linear combination of attributes</strong></p>
-          <p>Let \(a=\kappa_d d+\kappa_f f\). Define</p>
-          <p>\[
-          h_d=\frac{V^{-1}d}{d^\top V^{-1}d},\quad
-          h_f=\frac{V^{-1}f}{f^\top V^{-1}f}
-          \]</p>
-          <p>\[
-          \sigma_d^2=\frac{1}{d^\top V^{-1}d},\quad
-          \sigma_f^2=\frac{1}{f^\top V^{-1}f},\quad
-          \sigma_a^2=\frac{1}{a^\top V^{-1}a}
-          \]</p>
-          
-          <p><b>Mixture representation for \(h_a\):</b></p>
-          <p>From the solution to the quad prog,</p>
-          <p>\[
-          h_a=\frac{V^{-1}a}{a^\top V^{-1}a}
-          =\frac{\kappa_d V^{-1}d+\kappa_f V^{-1}f}{a^\top V^{-1}a}
-          \]</p>
-          
-          <p>Use \(h_d=\sigma_d^2 V^{-1}d\Rightarrow V^{-1}d=\frac{1}{\sigma_d^2}h_d\) and similarly \(V^{-1}f=\frac{1}{\sigma_f^2}h_f\). Also \(a^\top V^{-1}a=\frac{1}{\sigma_a^2}\). Thus</p>
-          <p>\[
-          h_a
-          =\sigma_a^2\!\left(\frac{\kappa_d}{\sigma_d^2}h_d+\frac{\kappa_f}{\sigma_f^2}h_f\right)
-          \]</p>
-          
-          <p>Equivalently,</p>
-          <p>\[
-          \boxed{\,h_a=\left(\frac{\kappa_d\,\sigma_a^2}{\sigma_d^2}\right)h_d
-          +\left(\frac{\kappa_f\,\sigma_a^2}{\sigma_f^2}\right)h_f\,}
-          \]</p>
-          
-          <p><strong>Mixture part b) Variance \(\sigma_a^2\) and orthogonal special case</strong></p>
-          <p>By Item 2 (Variance of the characteristic portfolio),</p>
-          <p>\[
-          \frac{1}{\sigma_a^2}
-          =a^\top V^{-1}a
-          =(\kappa_d d+\kappa_f f)^\top V^{-1}(\kappa_d d+\kappa_f f)
-          \]</p>
-          
-          <p><b>1) Distribute the quadratic form (bilinearity).</b></p>
-          <p>\[
-          = (\kappa_d d)^\top V^{-1}(\kappa_d d)
-          +(\kappa_f f)^\top V^{-1}(\kappa_f f)
-          +(\kappa_d d)^\top V^{-1}(\kappa_f f)
-          +(\kappa_f f)^\top V^{-1}(\kappa_d d)
-          \]</p>
-          
-          <p><b>2) Pull out scalars \(\kappa_d,\kappa_f\).</b></p>
-          <p>\[
-          = \kappa_d^2\, d^\top V^{-1} d
-          +\kappa_f^2\, f^\top V^{-1} f
-          +\kappa_d\kappa_f\, d^\top V^{-1} f
-          +\kappa_d\kappa_f\, f^\top V^{-1} d
-          \]</p>
-          
-          <p><b>3) Use symmetry of \(V^{-1}\) so \(d^\top V^{-1} f=f^\top V^{-1} d\).</b></p>
-          <p>\[
-          = \kappa_d^2\, d^\top V^{-1} d
-          +\kappa_f^2\, f^\top V^{-1} f
-          +2\kappa_d\kappa_f\, d^\top V^{-1} f
-          \]</p>
-          
-          <p><b>4) Substitute the variance identities \(d^\top V^{-1} d=1/\sigma_d^2\) and \(f^\top V^{-1} f=1/\sigma_f^2\).</b></p>
-          <p>\[
-          = \frac{\kappa_d^2}{\sigma_d^2}
-          +\frac{\kappa_f^2}{\sigma_f^2}
-          +2\kappa_d\kappa_f\, d^\top V^{-1} f
-          \]</p>
-          
-          <p>Relate the cross term to Item 4. Since</p>
-          <p>\[
-          \sigma_{d,f}:=\operatorname{Cov}(R_{h_d},R_{h_f})
-          =h_d^\top V h_f
-          =\sigma_d^2\sigma_f^2\,d^\top V^{-1}f
-          \]</p>
-          
-          <p>we have \(d^\top V^{-1}f=\sigma_{d,f}/(\sigma_d^2\sigma_f^2)\). Hence</p>
-          <p>\[
-          \boxed{\;\frac{1}{\sigma_a^2}
-          =\frac{\kappa_d^2}{\sigma_d^2}
-          +\frac{\kappa_f^2}{\sigma_f^2}
-          +\frac{2\kappa_d\kappa_f\,\sigma_{d,f}}{\sigma_d^2\sigma_f^2}\;}
-          \]</p>
-          
-          <p><b>Orthogonal special case.</b> If \(d\) and \(f\) are \(V^{-1}\)-orthogonal (equivalently \(\sigma_{d,f}=0\)), only the first two terms remain.:</p>
-          <p>\[
-          \boxed{\;\frac{1}{\sigma_a^2}
-          =\frac{\kappa_d^2}{\sigma_d^2}
-          +\frac{\kappa_f^2}{\sigma_f^2}\;}
-          \]</p>
-          
-          <p><b>In words:</b> the <b>portfolio map is linear</b> under the \(V^{-1}\) metric. A composite attribute is implemented by a matching composite of its characteristic portfolios, with weights adjusted by their variances. The variance formula is just the usual "sum plus cross-term"; if \(h_d\) and \(h_f\) are uncorrelated, it becomes Pythagorean.</p>
-          
-          <p><b>Why it's important:</b> you can modularly build complex factors from a base library of characteristic portfolios, and you can <b>orthogonalize</b> them by making \(d,f\) \(V^{-1}\)-orthogonal, giving uncorrelated factor returns.</p>
+          <div class="secondary">
+            <p><strong>The Proof of the Scaling & Mixture Corollaries</strong></p>
+            <p><strong>Scaling</strong></p>
+            <p><b>Goal.</b> Show for \(\kappa>0\):</p>
+            <p>\[
+            h_{\kappa a}=\frac{h_a}{\kappa}
+            \]</p>
+            <p>\[
+            \sigma_{\kappa a}^2=\frac{\sigma_a^2}{\kappa^2}
+            \]</p>
+
+            <p><b>Definition (Item 1).</b></p>
+            <p>\[
+            h_x=\frac{V^{-1}x}{x^\top V^{-1}x},\qquad
+            \sigma_x^2=\frac{1}{x^\top V^{-1}x}
+            \]</p>
+
+            <p><b>Apply with \(x=\kappa a\).</b></p>
+            <p>\[
+            h_{\kappa a}
+            =\frac{V^{-1}(\kappa a)}{(\kappa a)^\top V^{-1}(\kappa a)}
+            =\frac{\kappa V^{-1}a}{\kappa^2\,a^\top V^{-1}a}
+            =\frac{1}{\kappa}\,\frac{V^{-1}a}{a^\top V^{-1}a}
+            =\frac{h_a}{\kappa}
+            \]</p>
+
+            <p>\[
+            \sigma_{\kappa a}^2
+            =\frac{1}{(\kappa a)^\top V^{-1}(\kappa a)}
+            =\frac{1}{\kappa^2\,a^\top V^{-1}a}
+            =\frac{\sigma_a^2}{\kappa^2}
+            \]</p>
+
+            <p><b>Unit-exposure check.</b></p>
+            <p>\[
+            (\kappa a)^\top h_{\kappa a}
+            =(\kappa a)^\top\!\left(\frac{h_a}{\kappa}\right)
+            =a^\top h_a
+            =1
+            \]</p>
+
+            <p><b>In words:</b> change the <b>units</b> of the attribute, not the economics. If you double the attribute scale, you need half as much portfolio to get one unit of exposure; variance scales like a square.</p>
+
+            <p><b>Why it's important:</b> invariance to labeling. Whether \(a\) is "beta in %" or "beta in decimals," your exposure mechanism behaves consistently.</p>
+
+            <p><strong>Mixture part a) Linear combination of attributes</strong></p>
+            <p>Let \(a=\kappa_d d+\kappa_f f\). Define</p>
+            <p>\[
+            h_d=\frac{V^{-1}d}{d^\top V^{-1}d},\quad
+            h_f=\frac{V^{-1}f}{f^\top V^{-1}f}
+            \]</p>
+            <p>\[
+            \sigma_d^2=\frac{1}{d^\top V^{-1}d},\quad
+            \sigma_f^2=\frac{1}{f^\top V^{-1}f},\quad
+            \sigma_a^2=\frac{1}{a^\top V^{-1}a}
+            \]</p>
+
+            <p><b>Mixture representation for \(h_a\):</b></p>
+            <p>From the solution to the quad prog,</p>
+            <p>\[
+            h_a=\frac{V^{-1}a}{a^\top V^{-1}a}
+            =\frac{\kappa_d V^{-1}d+\kappa_f V^{-1}f}{a^\top V^{-1}a}
+            \]</p>
+
+            <p>Use \(h_d=\sigma_d^2 V^{-1}d\Rightarrow V^{-1}d=\frac{1}{\sigma_d^2}h_d\) and similarly \(V^{-1}f=\frac{1}{\sigma_f^2}h_f\). Also \(a^\top V^{-1}a=\frac{1}{\sigma_a^2}\). Thus</p>
+            <p>\[
+            h_a
+            =\sigma_a^2\!\left(\frac{\kappa_d}{\sigma_d^2}h_d+\frac{\kappa_f}{\sigma_f^2}h_f\right)
+            \]</p>
+
+            <p>Equivalently,</p>
+            <p>\[
+            \boxed{\,h_a=\left(\frac{\kappa_d\,\sigma_a^2}{\sigma_d^2}\right)h_d
+            +\left(\frac{\kappa_f\,\sigma_a^2}{\sigma_f^2}\right)h_f\,}
+            \]</p>
+
+            <p><strong>Mixture part b) Variance \(\sigma_a^2\) and orthogonal special case</strong></p>
+            <p>By Item 2 (Variance of the characteristic portfolio),</p>
+            <p>\[
+            \frac{1}{\sigma_a^2}
+            =a^\top V^{-1}a
+            =(\kappa_d d+\kappa_f f)^\top V^{-1}(\kappa_d d+\kappa_f f)
+            \]</p>
+
+            <p><b>1) Distribute the quadratic form (bilinearity).</b></p>
+            <p>\[
+            = (\kappa_d d)^\top V^{-1}(\kappa_d d)
+            +(\kappa_f f)^\top V^{-1}(\kappa_f f)
+            +(\kappa_d d)^\top V^{-1}(\kappa_f f)
+            +(\kappa_f f)^\top V^{-1}(\kappa_d d)
+            \]</p>
+
+            <p><b>2) Pull out scalars \(\kappa_d,\kappa_f\).</b></p>
+            <p>\[
+            = \kappa_d^2\, d^\top V^{-1} d
+            +\kappa_f^2\, f^\top V^{-1} f
+            +\kappa_d\kappa_f\, d^\top V^{-1} f
+            +\kappa_d\kappa_f\, f^\top V^{-1} d
+            \]</p>
+
+            <p><b>3) Use symmetry of \(V^{-1}\) so \(d^\top V^{-1} f=f^\top V^{-1} d\).</b></p>
+            <p>\[
+            = \kappa_d^2\, d^\top V^{-1} d
+            +\kappa_f^2\, f^\top V^{-1} f
+            +2\kappa_d\kappa_f\, d^\top V^{-1} f
+            \]</p>
+
+            <p><b>4) Substitute the variance identities \(d^\top V^{-1} d=1/\sigma_d^2\) and \(f^\top V^{-1} f=1/\sigma_f^2\).</b></p>
+            <p>\[
+            = \frac{\kappa_d^2}{\sigma_d^2}
+            +\frac{\kappa_f^2}{\sigma_f^2}
+            +2\kappa_d\kappa_f\, d^\top V^{-1} f
+            \]</p>
+
+            <p>Relate the cross term to Item 4. Since</p>
+            <p>\[
+            \sigma_{d,f}:=\operatorname{Cov}(R_{h_d},R_{h_f})
+            =h_d^\top V h_f
+            =\sigma_d^2\sigma_f^2\,d^\top V^{-1}f
+            \]</p>
+
+            <p>we have \(d^\top V^{-1}f=\sigma_{d,f}/(\sigma_d^2\sigma_f^2)\). Hence</p>
+            <p>\[
+            \boxed{\;\frac{1}{\sigma_a^2}
+            =\frac{\kappa_d^2}{\sigma_d^2}
+            +\frac{\kappa_f^2}{\sigma_f^2}
+            +\frac{2\kappa_d\kappa_f\,\sigma_{d,f}}{\sigma_d^2\sigma_f^2}\;}
+            \]</p>
+
+            <p><b>Orthogonal special case.</b> If \(d\) and \(f\) are \(V^{-1}\)-orthogonal (equivalently \(\sigma_{d,f}=0\)), only the first two terms remain.:</p>
+            <p>\[
+            \boxed{\;\frac{1}{\sigma_a^2}
+            =\frac{\kappa_d^2}{\sigma_d^2}
+            +\frac{\kappa_f^2}{\sigma_f^2}\;}
+            \]</p>
+
+            <p><b>In words:</b> the <b>portfolio map is linear</b> under the \(V^{-1}\) metric. A composite attribute is implemented by a matching composite of its characteristic portfolios, with weights adjusted by their variances. The variance formula is just the usual "sum plus cross-term"; if \(h_d\) and \(h_f\) are uncorrelated, it becomes Pythagorean.</p>
+
+            <p><b>Why it's important:</b> you can modularly build complex factors from a base library of characteristic portfolios, and you can <b>orthogonalize</b> them by making \(d,f\) \(V^{-1}\)-orthogonal, giving uncorrelated factor returns.</p>
+          </div>
         </div>
       </details>
       <details class="dropdown-block">
