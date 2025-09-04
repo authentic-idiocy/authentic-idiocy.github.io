@@ -3,6 +3,7 @@ layout: default
 title: Moi
 ---
 
+<div style="display:flex;justify-content:center;align-items:center;min-height:100vh;">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="440" height="360" aria-label="Animated mound pop + tomb rise + bouquets from above">
   <defs>
     <path id="stonePath" d="M50 150 V76 A60 60 0 0 1 170 76 V150 Z"/>
@@ -138,3 +139,5 @@ title: Moi
     </g>
   </g>
 </svg>
+
+</div>
